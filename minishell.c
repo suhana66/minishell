@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 13:27:42 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/19 13:31:52 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(void)
 		if (!input)
 			break ;
 		ft_printf("%s\n", input);
+		add_history(input);
 		free(input);
 	}
 	free(prompt);
