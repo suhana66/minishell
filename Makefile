@@ -6,6 +6,8 @@ LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a
 LIBFT_LINK := -L$(LIBFT_PATH) -lft
 
+READLINE_LIBRARY := -lreadline
+
 SRC := minishell.c
 OBJ := $(SRC:%.c=%.o)
 INCLUDES := -I$(LIBFT_PATH)
@@ -13,7 +15,7 @@ INCLUDES := -I$(LIBFT_PATH)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJ) $(LIBFT_LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJ) $(LIBFT_LINK) $(READLINE_LIBRARY)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@

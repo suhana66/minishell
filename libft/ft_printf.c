@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 09:14:59 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 10:51:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:37:36 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_format(int *result, char *s, va_list *args);
 void	ft_print_chars(int *count, char *s, int len);
 void	ft_print_unsigned(int *count, unsigned long long n,
-				unsigned long long base, char replace_c);
+			unsigned long long base, char replace_c);
 void	ft_print_int(int *count, int n, int sign);
 
 int	ft_printf(const char *s, ...)
