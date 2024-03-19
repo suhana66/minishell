@@ -1,6 +1,9 @@
 NAME := libft.a
 SRC := ft_printf.c \
-	ft_strjoin.c
+	ft_strjoin.c \
+	ft_strchr.c \
+	ft_substr.c \
+	ft_strlen.c
 OBJ := $(SRC:%.c=%.o)
 CC := cc
 CFLAGS := -Wall -Wextra -Werror

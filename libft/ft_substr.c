@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 14:26:52 by susajid          ###   ########.fr       */
+/*   Created: 2024/03/19 16:25:07 by susajid           #+#    #+#             */
+/*   Updated: 2024/03/19 16:25:10 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*result;
+	size_t	i;
 
-char	**parse_cli_input(char *input);
-
-#endif /* MINISHELL_H */
+	if (start > ft_strlen(s))
+		len = 0;
+	else if (ft_strlen(s + start) < len)
+		len = ft_strlen(s + start);
+	result = malloc((len + 1) * sizeof(char));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		result[i] = s[start + i];
+		i++;
+	}
+	result[len] = 0;
+	return (result);
+}

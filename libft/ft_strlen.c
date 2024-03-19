@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 14:26:52 by susajid          ###   ########.fr       */
+/*   Created: 2024/03/19 16:53:43 by susajid           #+#    #+#             */
+/*   Updated: 2024/03/19 16:55:55 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
+size_t	ft_strlen(const char *s)
+{
+	size_t	count;
 
-char	**parse_cli_input(char *input);
-
-#endif /* MINISHELL_H */
+	count = 0;
+	while (s[count])
+		count++;
+	return (count);
+}

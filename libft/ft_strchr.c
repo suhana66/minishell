@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 14:26:52 by susajid          ###   ########.fr       */
+/*   Created: 2024/03/19 15:28:48 by susajid           #+#    #+#             */
+/*   Updated: 2024/03/19 15:28:54 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
-
-char	**parse_cli_input(char *input);
-
-#endif /* MINISHELL_H */
+char	*ft_strchr(const char *s, int c)
+{
+	c = c % 256;
+	while (1)
+	{
+		if (*s == c)
+			return ((char *)(s));
+		if (!*s)
+			break ;
+		s++;
+	}
+	return (NULL);
+}
