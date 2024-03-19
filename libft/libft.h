@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 10:51:18 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/19 13:22:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <stdarg.h>
 # include <unistd.h>
+# include <stdlib.h>
 
 int		ft_printf(const char *s, ...);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif /* LIBFT_H */

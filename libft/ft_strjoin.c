@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 13:27:42 by susajid          ###   ########.fr       */
+/*   Created: 2024/03/19 13:20:26 by susajid           #+#    #+#             */
+/*   Updated: 2024/03/19 13:20:44 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*prompt;
-	char	*input;
+	char	*result;
+	int		len;
+	int		i;
 
-	prompt = getcwd(NULL, 0);
-	if (!prompt)
-		return (perror("getcwd()"), 1);
-	input = prompt;
-	prompt = ft_strjoin(input, " % ");
-	free(input);
-	while (1)
-	{
-		input = readline(prompt);
-		if (!input)
-			break ;
-		ft_printf("%s\n", input);
-		free(input);
-	}
-	free(prompt);
-	return (0);
+	len = 0;
+	i = 0;
+	while (s1[i++])
+		len++;
+	i = 0;
+	while (s2[i++])
+		len++;
+	result = malloc((len + 1) * sizeof(char));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		result[i++] = *s1++;
+	while (*s2)
+		result[i++] = *s2++;
+	result[len] = 0;
+	return (result);
 }

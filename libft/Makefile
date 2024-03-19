@@ -1,5 +1,6 @@
 NAME := libft.a
-SRC := ft_printf.c
+SRC := ft_printf.c \
+	ft_strjoin.c
 OBJ := $(SRC:%.c=%.o)
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
