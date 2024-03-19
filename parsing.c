@@ -6,13 +6,14 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 17:02:22 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:02:29 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 size_t	word_count(char *str, char *delimiters);
+char	**check_mallocs(char **array, size_t arrlen);
 
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
 char	**parse_cli_input(char *input)
@@ -42,8 +43,7 @@ char	**parse_cli_input(char *input)
 		cmd_argv[i++] = ft_substr(input, 0, word_i - input);
 		input = word_i;
 	}
-	// TODO: Memory management
-	return (cmd_argv);
+	return (check_mallocs(cmd_argv, cmd_argc));
 }
 
 size_t	word_count(char *str, char *delimiters)
@@ -65,4 +65,24 @@ size_t	word_count(char *str, char *delimiters)
 		str++;
 	}
 	return (count);
+}
+
+char	**check_mallocs(char **array, size_t arrlen)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < arrlen)
+	{
+		if (!array[i])
+		{
+			i = 0;
+			while (i < arrlen)
+				free(array[i++]);
+			free(array);
+			return (NULL);
+		}
+		i++;
+	}
+	return (array);
 }

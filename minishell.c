@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 16:58:30 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:03:41 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(void)
 			break ;
 		add_history(input);
 		cmd_argv = parse_cli_input(input);
+		(void)cmd_argv;
+		// TODO: cmd_argv memory management
 		free(input);
 	}
 	free(prompt);

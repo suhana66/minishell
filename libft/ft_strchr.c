@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:28:48 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 15:28:54 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:48:35 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 char	*ft_strchr(const char *s, int c)
 {
 	c = c % 256;
+	if (!s)
+		return (NULL);
 	while (1)
 	{
 		if (*s == c)
