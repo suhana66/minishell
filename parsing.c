@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 18:02:29 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:00:30 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 size_t	word_count(char *str, char *delimiters);
 char	**check_mallocs(char **array, size_t arrlen);
 
-// Bash delimiters can be found in the variable IFS (Internal Field Separator)
-char	**parse_cli_input(char *input)
+char	**split_cli_input(char *input, char *delimiters)
 {
-	char	*delimiters;
 	char	**cmd_argv;
 	size_t	cmd_argc;
 	size_t	i;
@@ -26,7 +24,6 @@ char	**parse_cli_input(char *input)
 
 	if (!input || !*input)
 		return (NULL);
-	delimiters = " \t\n";
 	cmd_argc = word_count(input, delimiters);
 	cmd_argv = malloc(sizeof(char *) * (cmd_argc + 1));
 	if (!cmd_argv)

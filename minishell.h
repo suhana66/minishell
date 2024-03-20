@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 21:45:33 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:01:02 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 
-char	**parse_cli_input(char *input);
+char	**split_cli_input(char *input, char *delimiters);
 void	eval(char **cmd_argv);
 
 #endif /* MINISHELL_H */
