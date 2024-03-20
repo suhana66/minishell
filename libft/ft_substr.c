@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:25:07 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/19 16:25:10 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:31:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	result = malloc((len + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
+	result[len] = 0;
 	i = 0;
 	while (i < len)
 	{
 		result[i] = s[start + i];
 		i++;
 	}
-	result[len] = 0;
 	return (result);
 }
