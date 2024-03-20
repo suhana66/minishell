@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/20 14:36:34 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:12:36 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 	size_t	i;
 	size_t	token_len;
 
-	if (!input || !*input)
-		return (NULL);
 	cmd_argc = get_token_count(input, delimiters, enclosers);
 	cmd_argv = malloc(sizeof(char *) * (cmd_argc + 1));
 	if (!cmd_argv)
