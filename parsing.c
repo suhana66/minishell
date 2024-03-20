@@ -6,25 +6,26 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/20 09:00:30 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:36:34 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	word_count(char *str, char *delimiters);
+size_t	get_token_length(char *input, char *delimiters, char *enclosers);
+size_t	get_token_count(char *str, char *delimiters, char *enclosers);
 char	**check_mallocs(char **array, size_t arrlen);
 
-char	**split_cli_input(char *input, char *delimiters)
+char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 {
 	char	**cmd_argv;
 	size_t	cmd_argc;
 	size_t	i;
-	char	*word_i;
+	size_t	token_len;
 
 	if (!input || !*input)
 		return (NULL);
-	cmd_argc = word_count(input, delimiters);
+	cmd_argc = get_token_count(input, delimiters, enclosers);
 	cmd_argv = malloc(sizeof(char *) * (cmd_argc + 1));
 	if (!cmd_argv)
 		return (NULL);
@@ -34,32 +35,46 @@ char	**split_cli_input(char *input, char *delimiters)
 	{
 		while (*input && ft_strchr(delimiters, *input))
 			input++;
-		word_i = input;
-		while (!ft_strchr(delimiters, *word_i))
-			word_i++;
-		cmd_argv[i++] = ft_substr(input, 0, word_i - input);
-		input = word_i;
+		token_len = get_token_length(input, delimiters, enclosers);
+		cmd_argv[i++] = ft_substr(input, 0, token_len);
+		input += token_len;
 	}
 	return (check_mallocs(cmd_argv, cmd_argc));
 }
 
-size_t	word_count(char *str, char *delimiters)
+size_t	get_token_length(char *input, char *delimiters, char *enclosers)
+{
+	char	*token_i;
+	char	encloser;
+
+	token_i = input;
+	encloser = 0;
+	while (!ft_strchr(delimiters, *token_i) || encloser)
+	{
+		if (!encloser && ft_strchr(enclosers, *token_i))
+			encloser = *token_i;
+		else if (encloser && *token_i == encloser)
+			encloser = 0;
+		token_i++;
+	}
+	return (token_i - input);
+}
+
+size_t	get_token_count(char *input, char *delimiters, char *enclosers)
 {
 	size_t	count;
-	int		counted;
+	size_t	token_len;
 
 	count = 0;
-	counted = 0;
-	while (*str)
+	while (1)
 	{
-		if (ft_strchr(delimiters, *str))
-			counted = 0;
-		else if (!counted)
-		{
-			count++;
-			counted = 1;
-		}
-		str++;
+		while (*input && ft_strchr(delimiters, *input))
+			input++;
+		token_len = get_token_length(input, delimiters, enclosers);
+		if (token_len == 0)
+			break ;
+		count++;
+		input += token_len;
 	}
 	return (count);
 }
