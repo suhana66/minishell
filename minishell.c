@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/20 15:22:39 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/21 09:07:36 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(void)
 	while (1)
 	{
 		input = readline(prompt);
+		// TODO: error condition
 		if (!input)
 			break ;
 		if (!*input)
@@ -37,6 +38,9 @@ int	main(void)
 		cmd_argv = split_cli_input(input, " \t\n", "'\"");
 		if (!prompt)
 			return (perror("split_cli_input()"), 2);
+		i = 0;
+		while (cmd_argv[i])
+			expand_cmd_arg(&cmd_argv[i]);
 		eval(cmd_argv);
 		i = 0;
 		while (cmd_argv[i])
