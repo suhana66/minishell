@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 19:39:13 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/21 10:40:18 by susajid          ###   ########.fr       */
+/*   Created: 2024/03/21 10:06:17 by susajid           #+#    #+#             */
+/*   Updated: 2024/03/21 10:06:18 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	expand_cmd_arg(char **cmd_arg)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	i;
-	char	encloser;
+	const char	*srcstart;
 
-	i = 0;
-	encloser = 0;
-	while ((*cmd_arg)[i])
+	srcstart = src;
+	if (dstsize)
 	{
-		if ((*cmd_arg)[i] == '"' || (*cmd_arg)[i] == '\'')
+		while (*src && dstsize - 1)
 		{
-			if (!encloser)
-				encloser = (*cmd_arg)[i];
-			else if ((*cmd_arg)[i] == encloser)
-				encloser = 0;
-			ft_strlcpy(*cmd_arg + i, *cmd_arg + i + 1, ft_strlen(*cmd_arg + i));
+			*dst++ = *src++;
+			dstsize--;
 		}
-		i++;
+		*dst = 0;
 	}
+	while (*src)
+		src++;
+	return ((size_t)(src - srcstart));
 }
-
-// [a-zA-Z_]+[a-zA-Z0-9_]*

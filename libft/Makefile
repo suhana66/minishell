@@ -3,7 +3,8 @@ SRC := ft_printf.c \
 	ft_strjoin.c \
 	ft_strchr.c \
 	ft_substr.c \
-	ft_strlen.c
+	ft_strlen.c \
+	ft_strlcpy.c
 OBJ := $(SRC:%.c=%.o)
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
