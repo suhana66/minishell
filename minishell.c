@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/21 10:27:22 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/21 15:49:09 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	main(void)
 			return (perror("split_cli_input()"), 2);
 		i = 0;
 		while (cmd_argv[i])
-		{
 			expand_cmd_arg(&cmd_argv[i++]);
-			// printf("$%s$\n", cmd_argv[i - 1]);
-		}
 		eval(cmd_argv);
 		i = 0;
 		while (cmd_argv[i])

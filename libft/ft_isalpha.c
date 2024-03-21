@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 13:20:26 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/21 14:09:24 by susajid          ###   ########.fr       */
+/*   Created: 2024/03/21 13:30:56 by susajid           #+#    #+#             */
+/*   Updated: 2024/03/21 13:30:59 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_isalpha(int c)
 {
-	char	*result;
-	int		len;
-	int		i;
-
-	len = ft_strlen(s1) + ft_strlen(s2);
-	result = malloc((len + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
-	result[len] = 0;
-	i = 0;
-	while (s1 && *s1)
-		result[i++] = *s1++;
-	while (s2 && *s2)
-		result[i++] = *s2++;
-	return (result);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
