@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 15:44:25 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 17:24:37 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 	cmd_argc = get_token_count(input, delimiters, enclosers);
 	cmd_argv = malloc(sizeof(char *) * (cmd_argc + 1));
 	if (!cmd_argv)
-		return (NULL);
+		return (ft_perror("malloc"), NULL);
 	cmd_argv[cmd_argc] = NULL;
 	i = 0;
 	while (*input && i < cmd_argc)
@@ -39,7 +39,7 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 		{
 			while (--i >= 0)
 				free(cmd_argv[i]);
-			return (free(cmd_argv), NULL);
+			return (free(cmd_argv), ft_perror("malloc"), NULL);
 		}
 	}
 	return (cmd_argv);
@@ -139,21 +139,21 @@ int	replace_enviornment_variable(char **cmd_arg, size_t *variable_index)
 		return ((*variable_index)++, 0);
 	temp1 = ft_substr(start, 0, len);
 	if (!temp1)
-		return (1);
+		return (ft_perror("malloc"), 1);
 	env_value = getenv(temp1);
 	free(temp1);
 	temp1 = ft_substr(*cmd_arg, 0, *variable_index);
 	if (!temp1)
-		return (2);
+		return (ft_perror("malloc"), 2);
 	temp2 = ft_strjoin(temp1, env_value);
 	free(temp1);
 	if (!temp2)
-		return (3);
+		return (ft_perror("malloc"), 3);
 	temp1 = temp2;
 	temp2 = ft_strjoin(temp2, start + len);
 	free(temp1);
 	if (!temp2)
-		return (4);
+		return (ft_perror("malloc"), 4);
 	free(*cmd_arg);
 	*cmd_arg = temp2;
 	*variable_index += ft_strlen(env_value);

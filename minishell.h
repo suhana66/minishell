@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 16:31:02 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 17:28:49 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@
 char	**split_cli_input(char *input, char *delimiters, char *enclosers);
 int		expand_cmd_arg(char **cmd_argv);
 void	eval(char **cmd_argv);
+
+void	ft_perror(char *func_name);
 
 #endif /* MINISHELL_H */
