@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:39:13 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 11:18:35 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 12:48:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ void	expand_cmd_arg(char **cmd_arg)
 	encloser = 0;
 	while ((*cmd_arg)[i])
 	{
-		if ((*cmd_arg)[i] == '"' || (*cmd_arg)[i] == '\'')
+		if (((*cmd_arg)[i] == '"' || (*cmd_arg)[i] == '\'')
+			&& (!encloser || (*cmd_arg)[i] == encloser))
 		{
 			if (!encloser)
 				encloser = (*cmd_arg)[i];
-			else if ((*cmd_arg)[i] == encloser)
+			else
 				encloser = 0;
 			ft_strlcpy(*cmd_arg + i, *cmd_arg + i + 1, ft_strlen(*cmd_arg + i));
+			continue ;
 		}
 		if (encloser != '\'' && (*cmd_arg)[i] == '$')
 			i += replace_enviornment_variable(cmd_arg, i);
