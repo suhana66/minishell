@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 13:14:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:21:17 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	get_token_length(char **input, char *delimiters, char *enclosers);
 size_t	get_token_count(char *str, char *delimiters, char *enclosers);
-size_t	replace_enviornment_variable(char **cmd_arg, size_t variable_index);
+int		replace_enviornment_variable(char **cmd_arg, size_t *variable_index);
 
 char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 {
@@ -45,7 +45,7 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 	return (cmd_argv);
 }
 
-void	expand_cmd_arg(char **cmd_arg)
+int	expand_cmd_arg(char **cmd_arg)
 {
 	size_t	i;
 	char	encloser;
@@ -65,10 +65,14 @@ void	expand_cmd_arg(char **cmd_arg)
 			continue ;
 		}
 		if (encloser != '\'' && (*cmd_arg)[i] == '$')
-			i += replace_enviornment_variable(cmd_arg, i);
+		{
+			if (replace_enviornment_variable(cmd_arg, &i))
+				return (1);
+		}
 		else
 			i++;
 	}
+	return (0);
 }
 
 size_t	get_token_length(char **input, char *delimiters, char *enclosers)
@@ -117,7 +121,7 @@ size_t	get_token_count(char *input, char *delimiters, char *enclosers)
 					(3) replace it with the enviornment variable value
 					(4) return the number of characters replaced
 */
-size_t	replace_enviornment_variable(char **cmd_arg, size_t variable_index)
+int	replace_enviornment_variable(char **cmd_arg, size_t *variable_index)
 {
 	size_t	len;
 	char	*start;
@@ -125,24 +129,26 @@ size_t	replace_enviornment_variable(char **cmd_arg, size_t variable_index)
 	char	*temp2;
 	char	*env_value;
 
-	start = *cmd_arg + variable_index + 1;
+	start = *cmd_arg + *variable_index + 1;
 	while (*start == '=')
 		start++;
 	len = 0;
 	while (start[len] && (ft_isalnum(start[len]) || start[len] == '_'))
 		len++;
 	if (len == 0)
-		return (1);
+		return ((*variable_index)++, 0);
 	// TODO: ft_substr & ft_strjoin error conditions
 	temp1 = ft_substr(start, 0, len);
 	env_value = getenv(temp1);
 	free(temp1);
-	temp1 = ft_substr(*cmd_arg, 0, variable_index);
+	temp1 = ft_substr(*cmd_arg, 0, *variable_index);
 	temp2 = ft_strjoin(temp1, env_value);
 	free(temp1);
 	temp1 = temp2;
 	temp2 = ft_strjoin(temp2, start + len);
+	free(temp1);
 	free(*cmd_arg);
 	*cmd_arg = temp2;
-	return (free(temp1), ft_strlen(env_value));
+	*variable_index += ft_strlen(env_value);
+	return (0);
 }
