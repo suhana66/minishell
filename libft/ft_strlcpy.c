@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 10:06:17 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/21 10:06:18 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:22:47 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	srcstart = src;
 	if (dstsize)
 	{
-		while (*src && dstsize - 1)
-		{
+		while (*src && --dstsize)
 			*dst++ = *src++;
-			dstsize--;
-		}
 		*dst = 0;
 	}
-	while (*src)
-		src++;
-	return ((size_t)(src - srcstart));
+	return (ft_strlen(srcstart));
 }
