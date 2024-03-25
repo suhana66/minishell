@@ -6,15 +6,14 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/20 19:39:56 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 12:12:38 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	get_token_length(char *input, char *delimiters, char *enclosers);
+size_t	get_token_length(char **input, char *delimiters, char *enclosers);
 size_t	get_token_count(char *str, char *delimiters, char *enclosers);
-char	**check_mallocs(char **array, size_t arrlen);
 
 char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 {
@@ -33,19 +32,25 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 	{
 		while (*input && ft_strchr(delimiters, *input))
 			input++;
-		token_len = get_token_length(input, delimiters, enclosers);
-		cmd_argv[i++] = ft_substr(input, 0, token_len);
-		input += token_len;
+		token_len = get_token_length(&input, delimiters, enclosers);
+		cmd_argv[i] = ft_substr(input - token_len, 0, token_len);
+		if (!cmd_argv[i++])
+		{
+			while (--i >= 0)
+				free(cmd_argv[i]);
+			return (free(cmd_argv), NULL);
+		}
 	}
-	return (check_mallocs(cmd_argv, cmd_argc));
+	return (cmd_argv);
 }
 
-size_t	get_token_length(char *input, char *delimiters, char *enclosers)
+size_t	get_token_length(char **input, char *delimiters, char *enclosers)
 {
 	char	*token_i;
 	char	encloser;
+	size_t	result;
 
-	token_i = input;
+	token_i = *input;
 	encloser = 0;
 	while (!ft_strchr(delimiters, *token_i) || encloser)
 	{
@@ -55,7 +60,9 @@ size_t	get_token_length(char *input, char *delimiters, char *enclosers)
 			encloser = 0;
 		token_i++;
 	}
-	return (token_i - input);
+	result = token_i - *input;
+	*input += result;
+	return (result);
 }
 
 size_t	get_token_count(char *input, char *delimiters, char *enclosers)
@@ -68,31 +75,10 @@ size_t	get_token_count(char *input, char *delimiters, char *enclosers)
 	{
 		while (*input && ft_strchr(delimiters, *input))
 			input++;
-		token_len = get_token_length(input, delimiters, enclosers);
+		token_len = get_token_length(&input, delimiters, enclosers);
 		if (token_len == 0)
 			break ;
 		count++;
-		input += token_len;
 	}
 	return (count);
-}
-
-char	**check_mallocs(char **array, size_t arrlen)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < arrlen)
-	{
-		if (!array[i])
-		{
-			i = 0;
-			while (i < arrlen)
-				free(array[i++]);
-			free(array);
-			return (NULL);
-		}
-		i++;
-	}
-	return (array);
 }
