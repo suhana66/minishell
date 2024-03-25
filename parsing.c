@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 15:21:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:44:25 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,16 +137,23 @@ int	replace_enviornment_variable(char **cmd_arg, size_t *variable_index)
 		len++;
 	if (len == 0)
 		return ((*variable_index)++, 0);
-	// TODO: ft_substr & ft_strjoin error conditions
 	temp1 = ft_substr(start, 0, len);
+	if (!temp1)
+		return (1);
 	env_value = getenv(temp1);
 	free(temp1);
 	temp1 = ft_substr(*cmd_arg, 0, *variable_index);
+	if (!temp1)
+		return (2);
 	temp2 = ft_strjoin(temp1, env_value);
 	free(temp1);
+	if (!temp2)
+		return (3);
 	temp1 = temp2;
 	temp2 = ft_strjoin(temp2, start + len);
 	free(temp1);
+	if (!temp2)
+		return (4);
 	free(*cmd_arg);
 	*cmd_arg = temp2;
 	*variable_index += ft_strlen(env_value);

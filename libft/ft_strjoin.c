@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:20:26 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/21 14:09:24 by susajid          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:28:18 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	result[len] = 0;
 	i = 0;
-	while (s1 && *s1)
+	while (*s1)
 		result[i++] = *s1++;
-	while (s2 && *s2)
+	while (*s2)
 		result[i++] = *s2++;
 	return (result);
 }
