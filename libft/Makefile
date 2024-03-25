@@ -1,6 +1,5 @@
 NAME := libft.a
-SRC := ft_printf.c \
-	ft_strjoin.c \
+SRC := ft_strjoin.c \
 	ft_strchr.c \
 	ft_substr.c \
 	ft_strlen.c \
