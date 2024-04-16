@@ -6,15 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 17:24:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/16 12:47:35 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-size_t	get_token_length(char **input, char *delimiters, char *enclosers);
-size_t	get_token_count(char *str, char *delimiters, char *enclosers);
-int		replace_enviornment_variable(char **cmd_arg, size_t *variable_index);
 
 char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 {
@@ -43,36 +39,6 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 		}
 	}
 	return (cmd_argv);
-}
-
-int	expand_cmd_arg(char **cmd_arg)
-{
-	size_t	i;
-	char	encloser;
-
-	i = 0;
-	encloser = 0;
-	while ((*cmd_arg)[i])
-	{
-		if (((*cmd_arg)[i] == '"' || (*cmd_arg)[i] == '\'')
-			&& (!encloser || (*cmd_arg)[i] == encloser))
-		{
-			if (!encloser)
-				encloser = (*cmd_arg)[i];
-			else
-				encloser = 0;
-			ft_strlcpy(*cmd_arg + i, *cmd_arg + i + 1, ft_strlen(*cmd_arg + i));
-			continue ;
-		}
-		if (encloser != '\'' && (*cmd_arg)[i] == '$')
-		{
-			if (replace_enviornment_variable(cmd_arg, &i))
-				return (1);
-		}
-		else
-			i++;
-	}
-	return (0);
 }
 
 size_t	get_token_length(char **input, char *delimiters, char *enclosers)
@@ -114,48 +80,66 @@ size_t	get_token_count(char *input, char *delimiters, char *enclosers)
 	return (count);
 }
 
+int	expand_cmd_arg(char **cmd_arg)
+{
+	size_t	i;
+	char	encloser;
+
+	i = 0;
+	encloser = 0;
+	while ((*cmd_arg)[i])
+	{
+		if (((*cmd_arg)[i] == '"' || (*cmd_arg)[i] == '\'')
+			&& (!encloser || (*cmd_arg)[i] == encloser))
+		{
+			if (!encloser)
+				encloser = (*cmd_arg)[i];
+			else
+				encloser = 0;
+			ft_strlcpy(*cmd_arg + i, *cmd_arg + i + 1, ft_strlen(*cmd_arg + i));
+			continue ;
+		}
+		if (encloser == '\'' || (*cmd_arg)[i] != '$')
+			i++;
+		else
+			if (replace_enviornment_variable(cmd_arg, &i))
+				return (1);
+	}
+	return (0);
+}
+
 /*
 	Regex for enviornment variable identifier: [a-zA-Z_]+[a-zA-Z0-9_]*
-	Function steps: (1) find the identifier string that follows the regex
-					(2) get the identifier's value
-					(3) replace it with the enviornment variable value
-					(4) return the number of characters replaced
+	Expansion steps:	(1) find the identifier string that follows the regex
+						(2) get the identifier's value
+						(3) replace it with the enviornment variable value
+						(4) return the number of characters replaced
 */
-int	replace_enviornment_variable(char **cmd_arg, size_t *variable_index)
+int	replace_enviornment_variable(char **cmd_arg, size_t *var_i)
 {
 	size_t	len;
 	char	*start;
-	char	*temp1;
-	char	*temp2;
-	char	*env_value;
+	char	*temp;
+	char	*env;
 
-	start = *cmd_arg + *variable_index + 1;
+	start = *cmd_arg + *var_i + 1;
 	while (*start == '=')
 		start++;
 	len = 0;
 	while (start[len] && (ft_isalnum(start[len]) || start[len] == '_'))
 		len++;
 	if (len == 0)
-		return ((*variable_index)++, 0);
-	temp1 = ft_substr(start, 0, len);
-	if (!temp1)
-		return (ft_perror("malloc"), 1);
-	env_value = getenv(temp1);
-	free(temp1);
-	temp1 = ft_substr(*cmd_arg, 0, *variable_index);
-	if (!temp1)
+		return ((*var_i)++, 0);
+	temp = ft_substr(start, 0, len);
+	if (!temp)
+		return (ft_perror("ft_substr"), 1);
+	env = getenv(temp);
+	free(temp);
+	temp = malloc(sizeof(char) * (*var_i + ft_strlen(env) + \
+		ft_strlen(start + len) + 1));
+	if (!temp || (ft_strlcpy(temp, *cmd_arg, *var_i + 1), ft_strlcat(temp, env, \
+		*var_i + ft_strlen(env) + 1), ft_strlcat(temp, start + len, \
+		*var_i + ft_strlen(env) + ft_strlen(start + len) + 1), 0))
 		return (ft_perror("malloc"), 2);
-	temp2 = ft_strjoin(temp1, env_value);
-	free(temp1);
-	if (!temp2)
-		return (ft_perror("malloc"), 3);
-	temp1 = temp2;
-	temp2 = ft_strjoin(temp2, start + len);
-	free(temp1);
-	if (!temp2)
-		return (ft_perror("malloc"), 4);
-	free(*cmd_arg);
-	*cmd_arg = temp2;
-	*variable_index += ft_strlen(env_value);
-	return (0);
+	return (free(*cmd_arg), *cmd_arg = temp, *var_i += ft_strlen(env), 0);
 }
