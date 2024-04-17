@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 17:22:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/17 12:39:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 
 	prompt = getcwd(NULL, 0);
 	if (!prompt)
-		return (ft_perror("getcwd"), 1);
+		return (ft_putstr_fd("getcwd() error", 2), 1);
 	input = prompt;
 	prompt = ft_strjoin(input, " % ");
 	free(input);
@@ -30,7 +30,7 @@ int	main(void)
 	{
 		input = readline(prompt);
 		if (!input)
-			return (ft_perror("readline"), free(input), free(prompt), 2);
+			return (ft_putstr_fd("readline() error", 2), free(input), free(prompt), 2);
 		if (!*input)
 			continue ;
 		add_history(input);
@@ -65,10 +65,4 @@ int	main(void)
 void	eval(char **cmd_argv)
 {
 	(void)cmd_argv;
-}
-
-void	ft_perror(char *func_name)
-{
-	ft_putstr_fd(func_name, 2);
-	ft_putstr_fd("() error\n", 2);
 }

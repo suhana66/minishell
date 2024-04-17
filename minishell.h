@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/16 12:49:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/17 12:38:19 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <readline/readline.h>
 
 void	eval(char **cmd_argv);
-void	ft_perror(char *func_name);
 
 char	**split_cli_input(char *input, char *delimiters, char *enclosers);
 size_t	get_token_length(char **input, char *delimiters, char *enclosers);
