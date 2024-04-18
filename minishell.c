@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 11:47:57 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/18 12:45:53 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,24 @@ int	main(void)
 	{
 		input = readline(prompt);
 		if (!input)
-			return (ft_putstr_fd("readline() error", 2), free(input), free(prompt), 2);
+			return (ft_putstr_fd("readline() error", 2), free_all(prompt, input, NULL), 2);
 		if (!*input)
 			continue ;
 		add_history(input);
 		cmd_argv = split_cli_input(input, " \t\n", "'\"");
 		if (!cmd_argv)
-			return (free(input), free(prompt), 3);
-		redirect_heredoc(&cmd_argv);
+			return (free_all(prompt, input, cmd_argv), 3);
+		if (redirect_heredoc(&cmd_argv))
+			return (free_all(prompt, input, cmd_argv), 4);
 		i = 0;
 		while (cmd_argv[i])
-		{
 			if (expand_cmd_arg(&cmd_argv[i++]))
-			{
-				i = 0;
-				while (cmd_argv[i])
-					free(cmd_argv[i++]);
-				return (free(cmd_argv), free(input), free(prompt), 4);
-			}
-		}
+				return (free_all(prompt, input, cmd_argv), 5);
 		i = 0;
 		while (cmd_argv[i])
 			printf("$%s$\n", cmd_argv[i++]);
 		eval(cmd_argv);
-		i = 0;
-		while (cmd_argv[i])
-			free(cmd_argv[i++]);
-		free(cmd_argv);
-		free(input);
+		free_all(NULL, input, cmd_argv);
 	}
 	free(prompt);
 	return (0);
@@ -66,4 +56,21 @@ int	main(void)
 void	eval(char **cmd_argv)
 {
 	(void)cmd_argv;
+}
+
+void	free_all(char *prompt, char *input, char **cmd_argv)
+{
+	size_t	i;
+
+    if (prompt)
+        free(prompt);
+    if (input)
+        free(input);
+	if (cmd_argv)
+	{
+		i = 0;
+		while (cmd_argv[i])
+			free(cmd_argv[i++]);
+		free(cmd_argv);
+	}
 }

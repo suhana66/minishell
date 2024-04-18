@@ -9,7 +9,8 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 READLINE_LIBRARY := -lreadline
 
 SRC := minishell.c \
-	parsing.c
+	parsing.c \
+	redirection.c
 OBJ := $(SRC:%.c=%.o)
 INCLUDES := -I$(LIBFT_PATH)
 

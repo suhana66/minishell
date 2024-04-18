@@ -10,7 +10,8 @@ SRC := ft_isalnum.c \
 	ft_strlcpy.c \
 	ft_strlen.c \
 	ft_substr.c \
-	ft_strlcat.c
+	ft_strlcat.c \
+	ft_strnstr.c
 OBJ := $(SRC:%.c=%.o)
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
