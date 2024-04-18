@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/17 12:39:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/18 11:47:57 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(void)
 		cmd_argv = split_cli_input(input, " \t\n", "'\"");
 		if (!cmd_argv)
 			return (free(input), free(prompt), 3);
+		redirect_heredoc(&cmd_argv);
 		i = 0;
 		while (cmd_argv[i])
 		{
