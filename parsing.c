@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 11:49:35 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:12:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 			input++;
 		token_len = get_token_length(&input, delimiters, enclosers);
 		cmd_argv[i] = ft_substr(input - token_len, 0, token_len);
-		if (!cmd_argv[i++])
-		{
-			while (--i >= 0)
-				free(cmd_argv[i]);
-			return (free(cmd_argv), ft_putstr_fd("malloc() error", 2), NULL);
-		}
 	}
+	i = 0;
+	while (i < cmd_argc)
+		if (!cmd_argv[i])
+			return (free_all(NULL, NULL, cmd_argv),
+				ft_putstr_fd("malloc() error", 2), NULL);
 	return (cmd_argv);
 }
 

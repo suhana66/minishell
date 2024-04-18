@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 12:45:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:13:38 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ int	main(void)
 		while (cmd_argv[i])
 			if (expand_cmd_arg(&cmd_argv[i++]))
 				return (free_all(prompt, input, cmd_argv), 5);
-		i = 0;
-		while (cmd_argv[i])
-			printf("$%s$\n", cmd_argv[i++]);
 		eval(cmd_argv);
 		free_all(NULL, input, cmd_argv);
 	}
@@ -62,10 +59,10 @@ void	free_all(char *prompt, char *input, char **cmd_argv)
 {
 	size_t	i;
 
-    if (prompt)
-        free(prompt);
-    if (input)
-        free(input);
+	if (prompt)
+		free(prompt);
+	if (input)
+		free(input);
 	if (cmd_argv)
 	{
 		i = 0;
