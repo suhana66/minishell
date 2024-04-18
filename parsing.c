@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 13:12:00 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/18 14:16:59 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	**split_cli_input(char *input, char *delimiters, char *enclosers)
 		while (*input && ft_strchr(delimiters, *input))
 			input++;
 		token_len = get_token_length(&input, delimiters, enclosers);
-		cmd_argv[i] = ft_substr(input - token_len, 0, token_len);
+		cmd_argv[i++] = ft_substr(input - token_len, 0, token_len);
 	}
 	i = 0;
 	while (i < cmd_argc)
-		if (!cmd_argv[i])
+		if (!cmd_argv[i++])
 			return (free_all(NULL, NULL, cmd_argv),
 				ft_putstr_fd("malloc() error", 2), NULL);
 	return (cmd_argv);
@@ -48,7 +48,7 @@ size_t	get_token_length(char **input, char *delimiters, char *enclosers)
 
 	token_i = *input;
 	encloser = 0;
-	while (!ft_strchr(delimiters, *token_i) || encloser)
+	while (*token_i && (!ft_strchr(delimiters, *token_i) || encloser))
 	{
 		if (!encloser && ft_strchr(enclosers, *token_i))
 			encloser = *token_i;
@@ -56,6 +56,8 @@ size_t	get_token_length(char **input, char *delimiters, char *enclosers)
 			encloser = 0;
 		token_i++;
 	}
+	if (encloser)
+		return (ft_putstr_fd("parse error", 2), 0);
 	result = token_i - *input;
 	*input += result;
 	return (result);
@@ -71,9 +73,11 @@ size_t	get_token_count(char *input, char *delimiters, char *enclosers)
 	{
 		while (*input && ft_strchr(delimiters, *input))
 			input++;
+		if (!*input)
+			break ;
 		token_len = get_token_length(&input, delimiters, enclosers);
 		if (token_len == 0)
-			break ;
+			return (0);
 		count++;
 	}
 	return (count);
