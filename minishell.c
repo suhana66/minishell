@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 14:19:59 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/18 14:32:15 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 
 	prompt = getcwd(NULL, 0);
 	if (!prompt)
-		return (ft_putstr_fd("getcwd() error", 2), 1);
+		return (ft_putstr_fd("getcwd() error\n", 2), 1);
 	input = prompt;
 	prompt = ft_strjoin(input, " % ");
 	free(input);
@@ -30,7 +30,7 @@ int	main(void)
 	{
 		input = readline(prompt);
 		if (!input)
-			return (ft_putstr_fd("readline() error", 2), free_all(prompt, input, NULL), 2);
+			return (ft_putstr_fd("readline() error\n", 2), free_all(prompt, input, NULL), 2);
 		if (!*input && (free(input), 1))
 			continue ;
 		add_history(input);
@@ -39,8 +39,8 @@ int	main(void)
 			return (free_all(prompt, input, cmd_argv), 3);
 		if (!cmd_argv[0] && (free_all(NULL, input, cmd_argv), 1))
 			continue ;
-		if (redirect_heredoc(&cmd_argv))
-			return (free_all(prompt, input, cmd_argv), 4);
+		if (redirect_heredoc(&cmd_argv) == 1 && (free_all(NULL, input, cmd_argv), 1))
+			continue ;
 		i = 0;
 		while (cmd_argv[i])
 			if (expand_cmd_arg(&cmd_argv[i++]))
