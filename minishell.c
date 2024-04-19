@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/19 10:08:22 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:13:01 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(void)
 			return (free_all(prompt, input, cmd_argv), 3);
 		if (!cmd_argv[0] && (free_all(NULL, input, cmd_argv), 1))
 			continue ;
-		if (redirect_heredoc(&cmd_argv) && (free_all(NULL, input, cmd_argv), 1))
+		if (redirect(cmd_argv) && (free_all(NULL, input, cmd_argv), 1))
 			continue ;
 		i = 0;
 		while (cmd_argv[i])
