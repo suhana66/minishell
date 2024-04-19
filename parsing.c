@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 14:27:25 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/19 08:51:36 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,14 @@ int	replace_enviornment_variable(char **cmd_arg, size_t *var_i)
 		return (ft_putstr_fd("malloc() error\n", 2), 1);
 	env = getenv(temp);
 	free(temp);
-	temp = malloc(sizeof(char) * (*var_i + ft_strlen(env) + \
-		ft_strlen(start + len) + 1));
-	if (!temp || (ft_strlcpy(temp, *cmd_arg, *var_i + 1), ft_strlcat(temp, env, \
-		*var_i + ft_strlen(env) + 1), ft_strlcat(temp, start + len, \
-		*var_i + ft_strlen(env) + ft_strlen(start + len) + 1), 0))
+	temp = malloc(sizeof(char) * (*var_i + ft_strlen(env) + ft_strlen(start + len) + 1));
+	if (!temp)
 		return (ft_putstr_fd("malloc() error\n", 2), 2);
-	return (free(*cmd_arg), *cmd_arg = temp, *var_i += ft_strlen(env), 0);
+	ft_strlcpy(temp, *cmd_arg, *var_i + 1);
+	ft_strlcat(temp, env, *var_i + ft_strlen(env) + 1);
+	ft_strlcat(temp, start + len, *var_i + ft_strlen(env) + ft_strlen(start + len) + 1);
+	free(*cmd_arg);
+	*cmd_arg = temp;
+	*var_i += ft_strlen(env);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 12:43:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/19 08:54:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ int		expand_cmd_arg(char **cmd_arg);
 int		replace_enviornment_variable(char **cmd_arg, size_t *var_i);
 
 int		redirect_heredoc(char ***cmd_argvp);
-char	*find_next(char *arg1, char	*arg2);
 
 #endif /* MINISHELL_H */

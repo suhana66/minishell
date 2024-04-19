@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:43:26 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/18 14:27:09 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/19 08:53:47 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,11 @@ int	redirect_heredoc(char ***cmd_argvp)
 	{
 		if (ft_strnstr(argv[i], "<<", ft_strlen(argv[i])))
 		{
-			delimiter = find_next(argv[i] + 2, argv[i + 1]);
+			delimiter = NULL;
 			if (!delimiter)
 				return (ft_putstr_fd("parse error\n", 2), 1);
 		}
 		i++;
 	}
 	return (0);
-}
-
-char	*find_next(char *arg1, char	*arg2)
-{
-	(void)arg1;
-	(void)arg2;
-	return (NULL);
 }
