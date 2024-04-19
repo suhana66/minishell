@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/19 08:52:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:08:22 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(void)
 		if (!*input && (free(input), 1))
 			continue ;
 		add_history(input);
-		cmd_argv = split_cli_input(input, " \t\n", "'\"");
+		cmd_argv = split_cli_input(input, " \t\n");
 		if (!cmd_argv)
 			return (free_all(prompt, input, cmd_argv), 3);
 		if (!cmd_argv[0] && (free_all(NULL, input, cmd_argv), 1))
@@ -55,6 +55,19 @@ int	main(void)
 void	eval(char **cmd_argv)
 {
 	(void)cmd_argv;
+}
+
+int	shift_encloser(char cmd_arg_c, int *encloser)
+{
+	if ((cmd_arg_c == '"' || cmd_arg_c == '\'') && (!*encloser || cmd_arg_c == *encloser))
+	{
+		if (!*encloser)
+			*encloser = cmd_arg_c;
+		else
+			*encloser = 0;
+		return (1);
+	}
+	return (0);
 }
 
 void	free_all(char *prompt, char *input, char **cmd_argv)
