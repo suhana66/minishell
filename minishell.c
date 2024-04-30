@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:06:28 by susajid           #+#    #+#             */
-/*   Updated: 2024/03/25 17:22:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/04/19 12:04:49 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 
 	prompt = getcwd(NULL, 0);
 	if (!prompt)
-		return (ft_perror("getcwd"), 1);
+		return (ft_putendl_fd("getcwd() error", 2), 1);
 	input = prompt;
 	prompt = ft_strjoin(input, " % ");
 	free(input);
@@ -30,33 +30,23 @@ int	main(void)
 	{
 		input = readline(prompt);
 		if (!input)
-			return (ft_perror("readline"), free(input), free(prompt), 2);
-		if (!*input)
+			return (ft_putendl_fd("readline() error", 2), free_all(prompt, input, NULL), 2);
+		if (!*input && (free(input), 1))
 			continue ;
 		add_history(input);
-		cmd_argv = split_cli_input(input, " \t\n", "'\"");
+		cmd_argv = split_cli_input(input, " \t\n");
 		if (!cmd_argv)
-			return (free(input), free(prompt), 3);
+			return (free_all(prompt, input, cmd_argv), 3);
+		if (!cmd_argv[0] && (free_all(NULL, input, cmd_argv), 1))
+			continue ;
+		if (redirect(cmd_argv) && (free_all(NULL, input, cmd_argv), 1))
+			continue ;
 		i = 0;
 		while (cmd_argv[i])
-		{
 			if (expand_cmd_arg(&cmd_argv[i++]))
-			{
-				i = 0;
-				while (cmd_argv[i])
-					free(cmd_argv[i++]);
-				return (free(cmd_argv), free(input), free(prompt), 4);
-			}
-		}
-		i = 0;
-		while (cmd_argv[i])
-			printf("$%s$\n", cmd_argv[i++]);
+				return (free_all(prompt, input, cmd_argv), 5);
 		eval(cmd_argv);
-		i = 0;
-		while (cmd_argv[i])
-			free(cmd_argv[i++]);
-		free(cmd_argv);
-		free(input);
+		free_all(NULL, input, cmd_argv);
 	}
 	free(prompt);
 	return (0);
@@ -67,8 +57,32 @@ void	eval(char **cmd_argv)
 	(void)cmd_argv;
 }
 
-void	ft_perror(char *func_name)
+int	shift_encloser(char cmd_arg_c, int *encloser)
 {
-	ft_putstr_fd(func_name, 2);
-	ft_putstr_fd("() error\n", 2);
+	if ((cmd_arg_c == '"' || cmd_arg_c == '\'') && (!*encloser || cmd_arg_c == *encloser))
+	{
+		if (!*encloser)
+			*encloser = cmd_arg_c;
+		else
+			*encloser = 0;
+		return (1);
+	}
+	return (0);
+}
+
+void	free_all(char *prompt, char *input, char **cmd_argv)
+{
+	size_t	i;
+
+	if (prompt)
+		free(prompt);
+	if (input)
+		free(input);
+	if (cmd_argv)
+	{
+		i = 0;
+		while (cmd_argv[i])
+			free(cmd_argv[i++]);
+		free(cmd_argv);
+	}
 }
