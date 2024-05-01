@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/30 17:18:42 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 08:54:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,4 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	return (0);
-}
-
-// Bash delimiters can be found in the variable IFS (Internal Field Separator)
-t_lexer	*lexer(char *input)
-{
-	char	*delimiters;
-	char	*enclosers;
-
-	delimiters = " \t\n";
-	enclosers = "\"\'";
-	(void)delimiters;
-	(void)enclosers;
-	(void)input;
-	return (NULL);
 }
