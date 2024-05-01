@@ -9,9 +9,10 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 READLINE_LIBRARY := -lreadline
 
 SRC := main.c \
-	lexer.c
+	lexer.c \
+	parser.c
 OBJ := $(SRC:%.c=%.o)
-INCLUDES := -I$(LIBFT_PATH)
+INCLUDES := -I$(LIBFT_PATH) -I.
 
 all: $(NAME)
 

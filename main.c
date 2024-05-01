@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 10:29:32 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:00:37 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	main(int argc, char **argv, char **envp)
 		tokens = lexer(input);
 		if (!tokens)
 			return (-1);
-		lexer_clear(tokens);
+		parser(tokens);
+		lexer_clear(&tokens);
 	}
 	(void)argv;
 	(void)envp;
