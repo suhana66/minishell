@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 10:19:30 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 10:28:43 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,18 @@ t_lexer	*lexer_new(enum e_token token_type, char *str)
 
 void	lexer_clear(t_lexer **token_list)
 {
-	// TODO: error handling (lexer_clear)
-	(void)token_list;
+	t_lexer	*to_delete;
+
+	if (!token_list)
+		return ;
+	while (*token_list)
+	{
+		to_delete = *token_list;
+		*token_list = to_delete->next;
+		free(to_delete->str);
+		free(to_delete);
+	}
+	*token_list = NULL;
 }
 
 size_t	lexer_token_length(char **input, char *delimiters)

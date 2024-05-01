@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 09:44:07 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 10:29:32 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(input);
 		tokens = lexer(input);
+		if (!tokens)
+			return (-1);
+		lexer_clear(tokens);
 	}
-	(void)tokens;
 	(void)argv;
 	(void)envp;
 	return (0);
