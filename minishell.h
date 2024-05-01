@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 10:48:47 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 12:09:28 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,34 @@
 
 # define READLINE_MSG	"\033[1;32mminishell$ \033[0m"
 
-enum e_token
+typedef enum e_token
 {
-	WORD,
 	PIPE,
 	GREAT,
 	GREATGREAT,
 	LESS,
 	LESSLESS
-};
+}	t_token;
 
 typedef struct s_lexer
 {
-	enum e_token	token_type;
+	t_token			token_type;
 	char			*str;
 	struct s_lexer	*next;
 }	t_lexer;
 
-int	ft_perror(int errnum);
+typedef struct s_simple_cmd
+{
+}	t_simple_cmd;
 
-t_lexer	*lexer(char *input);
-t_lexer	*lexer_new(enum e_token token_type, char *str);
-void	lexer_clear(t_lexer **token_list);
-size_t	lexer_token_length(char **input, char *delimiters);
+int				ft_perror(int errnum);
 
-void	parser(t_lexer *token_list);
+t_lexer			*lexer(char *input);
+t_lexer			*lexer_new(t_token token_type, char *str);
+void			lexer_clear(t_lexer **token_list);
+size_t			lexer_token_length(char **input, char *delimiters);
+
+t_simple_cmd	*parser(t_lexer *token_list);
+void 			parser_token_error(t_token token);
 
 #endif /* MINISHELL_H */

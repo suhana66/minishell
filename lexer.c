@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 10:28:43 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:59:21 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
 t_lexer	*lexer(char *input)
 {
-	t_lexer			*token_list;
-	enum e_token	token_type;
-	char			*str;
-	t_lexer			**last_node;
+	t_lexer	*token_list;
+	t_token	token_type;
+	char	*str;
+	t_lexer	**last_node;
 
 	token_type = 0;
 	str = NULL;
@@ -57,7 +57,7 @@ t_lexer	*lexer(char *input)
 	return (token_list);
 }
 
-t_lexer	*lexer_new(enum e_token token_type, char *str)
+t_lexer	*lexer_new(t_token token_type, char *str)
 {
 	t_lexer	*node;
 
