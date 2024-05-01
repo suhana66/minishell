@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 11:00:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 13:53:31 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	t_lexer	*tokens;
+	t_list	*cmd_table;
 
 	if (argc != 1)
 		return (ft_perror(1));
@@ -27,11 +27,9 @@ int	main(int argc, char **argv, char **envp)
 		if (!*input && (free(input), 1))
 			continue ;
 		add_history(input);
-		tokens = lexer(input);
-		if (!tokens)
+		cmd_table = parser(lexer(input));
+		if (!cmd_table)
 			return (-1);
-		parser(tokens);
-		lexer_clear(&tokens);
 	}
 	(void)argv;
 	(void)envp;

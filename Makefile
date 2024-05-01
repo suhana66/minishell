@@ -23,7 +23,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	make -C $(LIBFT_PATH)
+	make bonus -C $(LIBFT_PATH)
 
 clean:
 	make clean -C $(LIBFT_PATH)

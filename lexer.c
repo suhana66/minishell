@@ -6,23 +6,23 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 11:59:21 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:01:23 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
-t_lexer	*lexer(char *input)
+t_list	*lexer(char *input)
 {
-	t_lexer	*token_list;
-	t_token	token_type;
-	char	*str;
-	t_lexer	**last_node;
+	t_list			*token_list;
+	t_list			*node;
+	t_token			*content;
+	t_token_type	token_type;
+	char			*str;
 
 	token_type = 0;
 	str = NULL;
-	last_node = &token_list;
 	while (*input)
 	{
 		if (*input == '|' && (input++, 1))
@@ -43,50 +43,32 @@ t_lexer	*lexer(char *input)
 			continue ;
 		else
 		{
-			str = ft_substr(input, 0, lexer_token_length(&input, " \n\t|<>"));
+			str = ft_substr(input, 0, token_length(&input, " \n\t|<>"));
 			if (!str)
 				return (ft_perror(3), NULL);
 			if (!*str)
 				return (free(str), NULL);
 		}
-		*last_node = lexer_new(token_type, str);
-		if (!*last_node)
-			return (free(str), lexer_clear(&token_list), NULL);
-		last_node = &((*last_node)->next);
+		content = (t_token *)malloc(sizeof(t_token));
+		if (!content)
+			return (ft_perror(3), free(str), ft_lstclear(&token_list, token_del), NULL);
+		content->token_type = token_type;
+		content->str = str;
+		node = ft_lstnew(content);
+		if (!node)
+			return (ft_perror(3), token_del(content), ft_lstclear(&token_list, token_del), NULL);
+		ft_lstadd_back(&token_list, node);
 	}
 	return (token_list);
 }
 
-t_lexer	*lexer_new(t_token token_type, char *str)
+void	token_del(void *token)
 {
-	t_lexer	*node;
-
-	node = (t_lexer *)malloc(sizeof(t_lexer));
-	if (!node)
-		return (ft_perror(3), NULL);
-	node->str = str;
-	node->token_type = token_type;
-	node->next = NULL;
-	return (node);
+	free(((t_token *)token)->str);
+	free(token);
 }
 
-void	lexer_clear(t_lexer **token_list)
-{
-	t_lexer	*to_delete;
-
-	if (!token_list)
-		return ;
-	while (*token_list)
-	{
-		to_delete = *token_list;
-		*token_list = to_delete->next;
-		free(to_delete->str);
-		free(to_delete);
-	}
-	*token_list = NULL;
-}
-
-size_t	lexer_token_length(char **input, char *delimiters)
+size_t	token_length(char **input, char *delimiters)
 {
 	char	*i;
 	int		encloser;
