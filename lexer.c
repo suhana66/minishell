@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 09:29:45 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 10:19:30 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
 t_lexer	*lexer(char *input)
 {
+	t_lexer			*token_list;
 	enum e_token	token_type;
 	char			*str;
-	t_lexer			*token_list;
+	t_lexer			**last_node;
 
 	token_type = 0;
 	str = NULL;
+	last_node = &token_list;
 	while (*input)
 	{
 		if (*input == '|' && (input++, 1))
@@ -47,12 +49,31 @@ t_lexer	*lexer(char *input)
 			if (!*str)
 				return (free(str), NULL);
 		}
-		// TODO: add node
+		*last_node = lexer_new(token_type, str);
+		if (!*last_node)
+			return (free(str), lexer_clear(&token_list), NULL);
+		last_node = &((*last_node)->next);
 	}
+	return (token_list);
+}
+
+t_lexer	*lexer_new(enum e_token token_type, char *str)
+{
+	t_lexer	*node;
+
+	node = (t_lexer *)malloc(sizeof(t_lexer));
+	if (!node)
+		return (ft_perror(3), NULL);
+	node->str = str;
+	node->token_type = token_type;
+	node->next = NULL;
+	return (node);
+}
+
+void	lexer_clear(t_lexer **token_list)
+{
+	// TODO: error handling (lexer_clear)
 	(void)token_list;
-	(void)str;
-	(void)token_type;
-	return (NULL);
 }
 
 size_t	lexer_token_length(char **input, char *delimiters)

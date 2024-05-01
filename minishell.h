@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 09:53:21 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 10:19:13 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_lexer
 int	ft_perror(int errnum);
 
 t_lexer	*lexer(char *input);
+t_lexer	*lexer_new(enum e_token token_type, char *str);
+void	lexer_clear(t_lexer **token_list);
 size_t	lexer_token_length(char **input, char *delimiters);
 
 #endif /* MINISHELL_H */
