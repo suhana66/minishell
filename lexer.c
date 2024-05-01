@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 09:16:29 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/01 09:29:45 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_lexer	*lexer(char *input)
 		{
 			str = ft_substr(input, 0, lexer_token_length(&input, " \n\t|<>"));
 			if (!str)
-				return (ft_putendl_fd("memory error: unable to assign memory", 2), NULL);
+				return (ft_perror(3), NULL);
 			if (!*str)
 				return (free(str), NULL);
 		}
@@ -75,8 +75,7 @@ size_t	lexer_token_length(char **input, char *delimiters)
 		i++;
 	}
 	if (encloser)
-		return (ft_putendl_fd("syntax error: unable to locate closing quote\n",
-				STDERR_FILENO), 0);
+		return (ft_perror(10), 0);
 	result = i - *input;
 	*input += result;
 	return (result);
