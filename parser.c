@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 12:56:54 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 13:17:13 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_list	*parser(t_list **token_list, int *err)
 {
 	t_list	*cmd_table;
-	t_cmd	*node;
+	t_list	*node;
 
 	if (((t_token *)((*token_list)->content))->type == PIPE)
 		return (type_error(PIPE), *err = 1, NULL);
@@ -25,30 +25,44 @@ t_list	*parser(t_list **token_list, int *err)
 		node = cmd_new(token_list, err);
 		if (!node)
 			return (ft_lstclear(&cmd_table, cmd_del), NULL);
+		ft_lstadd_back(&cmd_table, node);
 		*token_list = (*token_list)->next;
 	}
 	return (cmd_table);
 }
 
-t_cmd	*cmd_new(t_list **token_list, int *err)
+t_list	*cmd_new(t_list **token_list, int *err)
 {
-	t_cmd	*result;
+	t_cmd	*content;
+	t_list	*node;
 
-	result = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!result)
+	content = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!content)
 		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
-	result->redirects = NULL;
-	(void)token_list;
-	return (result);
-	// errcode = redirects(token_list, &node->redirects);
-	// 	if (errcode)
-	// 		return (ft_lstclear(&cmd_table, cmd_del), cmd_del(node), errcode);
+	content->redirects = cmd_redirects(token_list, err);
+	if (err)
+		return (free(content), NULL);
+	// TODO
+	node = ft_lstnew(content);
+	if (!node)
+		return (cmd_del(content), NULL);
+	return (node);
 }
 
 void	cmd_del(void *simple_cmd)
 {
 	ft_lstclear(&((t_cmd *)(simple_cmd))->redirects, token_del);
 	free(simple_cmd);
+}
+
+t_list	*cmd_redirects(t_list **token_list, int *err)
+{
+	t_list	*result;
+
+	(void)token_list;
+	(void)err;
+	result = NULL;
+	return (result);
 }
 
 // int	redirects(t_list **token_list, t_list **redirects)

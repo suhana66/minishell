@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 12:57:34 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 13:14:33 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ char	*token_str(char **input, char *delimiters, int *err);
 t_type	token_type(char **input);
 
 t_list	*parser(t_list **token_list, int *err);
-t_cmd	*cmd_new(t_list **token_list, int *err);
+t_list	*cmd_new(t_list **token_list, int *err);
 void	cmd_del(void *simple_cmd);
+t_list	*cmd_redirects(t_list **token_list, int *err);
 void	type_error(t_type token);
 
 #endif /* MINISHELL_H */
