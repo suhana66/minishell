@@ -63,5 +63,6 @@ t_list	*parser(t_list *token_list);
 void	parser_token_error(t_type token);
 
 int env_st(t_info *info, char **env);
+int f_pwd(t_info *info);
 
 #endif /* MINISHELL_H */

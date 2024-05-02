@@ -2,7 +2,7 @@
 
 
 
-int built_env(t_info *info)
+int built_env(t_info *info, t_simple_cmds *simple_cmd)
 {
     t_env *t;
 
