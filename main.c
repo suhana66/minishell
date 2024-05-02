@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/01 21:14:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 10:03:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		if (errcode < 0)
 			return (3);
+		errcode = parser(&cmd_table);
+		if (errcode > 0)
+			continue ;
+		if (errcode < 0)
+			return (4);
 	}
 	(void)argv;
 	(void)envp;

@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 09:18:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 10:06:29 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	token_del(void *token);
 int		token_str(char **input, char *delimiters, char **result);
 t_type	token_type(char **input);
 
-t_list	*parser(t_list *token_list);
-void	parser_token_error(t_type token);
+int		parser(t_list **token_list);
+void	parser_type_error(t_type token);
 
 #endif /* MINISHELL_H */
