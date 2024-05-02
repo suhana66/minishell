@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 12:30:22 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 12:57:34 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef struct s_token
 	char	*str;
 }	t_token;
 
-typedef struct s_simple_cmd
+typedef struct s_cmd
 {
 	t_list	*redirects;
-}	t_simple_cmd;
+}	t_cmd;
 
 t_list	*lexer(char *input, int *err);
 t_list	*token_new(char *str, t_type type);
@@ -45,8 +45,9 @@ void	token_del(void *token);
 char	*token_str(char **input, char *delimiters, int *err);
 t_type	token_type(char **input);
 
-int		parser(t_list **token_list);
+t_list	*parser(t_list **token_list, int *err);
+t_cmd	*cmd_new(t_list **token_list, int *err);
 void	cmd_del(void *simple_cmd);
-void	parser_type_error(t_type token);
+void	type_error(t_type token);
 
 #endif /* MINISHELL_H */
