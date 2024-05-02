@@ -6,19 +6,19 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 09:30:43 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 12:27:20 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
-int	lexer(char *input, t_list **token_list)
+t_list	*lexer(char *input, int *err)
 {
+	t_list	*token_list;
 	t_list	*node;
 	t_type	type;
 	char	*str;
-	int		errcode;
 
 	while (*input)
 	{
@@ -28,17 +28,16 @@ int	lexer(char *input, t_list **token_list)
 		str = NULL;
 		if (!type)
 		{
-			errcode = token_str(&input, " \n\t|<>", &str);
-			if (errcode)
-				return (ft_lstclear(token_list, token_del), errcode);
+			str = token_str(&input, " \n\t|<>", err);
+			if (!str)
+				return (ft_lstclear(&token_list, token_del), NULL);
 		}
 		node = token_new(str, type);
 		if (!node)
-			return (ft_lstclear(token_list, token_del),
-				ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), -1);
-		ft_lstadd_back(token_list, node);
+			return (ft_lstclear(&token_list, token_del), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
+		ft_lstadd_back(&token_list, node);
 	}
-	return (0);
+	return (token_list);
 }
 
 t_list	*token_new(char *str, t_type type)
@@ -63,8 +62,9 @@ void	token_del(void *token)
 	free(token);
 }
 
-int	token_str(char **input, char *delimiters, char **result)
+char	*token_str(char **input, char *delimiters, int *err)
 {
+	char	*str;
 	size_t	i;
 	int		encloser;
 
@@ -83,13 +83,12 @@ int	token_str(char **input, char *delimiters, char **result)
 		i++;
 	}
 	if (encloser)
-		return (ft_putendl_fd("syntax error: unable to locate closing quote",
-				STDERR_FILENO), 1);
-	*result = ft_substr(*input, 0, i);
-	if (!*result)
-		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), -1);
+		return (ft_putendl_fd("syntax error: unable to locate closing quote", STDERR_FILENO), *err = 1, NULL);
+	str = ft_substr(*input, 0, i);
+	if (!str)
+		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
 	*input += i;
-	return (0);
+	return (str);
 }
 
 t_type	token_type(char **input)
