@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 15:28:48 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 08:44:52 by susajid          ###   ########.fr       */
+/*   Created: 2023/11/06 17:16:29 by susajid           #+#    #+#             */
+/*   Updated: 2024/04/30 09:38:08 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+int	ft_lstsize(t_list *lst)
 {
-	c = c % 256;
-	while (1)
+	int	result;
+
+	result = 0;
+	while (lst != NULL)
 	{
-		if (*s == c)
-			return ((char *)(s));
-		if (!*s)
-			break ;
-		s++;
+		result++;
+		lst = lst->next;
 	}
-	return (NULL);
+	return (result);
 }

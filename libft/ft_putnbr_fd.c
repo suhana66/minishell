@@ -1,27 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 15:28:48 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 08:44:52 by susajid          ###   ########.fr       */
+/*   Created: 2023/11/06 12:32:36 by susajid           #+#    #+#             */
+/*   Updated: 2024/04/29 18:52:42 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+static int	find_place(int n)
 {
-	c = c % 256;
-	while (1)
+	int	result;
+
+	result = 1;
+	if (n < 0)
+		result = -1;
+	n /= 10;
+	while (n)
 	{
-		if (*s == c)
-			return ((char *)(s));
-		if (!*s)
-			break ;
-		s++;
+		n /= 10;
+		result *= 10;
 	}
-	return (NULL);
+	return (result);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	int		place;
+	char	c;
+
+	place = find_place(n);
+	if (place < 0)
+		write(fd, "-", 1);
+	while (place)
+	{
+		if (place != 1 && place != -1)
+			c = n / place % 10 + '0';
+		else
+			c = n % 10 * place + '0';
+		write(fd, &c, 1);
+		place /= 10;
+	}
 }

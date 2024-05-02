@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 15:28:48 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 08:44:52 by susajid          ###   ########.fr       */
+/*   Created: 2023/11/07 13:51:31 by susajid           #+#    #+#             */
+/*   Updated: 2024/04/30 14:30:25 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	c = c % 256;
-	while (1)
+	t_list	*start;
+	t_list	**current;
+	void	*content;
+
+	if (!lst || !f || !del)
+		return (NULL);
+	start = NULL;
+	current = &start;
+	while (lst)
 	{
-		if (*s == c)
-			return ((char *)(s));
-		if (!*s)
-			break ;
-		s++;
+		content = f(lst->content);
+		*current = ft_lstnew(content);
+		if (!*current)
+			return (del(content), ft_lstclear(&start, del), NULL);
+		current = &((*current)->next);
+		lst = lst->next;
 	}
-	return (NULL);
+	return (start);
 }

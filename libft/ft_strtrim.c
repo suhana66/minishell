@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 15:28:48 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 08:44:52 by susajid          ###   ########.fr       */
+/*   Created: 2023/11/03 09:41:41 by susajid           #+#    #+#             */
+/*   Updated: 2024/04/30 09:50:21 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+// array index + 1 = length
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	c = c % 256;
-	while (1)
+	int		start;
+	int		len;
+	int		i;
+
+	i = 0;
+	while (s1[i] && ft_strchr(set, s1[i]))
+		i++;
+	start = i;
+	len = 0;
+	if (s1[i])
 	{
-		if (*s == c)
-			return ((char *)(s));
-		if (!*s)
-			break ;
-		s++;
+		i = ft_strlen(s1) - 1;
+		while (s1[i] && ft_strchr(set, s1[i]))
+			i--;
+		len = i - start + 1;
 	}
-	return (NULL);
+	return (ft_substr(s1, start, len));
 }

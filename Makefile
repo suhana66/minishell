@@ -8,11 +8,11 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 
 READLINE_LIBRARY := -lreadline
 
-SRC := minishell.c \
-	parsing.c \
-	redirection.c
+SRC := main.c \
+	lexer.c \
+	parser.c
 OBJ := $(SRC:%.c=%.o)
-INCLUDES := -I$(LIBFT_PATH)
+INCLUDES := -I$(LIBFT_PATH) -I.
 
 all: $(NAME)
 
@@ -23,7 +23,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	make -C $(LIBFT_PATH)
+	make bonus -C $(LIBFT_PATH)
 
 clean:
 	make clean -C $(LIBFT_PATH)
