@@ -52,21 +52,14 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	ar rcs $@ $^
 
-<<<<<<< HEAD
-=======
 bonus: $(OBJ) $(OBJ_B)
 	ar rcs $(NAME) $^
 
->>>>>>> new
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-<<<<<<< HEAD
-	rm -f $(OBJ)
-=======
 	rm -f $(OBJ) $(OBJ_B)
->>>>>>> new
 
 fclean: clean
 	rm -f $(NAME)
