@@ -34,6 +34,21 @@ typedef struct s_token
 	char	*str;
 }	t_token;
 
+typedef struct s_env
+{
+	char			**path;
+	char			*value;
+	char			*key;
+	struct s_env	*next;
+}				t_env;
+
+typedef struct s_info
+{
+	char			*pwd;
+	char			*old_pwd;
+	t_env			*envv;
+}				t_info;
+
 typedef struct s_simple_cmd
 {
 }	t_simple_cmd;

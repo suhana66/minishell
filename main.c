@@ -17,9 +17,12 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	t_list	*cmd_table;
 	int		errcode;
+	t_info  *info;
 
 	if (argc != 1)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
+	info.envv = add_env(envp);
+	f_pwd(&info);
 	while (1)
 	{
 		input = readline(READLINE_MSG);
