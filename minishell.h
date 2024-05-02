@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "libft/libft.h"
 # include <readline/readline.h>
 
 # define READLINE_MSG	"\033[1;32mminishell$ \033[0m"
@@ -61,5 +61,7 @@ t_type	token_type(char **input);
 
 t_list	*parser(t_list *token_list);
 void	parser_token_error(t_type token);
+
+int env_st(t_info *info, char **env);
 
 #endif /* MINISHELL_H */

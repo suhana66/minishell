@@ -1,12 +1,12 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 t_env *copy_env(char *str)
 {
-    t_env t;
+    t_env *t;
     int key_l;
     char *pos_equal;
 
-    t = malloc(sizeof(t_env))
+    t = malloc(sizeof(t_env));
     if (!t)
         return (NULL);
     pos_equal = ft_strchr(str, '=');
@@ -17,8 +17,8 @@ t_env *copy_env(char *str)
     t->key = malloc(key_l + 1);
     if (!t->key)
         return(free(t), NULL);
-    ft_strncpy(t->key, str, key_l);
-    t->key[key_l] = '\0';
+    ft_strlcpy(t->key, str, key_l+1);
+    // t->key[key_l] = '\0';
     //check if value should be after =
     t->value = ft_strdup(str);
     t->next = NULL;
@@ -27,7 +27,7 @@ t_env *copy_env(char *str)
 
 void free_env(t_env *head)
 {
-    t_env t;
+    t_env *t;
 
     while (head)
     {
@@ -35,7 +35,7 @@ void free_env(t_env *head)
         head = head->next;
         free(t->key);
         free(t->value);
-        free(temp);
+        free(t);
     }
 }
 
@@ -104,7 +104,7 @@ int env_st(t_info *info, char **env)
     {
         free_env(info->envv);
         //error "env"
-        exit(0)
+        exit(0);
     }
     while (info->envv->path[i])
     {
