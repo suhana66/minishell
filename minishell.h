@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 13:14:33 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 22:48:18 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,31 @@ typedef enum e_type
 
 typedef struct s_token
 {
-	t_type	type;
-	char	*str;
+	t_type			type;
+	char			*str;
+	struct s_token	*prev;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct s_cmd
 {
-	t_list	*redirects;
+	t_token			*redirects;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
 }	t_cmd;
 
-t_list	*lexer(char *input, int *err);
-t_list	*token_new(char *str, t_type type);
-void	token_del(void *token);
+t_token	*lexer(char *input, int *err);
+t_token	*token_new(char *str, t_type type);
+void	token_addback(t_token **tokens, t_token *node);
+void	token_clear(t_token **tokens);
 char	*token_str(char **input, char *delimiters, int *err);
 t_type	token_type(char **input);
 
-t_list	*parser(t_list **token_list, int *err);
-t_list	*cmd_new(t_list **token_list, int *err);
-void	cmd_del(void *simple_cmd);
-t_list	*cmd_redirects(t_list **token_list, int *err);
+t_cmd	*parser(t_token **token_list, int *err);
+t_cmd	*cmd_new(t_token **token_list, int *err);
+void	cmd_addback(t_cmd **cmds, t_cmd *node);
+void	cmd_clear(t_cmd **cmds);
+t_token	*cmd_redirects(t_token **token_list, int *err);
 void	type_error(t_type token);
 
 #endif /* MINISHELL_H */

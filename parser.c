@@ -6,87 +6,107 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 14:39:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/03 07:17:43 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*parser(t_list **token_list, int *err)
+// TODO: change temp names
+t_cmd	*parser(t_token **token_list, int *err)
 {
-	t_list	*cmd_table;
-	t_list	*node;
+	t_cmd	*cmd_table;
+	t_cmd	*node;
 
-	if (((t_token *)((*token_list)->content))->type == PIPE)
+	if ((*token_list)->type == PIPE)
 		return (type_error(PIPE), *err = 1, NULL);
 	cmd_table = NULL;
 	while (*token_list)
 	{
 		node = cmd_new(token_list, err);
 		if (*err)
-			return (ft_lstclear(&cmd_table, cmd_del), NULL);
-		ft_lstadd_back(&cmd_table, node);
+			return (cmd_clear(&cmd_table), NULL);
+		cmd_addback(&cmd_table, node);
 		// delete pipe
 	}
 	return (cmd_table);
 }
 
-t_list	*cmd_new(t_list **token_list, int *err)
+t_cmd	*cmd_new(t_token **token_list, int *err)
 {
-	t_cmd	*content;
-	t_list	*node;
+	t_cmd	*node;
 
-	content = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!content)
-		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
-	content->redirects = cmd_redirects(token_list, err);
-	if (err)
-		return (free(content), NULL);
-	// TODO
-	node = ft_lstnew(content);
+	node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!node)
-		return (cmd_del(content), NULL);
+		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
+	node->redirects = cmd_redirects(token_list, err);
+	if (*err)
+		return (free(node), NULL);
+	// TODO
 	return (node);
 }
 
-void	cmd_del(void *simple_cmd)
+void	cmd_addback(t_cmd **cmds, t_cmd *node)
 {
-	ft_lstclear(&((t_cmd *)(simple_cmd))->redirects, token_del);
-	free(simple_cmd);
+	t_cmd	*temp;
+
+	if (!cmds || !node)
+		return ;
+	if (!*cmds)
+	{
+		*cmds = node;
+		return ;
+	}
+	temp = *cmds;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = node;
+	node->prev = temp;
 }
 
-t_list	*cmd_redirects(t_list **token_list, int *err)
+void	cmd_clear(t_cmd **cmds)
 {
-	t_list	*result;
-	t_list	*node;
-	t_token	*token;
-	t_token	*token_next;
-	t_list	*temp;
+	t_cmd	*temp;
 
-	temp = *token_list;
-	while (temp && !((t_token *)(temp->content))->type)
-		temp = temp->next;
-	token = ((t_token *)(temp->content));
-	token_next = ((t_token *)(temp->next->content));
-	while (temp && token->type != PIPE)
+	if (!cmds)
+		return ;
+	while (*cmds)
 	{
-		if (!temp->next)
-			return (ft_lstclear(&result, token_del), type_error(0), *err = 1, NULL);
-		if (token_next->type)
-			return (ft_lstclear(&result, token_del), type_error(token_next->type), *err = 1, NULL);
+		temp = (*cmds)->next;
+		token_clear(&(*cmds)->redirects);
+		free(*cmds);
+		// TODO
+		*cmds = temp;
+	}
+	*cmds = NULL;
+}
+
+t_token	*cmd_redirects(t_token **token_list, int *err)
+{
+	t_token	*result;
+	t_token	*node;
+	t_token	*token;
+
+	token = *token_list;
+	while (token && !token->type)
+		token = token->next;
+	while (token && token->type != PIPE)
+	{
+		if (!token->next)
+			return (token_clear(&result), type_error(0), *err = 1, NULL);
+		if (token->next->type)
+			return (token_clear(&result), type_error(token->next->type), *err = 1, NULL);
 		if (token->type == GREAT || token->type == GREATGREAT || token->type == LESS || token->type == LESSLESS)
 		{
-			node = token_new(ft_strdup(token_next->str), token->type);
+			node = token_new(ft_strdup(token->next->str), token->type);
 			if (!node)
-				return (ft_lstclear(&result, token_del), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
-			ft_lstadd_back(&result, node);
+				return (token_clear(&result), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
+			token_addback(&result, node);
 			// delete two nodes
 		}
 	}
 	return (result);
 }
-
-
 
 void	type_error(t_type type)
 {

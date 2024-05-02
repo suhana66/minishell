@@ -6,17 +6,17 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 14:12:30 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 22:28:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
-t_list	*lexer(char *input, int *err)
+t_token	*lexer(char *input, int *err)
 {
-	t_list	*token_list;
-	t_list	*node;
+	t_token	*token_list;
+	t_token	*node;
 	t_type	type;
 	char	*str;
 
@@ -30,36 +30,62 @@ t_list	*lexer(char *input, int *err)
 		{
 			str = token_str(&input, " \n\t|<>", err);
 			if (*err)
-				return (ft_lstclear(&token_list, token_del), NULL);
+				return (token_clear(&token_list), NULL);
 		}
 		node = token_new(str, type);
 		if (!node)
-			return (ft_lstclear(&token_list, token_del), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
-		ft_lstadd_back(&token_list, node);
+			return (free(str), token_clear(&token_list), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
+		token_addback(&token_list, node);
 	}
 	return (token_list);
 }
 
-t_list	*token_new(char *str, t_type type)
+t_token	*token_new(char *str, t_type type)
 {
-	t_token	*content;
-	t_list	*node;
+	t_token	*node;
 
-	content = (t_token *)malloc(sizeof(t_token));
-	if (!content)
-		return (free(str), NULL);
-	content->type = type;
-	content->str = str;
-	node = ft_lstnew(content);
+	node = (t_token *)malloc(sizeof(t_token));
 	if (!node)
-		return (token_del(content), NULL);
+		return (NULL);
+	node->type = type;
+	node->str = str;
+	node->prev = NULL;
+	node->next = NULL;
 	return (node);
 }
 
-void	token_del(void *token)
+void	token_addback(t_token **tokens, t_token *node)
 {
-	free(((t_token *)token)->str);
-	free(token);
+	t_token	*temp;
+
+	if (!tokens || !node)
+		return ;
+	if (!*tokens)
+	{
+		*tokens = node;
+		return ;
+	}
+	temp = *tokens;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = node;
+	node->prev = temp;
+}
+
+void	token_clear(t_token **tokens)
+{
+	t_token	*temp;
+
+	if (!tokens)
+		return ;
+	while (*tokens)
+	{
+		temp = (*tokens)->next;
+		free((*tokens)->str);
+		free(*tokens);
+		*tokens = temp;
+	}
+	*tokens = NULL;
 }
 
 char	*token_str(char **input, char *delimiters, int *err)

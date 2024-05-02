@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 12:48:32 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 22:38:06 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	t_list	*token_list;
-	t_list	*cmd_table;
+	t_token	*token_list;
+	t_cmd	*cmd_table;
 	int		err;
 
 	if (argc != 1)
@@ -37,13 +37,13 @@ int	main(int argc, char **argv, char **envp)
 		if (err < 0)
 			return (3);
 		cmd_table = parser(&token_list, &err);
-		ft_lstclear(&token_list, token_del);
+		token_clear(&token_list);
 		if (err > 0)
 			continue ;
 		if (err < 0)
 			return (4);
 		// executor
-		ft_lstclear(&cmd_table, cmd_del);
+		cmd_clear(&cmd_table);
 	}
 	(void)argv;
 	(void)envp;
