@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 12:27:20 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/02 14:12:30 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_list	*lexer(char *input, int *err)
 		if (!type)
 		{
 			str = token_str(&input, " \n\t|<>", err);
-			if (!str)
+			if (*err)
 				return (ft_lstclear(&token_list, token_del), NULL);
 		}
 		node = token_new(str, type);
