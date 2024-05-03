@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 22:28:14 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/03 08:05:47 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,27 @@ void	token_addback(t_token **tokens, t_token *node)
 	node->prev = temp;
 }
 
+void	token_delone(t_token **token)
+{
+	t_token	*to_delete;
+
+	if (!token)
+		return ;
+	to_delete = *token;
+	if ((*token)->prev)
+		(*token)->prev->next = (*token)->next;
+	else
+		*token = (*token)->next;
+	free((*token)->str);
+	free(*token);
+}
+
 void	token_clear(t_token **tokens)
 {
-	t_token	*temp;
-
 	if (!tokens)
 		return ;
 	while (*tokens)
-	{
-		temp = (*tokens)->next;
-		free((*tokens)->str);
-		free(*tokens);
-		*tokens = temp;
-	}
+		token_delone(tokens);
 	*tokens = NULL;
 }
 

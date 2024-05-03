@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 22:48:18 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/03 08:06:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_cmd
 t_token	*lexer(char *input, int *err);
 t_token	*token_new(char *str, t_type type);
 void	token_addback(t_token **tokens, t_token *node);
+void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
 char	*token_str(char **input, char *delimiters, int *err);
 t_type	token_type(char **input);
@@ -53,6 +54,7 @@ t_type	token_type(char **input);
 t_cmd	*parser(t_token **token_list, int *err);
 t_cmd	*cmd_new(t_token **token_list, int *err);
 void	cmd_addback(t_cmd **cmds, t_cmd *node);
+void	cmd_delone(t_cmd **cmd);
 void	cmd_clear(t_cmd **cmds);
 t_token	*cmd_redirects(t_token **token_list, int *err);
 void	type_error(t_type token);

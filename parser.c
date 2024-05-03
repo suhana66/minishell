@@ -6,13 +6,12 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/03 07:17:43 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/03 08:02:39 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO: change temp names
 t_cmd	*parser(t_token **token_list, int *err)
 {
 	t_cmd	*cmd_table;
@@ -64,20 +63,28 @@ void	cmd_addback(t_cmd **cmds, t_cmd *node)
 	node->prev = temp;
 }
 
+void	cmd_delone(t_cmd **cmd)
+{
+	t_cmd	*to_delete;
+
+	if (!cmd)
+		return ;
+	to_delete = *cmd;
+	if ((*cmd)->prev)
+		(*cmd)->prev->next = (*cmd)->next;
+	else
+		*cmd = (*cmd)->next;
+	token_clear(&to_delete->redirects);
+	free(*cmd);
+	// TODO
+}
+
 void	cmd_clear(t_cmd **cmds)
 {
-	t_cmd	*temp;
-
 	if (!cmds)
 		return ;
 	while (*cmds)
-	{
-		temp = (*cmds)->next;
-		token_clear(&(*cmds)->redirects);
-		free(*cmds);
-		// TODO
-		*cmds = temp;
-	}
+		cmd_delone(cmds);
 	*cmds = NULL;
 }
 
