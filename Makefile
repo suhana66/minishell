@@ -9,7 +9,9 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 READLINE_LIBRARY := -lreadline
 
 SRC := lexer.c \
+	token_utils.c \
 	parser.c \
+	cmd_utils.c \
 	main.c
 OBJ := $(SRC:%.c=%.o)
 INCLUDES := -I$(LIBFT_PATH) -I.
