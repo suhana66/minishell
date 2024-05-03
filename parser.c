@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/03 08:14:02 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:43:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 	t_token	*token;
 
 	token = *token_list;
-	while (token && !token->type)
-		token = token->next;
-	while (token && token->type != PIPE)
+	result = NULL;
+	while (1)
 	{
+		while (token && !token->type)
+			token = token->next;
+		if (!token || token->type == PIPE)
+			break ;
 		if (!token->next)
 			return (token_clear(&result), type_error(0), *err = 1, NULL);
 		if (token->next->type)
