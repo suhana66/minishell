@@ -51,6 +51,7 @@ typedef struct s_info
 
 typedef struct s_simple_cmd
 {
+	char					**str;
 }	t_simple_cmd;
 
 int		lexer(char *input, t_list **token_list);
@@ -64,5 +65,7 @@ void	parser_token_error(t_type token);
 
 int env_st(t_info *info, char **env);
 int f_pwd(t_info *info);
+
+int	built_pwd(t_info *info, t_simple_cmd *simple_cmd);
 
 #endif /* MINISHELL_H */
