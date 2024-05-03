@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/03 08:20:48 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:40:09 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef enum e_type
 {
-	PIPE,
+	PIPE = 1,
 	GREAT,
 	GREATGREAT,
 	LESS,
