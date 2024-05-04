@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/04 15:31:45 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/04 15:49:27 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_cmd	*cmd_new(t_token **token_list, int *err)
 {
 	t_cmd	*node;
+	size_t	count;
 
 	node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!node)
@@ -22,6 +23,7 @@ t_cmd	*cmd_new(t_token **token_list, int *err)
 	node->redirects = cmd_redirects(token_list, err);
 	if (*err)
 		return (free(node), NULL);
+	count = token_count(*token_list);
 	// TODO
 	node->prev = NULL;
 	node->next = NULL;

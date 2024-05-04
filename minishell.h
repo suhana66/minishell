@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/03 13:40:09 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/04 15:51:06 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_type	token_type(char **input);
 
 t_token	*token_new(char *str, t_type type);
 void	token_addback(t_token **tokens, t_token *node);
+size_t	token_count(t_token *tokens);
 void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
 
