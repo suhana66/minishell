@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:10:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/04 10:08:31 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:28:15 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	token_delone(t_token **token)
 	*token = (*token)->next;
 	if (*token)
 		(*token)->prev = to_delete->prev;
+	if (to_delete->prev)
+		to_delete->prev->next = *token;
 	free(to_delete->str);
 	free(to_delete);
 }

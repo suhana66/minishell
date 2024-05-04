@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/04 10:11:58 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:30:37 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	cmd_delone(t_cmd **cmd)
 	*cmd = (*cmd)->next;
 	if (*cmd)
 		(*cmd)->prev = to_delete->prev;
+	if (to_delete->prev)
+		to_delete->prev->next = *cmd;
 	token_clear(&to_delete->redirects);
 	free(to_delete);
 	// TODO

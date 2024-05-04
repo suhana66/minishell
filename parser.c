@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/03 13:43:00 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:33:32 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 			if (!node)
 				return (token_clear(&result), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
 			token_addback(&result, node);
-			// delete two nodes
+			token_delone(&token);
+			token_delone(&token);
 		}
 	}
 	return (result);
