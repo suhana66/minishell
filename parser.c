@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/04 21:21:18 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/05 08:39:27 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,23 @@ t_cmd	*parser(t_token **token_list, int *err)
 {
 	t_cmd	*cmd_table;
 	t_cmd	*node;
+	t_token	*redirects;
+	char	**argv;
 
 	if ((*token_list)->type == PIPE)
 		return (type_error(PIPE), *err = 1, NULL);
 	cmd_table = NULL;
 	while (*token_list)
 	{
-		node = cmd_new(token_list, err);
+		redirects = cmd_redirects(token_list, err);
 		if (*err)
 			return (cmd_clear(&cmd_table), NULL);
+		argv = cmd_argv(token_list);
+		if (!argv)
+			return (cmd_clear(&cmd_table), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), token_clear(&redirects), *err = -1, NULL);
+		node = cmd_new(argv, redirects);
+		if (!node)
+			return (cmd_clear(&cmd_table), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), token_clear(&redirects), array_clear(argv), *err = -1, NULL);
 		cmd_addback(&cmd_table, node);
 		// delete pipe
 	}
@@ -67,6 +75,28 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 	return (result);
 }
 
+char	**cmd_argv(t_token **token_list)
+{
+	size_t	argc;
+	char	**result;
+	size_t	i;
+
+	argc = token_count(*token_list);
+	result = (char **)malloc((argc + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	result[argc] = NULL;
+	i = 0;
+	while (i < argc)
+	{
+		result[i] = ft_strdup((*token_list)->str);
+		if (!result[i++])
+			return (array_clear(result), NULL);
+		token_delone(token_list);
+	}
+	return (result);
+}
+
 void	type_error(t_type type)
 {
 	char	*token_name;
@@ -88,4 +118,16 @@ void	type_error(t_type type)
 		STDERR_FILENO);
 	ft_putstr_fd(token_name, STDERR_FILENO);
 	ft_putendl_fd("'", STDERR_FILENO);
+}
+
+void	array_clear(char **array)
+{
+	size_t	i;
+
+    if (!array)
+        return ;
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+    free(array);
 }
