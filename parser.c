@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 10:15:00 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/05 10:50:48 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ t_cmd	*parser(t_token **token_list, int *err)
 	cmd_table = NULL;
 	while (*token_list)
 	{
+		if (*token_list && (*token_list)->type == PIPE)
+			token_delone(token_list);
+		if (!*token_list)
+			return (cmd_clear(&cmd_table), type_error(0), *err = 1, NULL);
+		if ((*token_list)->type == PIPE)
+			return (cmd_clear(&cmd_table), type_error(PIPE), *err = 1, NULL);
 		redirects = cmd_redirects(token_list, err);
 		if (*err)
 			return (cmd_clear(&cmd_table), NULL);
@@ -34,7 +40,6 @@ t_cmd	*parser(t_token **token_list, int *err)
 		if (!node)
 			return (cmd_clear(&cmd_table), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), token_clear(&redirects), array_clear(argv), *err = -1, NULL);
 		cmd_addback(&cmd_table, node);
-		// delete pipe
 	}
 	return (cmd_table);
 }
