@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 10:50:48 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/05 12:59:35 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ t_cmd	*parser(t_token **token_list, int *err)
 			return (cmd_clear(&cmd_table), NULL);
 		argv = cmd_argv(token_list);
 		if (!argv)
-			return (cmd_clear(&cmd_table), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), token_clear(&redirects), *err = -1, NULL);
+			return (cmd_clear(&cmd_table), token_clear(&redirects), *err = -1, NULL);
 		node = cmd_new(argv, redirects);
 		if (!node)
-			return (cmd_clear(&cmd_table), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), token_clear(&redirects), array_clear(argv), *err = -1, NULL);
+			return (cmd_clear(&cmd_table), token_clear(&redirects), array_clear(argv), *err = -1, NULL);
 		cmd_addback(&cmd_table, node);
 	}
 	return (cmd_table);
@@ -68,7 +68,7 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 		{
 			node = token_new(ft_strdup(token->next->str), token->type);
 			if (!node)
-				return (token_clear(&result), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
+				return (token_clear(&result), *err = -1, NULL);
 			token_addback(&result, node);
 			if (token == head)
 				head = token->next->next;

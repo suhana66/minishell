@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 10:14:47 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/05 13:07:08 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 # include "libft.h"
 # include <readline/readline.h>
-
-# define READLINE_MSG	"\033[1;32mminishell $ \033[0m"
-# define MEM_ERR_MSG	"memory error: unable to assign memory"
 
 typedef enum e_type
 {

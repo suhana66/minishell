@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 22:38:06 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/05 13:06:55 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		err = 0;
-		input = readline(READLINE_MSG);
+		input = readline("\033[1;32mminishell $ \033[0m");
 		if (!input)
 			return (ft_putendl_fd("reading error: unable to read input", STDERR_FILENO), 2);
 		if (!*input && (free(input), 1))
@@ -35,16 +35,18 @@ int	main(int argc, char **argv, char **envp)
 		if (err > 0)
 			continue ;
 		if (err < 0)
-			return (3);
+			break ;
 		cmd_table = parser(&token_list, &err);
 		token_clear(&token_list);
 		if (err > 0)
 			continue ;
 		if (err < 0)
-			return (4);
+			break ;
 		// executor
 		cmd_clear(&cmd_table);
 	}
+	if (err < 0)
+		return (ft_putendl_fd("memory error: unable to assign memory", STDERR_FILENO), 1);
 	(void)argv;
 	(void)envp;
 	return (0);

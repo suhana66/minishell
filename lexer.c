@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/03 13:28:28 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/05 13:08:48 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_token	*lexer(char *input, int *err)
 		}
 		node = token_new(str, type);
 		if (!node)
-			return (free(str), token_clear(&token_list), ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
+			return (token_clear(&token_list), free(str), *err = -1, NULL);
 		token_addback(&token_list, node);
 	}
 	return (token_list);
@@ -65,7 +65,7 @@ char	*token_str(char **input, char *delimiters, int *err)
 		return (ft_putendl_fd("syntax error: unable to locate closing quote", STDERR_FILENO), *err = 1, NULL);
 	str = ft_substr(*input, 0, i);
 	if (!str)
-		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), *err = -1, NULL);
+		return (*err = -1, NULL);
 	*input += i;
 	return (str);
 }
