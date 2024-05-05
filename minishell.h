@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/04 21:22:23 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/04 21:33:42 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
+	char			**argv;
 	t_token			*redirects;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;

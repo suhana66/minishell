@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/04 15:49:27 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/04 22:19:30 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 t_cmd	*cmd_new(t_token **token_list, int *err)
 {
 	t_cmd	*node;
-	size_t	count;
+	size_t	argc;
+	size_t	i;
 
 	node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!node)
@@ -23,8 +24,23 @@ t_cmd	*cmd_new(t_token **token_list, int *err)
 	node->redirects = cmd_redirects(token_list, err);
 	if (*err)
 		return (free(node), NULL);
-	count = token_count(*token_list);
-	// TODO
+	argc = token_count(*token_list);
+	node->argv = (char **)malloc((argc + 1) * sizeof(char *));
+	if (!node->argv)
+		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), token_clear(&node->redirects), free(node), *err = -1, NULL);
+	(node->argv)[argc] = NULL;
+	i = 0;
+	while (i < argc)
+	{
+		(node->argv)[i] = ft_strdup((*token_list)->str);
+		if (!(node->argv)[i++])
+		{
+			while (--i >= 0)
+				free((node->argv)[i]);
+			return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), free(node->argv), token_clear(&node->redirects), free(node), *err = -1, NULL);
+		}
+		token_delone(token_list);
+	}
 	node->prev = NULL;
 	node->next = NULL;
 	return (node);
