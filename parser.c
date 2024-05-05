@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 08:39:27 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/05 10:15:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	**cmd_argv(t_token **token_list)
 	char	**result;
 	size_t	i;
 
-	argc = token_count(*token_list);
+	argc = arg_count(*token_list);
 	result = (char **)malloc((argc + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
@@ -120,14 +120,15 @@ void	type_error(t_type type)
 	ft_putendl_fd("'", STDERR_FILENO);
 }
 
-void	array_clear(char **array)
+size_t	arg_count(t_token *tokens)
 {
-	size_t	i;
+	size_t	result;
 
-    if (!array)
-        return ;
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-    free(array);
+	result = 0;
+	while (tokens && tokens->type != PIPE)
+	{
+		result++;
+		tokens = tokens->next;
+	}
+	return (result);
 }
