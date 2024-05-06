@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 15:22:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:36:58 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,20 @@ t_cmd	*cmd_add(char **argv, t_token *redirects, t_cmd **cmds)
 	return (node);
 }
 
-void	cmd_delone(t_cmd **cmd)
+void	cmd_clear(t_cmd **cmds)
 {
 	t_cmd	*to_delete;
 
-	if (!cmd || !*cmd)
-		return ;
-	to_delete = *cmd;
-	*cmd = (*cmd)->next;
-	if (*cmd)
-		(*cmd)->prev = to_delete->prev;
-	if (to_delete->prev)
-		to_delete->prev->next = *cmd;
-	array_clear(to_delete->argv);
-	token_clear(&to_delete->redirects);
-	free(to_delete);
-}
-
-void	cmd_clear(t_cmd **cmds)
-{
 	if (!cmds)
 		return ;
 	while (*cmds)
-		cmd_delone(cmds);
+	{
+		to_delete = *cmds;
+		*cmds = (*cmds)->next;
+		array_clear(to_delete->argv);
+		token_clear(&to_delete->redirects);
+		free(to_delete);
+	}
 	*cmds = NULL;
 }
 
