@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 13:36:52 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 14:36:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_cmd	*parser(t_token **token_list, int *err)
 		if (!argv)
 			return (cmd_clear(&cmd_table), token_clear(&redirects), *err = -1, NULL);
 		node = cmd_new(argv, redirects);
+		cmd_addback(&cmd_table, node);
 		if (!node)
 			return (cmd_clear(&cmd_table), token_clear(&redirects), array_clear(argv), *err = -1, NULL);
-		cmd_addback(&cmd_table, node);
 	}
 	return (cmd_table);
 }
@@ -47,10 +47,8 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 	t_token	*result;
 	t_token	*node;
 	t_token	*token;
-	t_token	*head;
 
 	token = *token_list;
-	head = *token_list;
 	result = NULL;
 	while (1)
 	{
@@ -60,19 +58,15 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 			break ;
 		if (!token->next || token->next->type)
 			return (token_clear(&result), type_error(token->next), *err = 1, NULL);
-		if (token->type == GREAT || token->type == GREATGREAT || token->type == LESS || token->type == LESSLESS)
-		{
-			node = token_new(token->type, ft_strdup(token->next->str));
-			if (!node)
-				return (token_clear(&result), *err = -1, NULL);
-			token_addback(&result, node);
-			if (token == head)
-				head = token->next->next;
-			token_delone(&token);
-			token_delone(&token);
-		}
+		node = token_new(token->type, ft_strdup(token->next->str));
+		token_addback(&result, node);
+		if (!node)
+			return (token_clear(&result), *err = -1, NULL);
+		if (token == *token_list)
+			*token_list = token->next->next;
+		token_delone(&token);
+		token_delone(&token);
 	}
-	*token_list = head;
 	return (result);
 }
 
