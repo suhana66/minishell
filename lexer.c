@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 09:39:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 09:43:37 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ char	*token_str(char **input, char *delimiters, int *err)
 		i++;
 	}
 	if (encloser)
-		return (ft_putendl_fd("syntax error: unable to locate closing quote", STDERR_FILENO), *err = 1, NULL);
+		return (ft_putendl_fd("syntax error: unable to locate closing quote",
+				STDERR_FILENO), *err = 1, NULL);
 	str = ft_substr(*input, 0, i);
 	if (!str)
 		return (*err = -1, NULL);
-	*input += i;
-	return (str);
+	return (*input += i, str);
 }
 
 t_type	token_type(char **input)
