@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 13:08:48 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 09:39:01 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,23 @@ t_token	*lexer(char *input, int *err)
 {
 	t_token	*token_list;
 	t_token	*node;
-	t_type	type;
-	char	*str;
 
+	if (!err || *err)
+		return (NULL);
 	token_list = NULL;
-	while (*input)
+	while (*input && !*err)
 	{
 		if (*input && ft_strchr(" \n\t", *input) && (input++, 1))
 			continue ;
-		type = token_type(&input);
-		str = NULL;
-		if (!type)
-		{
-			str = token_str(&input, " \n\t|<>", err);
-			if (*err)
-				return (token_clear(&token_list), NULL);
-		}
-		node = token_new(str, type);
+		node = token_new(token_type(&input), NULL);
 		if (!node)
-			return (token_clear(&token_list), free(str), *err = -1, NULL);
+			*err = -1;
+		else if (!node->type)
+			node->str = token_str(&input, " \n\t|<>", err);
 		token_addback(&token_list, node);
 	}
+	if (*err)
+		token_clear(&token_list);
 	return (token_list);
 }
 

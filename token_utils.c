@@ -6,13 +6,13 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:10:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 10:09:26 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 09:30:53 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*token_new(char *str, t_type type)
+t_token	*token_new(t_type type, char *str)
 {
 	t_token	*node;
 

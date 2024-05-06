@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 12:59:35 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 09:39:56 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 			return (token_clear(&result), type_error(token->next->type), *err = 1, NULL);
 		if (token->type == GREAT || token->type == GREATGREAT || token->type == LESS || token->type == LESSLESS)
 		{
-			node = token_new(ft_strdup(token->next->str), token->type);
+			node = token_new(token->type, ft_strdup(token->next->str));
 			if (!node)
 				return (token_clear(&result), *err = -1, NULL);
 			token_addback(&result, node);
