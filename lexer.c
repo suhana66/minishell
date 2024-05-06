@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 14:46:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:52:17 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	lexer(char *input, t_token **token_list)
 		node = token_add(token_type(&input), NULL, token_list);
 		if (!node)
 			err = -1;
-		if (!err && !node->type)
+		else if (!node->type)
 			err = token_str(&input, " \n\t|<>", &node->str);
 	}
 	if (err)
