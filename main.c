@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 09:56:12 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 10:35:33 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_token	*token_list;
 	t_cmd	*cmd_table;
 	int		err;
 
@@ -23,27 +21,38 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
 	while (1)
 	{
-		err = 0;
-		input = readline("\033[1;32mminishell $ \033[0m");
-		if (!input)
-			return (ft_putendl_fd("reading error: unable to read input", STDERR_FILENO), 2);
-		if (!*input && (free(input), 1))
-			continue ;
-		add_history(input);
-		token_list = lexer(input, &err);
-		cmd_table = parser(&token_list, &err);
-		free(input);
-		token_clear(&token_list);
+		err = get_cmd_table(&cmd_table);
 		if (err > 0)
 			continue ;
 		if (err < 0)
-			break ;
+			return (1);
 		// executor
 		cmd_clear(&cmd_table);
 	}
-	if (err < 0)
-		return (ft_putendl_fd("memory error: unable to assign memory", STDERR_FILENO), 1);
 	(void)argv;
 	(void)envp;
 	return (0);
+}
+
+int	get_cmd_table(t_cmd **cmd_table)
+{
+	char	*input;
+	t_token	*token_list;
+	int		err;
+
+	input = readline("\033[1;32mminishell $ \033[0m");
+	if (!input)
+		return (ft_putendl_fd("minishell: unable to read input",
+				STDERR_FILENO), -1);
+	if (!*input)
+		return (free(input), 1);
+	add_history(input);
+	err = lexer(input, &token_list);
+	if (!err)
+		err = parser(&token_list, cmd_table);
+	free(input);
+	token_clear(&token_list);
+	if (err < 0)
+		ft_putendl_fd("minishell: unable to assign memory", STDERR_FILENO);
+	return (err);
 }
