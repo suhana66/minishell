@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 13:30:35 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 13:36:52 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,15 @@ t_token	*cmd_redirects(t_token **token_list, int *err)
 
 char	**cmd_argv(t_token **token_list)
 {
+	t_token	*temp;
 	size_t	argc;
 	char	**result;
 	size_t	i;
 
-	argc = arg_count(*token_list);
+	temp = *token_list;
+	argc = 0;
+	while (temp && temp->type != PIPE && ++argc)
+		temp = temp->next;
 	result = (char **)malloc((argc + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
@@ -120,17 +124,4 @@ void	type_error(t_token *token)
 		STDERR_FILENO);
 	ft_putstr_fd(token_name, STDERR_FILENO);
 	ft_putendl_fd("'", STDERR_FILENO);
-}
-
-size_t	arg_count(t_token *tokens)
-{
-	size_t	result;
-
-	result = 0;
-	while (tokens && tokens->type != PIPE)
-	{
-		result++;
-		tokens = tokens->next;
-	}
-	return (result);
 }
