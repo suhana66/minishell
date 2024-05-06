@@ -6,79 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/04/19 12:04:21 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:43:47 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**split_cli_input(char *input, char *delimiters)
-{
-	char	**cmd_argv;
-	size_t	cmd_argc;
-	size_t	i;
-	size_t	token_len;
-
-	cmd_argc = get_token_count(input, delimiters);
-	cmd_argv = malloc(sizeof(char *) * (cmd_argc + 1));
-	if (!cmd_argv)
-		return (ft_putendl_fd("malloc() error", 2), NULL);
-	cmd_argv[cmd_argc] = NULL;
-	i = 0;
-	while (*input && i < cmd_argc)
-	{
-		while (*input && ft_strchr(delimiters, *input))
-			input++;
-		token_len = get_token_length(&input, delimiters);
-		cmd_argv[i++] = ft_substr(input - token_len, 0, token_len);
-	}
-	i = 0;
-	while (i < cmd_argc)
-		if (!cmd_argv[i++])
-			return (free_all(NULL, NULL, cmd_argv),
-				ft_putendl_fd("malloc() error", 2), NULL);
-	return (cmd_argv);
-}
-
-size_t	get_token_length(char **input, char *delimiters)
-{
-	char	*token_i;
-	int		encloser;
-	size_t	result;
-
-	token_i = *input;
-	encloser = 0;
-	while (*token_i && (!ft_strchr(delimiters, *token_i) || encloser))
-	{
-		shift_encloser(*token_i, &encloser);
-		token_i++;
-	}
-	if (encloser)
-		return (ft_putendl_fd("parse error", 2), 0);
-	result = token_i - *input;
-	*input += result;
-	return (result);
-}
-
-size_t	get_token_count(char *input, char *delimiters)
-{
-	size_t	count;
-	size_t	token_len;
-
-	count = 0;
-	while (1)
-	{
-		while (*input && ft_strchr(delimiters, *input))
-			input++;
-		if (!*input)
-			break ;
-		token_len = get_token_length(&input, delimiters);
-		if (token_len == 0)
-			return (0);
-		count++;
-	}
-	return (count);
-}
 
 int	expand_cmd_arg(char **cmd_arg)
 {
