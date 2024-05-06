@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 15:36:58 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:43:13 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_cmd	*cmd_add(char **argv, t_token *redirects, t_cmd **cmds)
 		return (NULL);
 	node->argv = argv;
 	node->redirects = redirects;
-	node->prev = NULL;
 	node->next = NULL;
 	if (!cmds)
 		return (node);
@@ -32,7 +31,6 @@ t_cmd	*cmd_add(char **argv, t_token *redirects, t_cmd **cmds)
 	while (temp->next)
 		temp = temp->next;
 	temp->next = node;
-	node->prev = temp;
 	return (node);
 }
 
