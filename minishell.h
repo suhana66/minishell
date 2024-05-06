@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 16:01:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:15:06 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_token	*token_add(t_type type, char *str, t_token **tokens);
 void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
 
-t_cmd	*parser(t_token **token_list, int *err);
+int		parser(t_token **token_list, t_cmd **cmd_table);
 int		cmd_redirects(t_token **token_list, t_token **result);
 char	**cmd_argv(t_token **token_list);
 void	type_error(t_token *token);
