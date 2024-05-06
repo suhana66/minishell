@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 13:37:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 14:44:32 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
 t_type	token_type(char **input);
 
-t_token	*token_new(t_type type, char *str);
-void	token_addback(t_token **tokens, t_token *node);
+t_token	*token_add(t_type type, char *str, t_token **tokens);
 void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
 void	array_clear(char **array);
