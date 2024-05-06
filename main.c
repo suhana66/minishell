@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/05 13:06:55 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 09:56:12 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(input);
 		token_list = lexer(input, &err);
-		free(input);
-		if (err > 0)
-			continue ;
-		if (err < 0)
-			break ;
 		cmd_table = parser(&token_list, &err);
+		free(input);
 		token_clear(&token_list);
 		if (err > 0)
 			continue ;
