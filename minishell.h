@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 10:37:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 11:16:31 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ typedef struct s_cmd
 
 int		get_cmd_table(t_cmd **cmd_table);
 
-t_token	*lexer(char *input, int *err);
-char	*token_str(char **input, char *delimiters, int *err);
+int		lexer(char *input, t_token **token_list);
+int		token_str(char **input, char *delimiters, char **result);
 t_type	token_type(char **input);
 
 t_token	*token_new(t_type type, char *str);

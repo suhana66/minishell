@@ -6,64 +6,63 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 09:43:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 11:15:49 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
-t_token	*lexer(char *input, int *err)
+int	lexer(char *input, t_token **token_list)
 {
-	t_token	*token_list;
 	t_token	*node;
+	int		err;
 
-	if (!err || *err)
-		return (NULL);
-	token_list = NULL;
-	while (*input && !*err)
+	*token_list = NULL;
+	err = 0;
+	while (*input && !err)
 	{
 		if (*input && ft_strchr(" \n\t", *input) && (input++, 1))
 			continue ;
 		node = token_new(token_type(&input), NULL);
+		token_addback(token_list, node);
 		if (!node)
-			*err = -1;
-		else if (!node->type)
-			node->str = token_str(&input, " \n\t|<>", err);
-		token_addback(&token_list, node);
+			err = -1;
+		if (!err && !node->type)
+			err = token_str(&input, " \n\t|<>", &node->str);
 	}
-	if (*err)
-		token_clear(&token_list);
-	return (token_list);
+	if (err)
+		token_clear(token_list);
+	return (err);
 }
 
-char	*token_str(char **input, char *delimiters, int *err)
+int	token_str(char **input, char *delimiters, char **result)
 {
-	char	*str;
 	size_t	i;
 	int		encloser;
+	char	*str;
 
 	i = 0;
 	encloser = 0;
-	while ((*input)[i] && (!ft_strchr(delimiters, (*input)[i]) || encloser))
+	str = *input;
+	while (str[i] && (!ft_strchr(delimiters, str[i]) || encloser))
 	{
-		if (((*input)[i] == '"' || (*input)[i] == '\'')
-			&& (!encloser || (*input)[i] == encloser))
+		if (str[i] == '"' || str[i] == '\'')
 		{
 			if (!encloser)
-				encloser = (*input)[i];
-			else
+				encloser = str[i];
+			else if (str[i] == encloser)
 				encloser = 0;
 		}
 		i++;
 	}
 	if (encloser)
 		return (ft_putendl_fd("syntax error: unable to locate closing quote",
-				STDERR_FILENO), *err = 1, NULL);
-	str = ft_substr(*input, 0, i);
-	if (!str)
-		return (*err = -1, NULL);
-	return (*input += i, str);
+				STDERR_FILENO), 1);
+	*result = ft_substr(*input, 0, i);
+	if (!*result)
+		return (-1);
+	return (*input += i, 0);
 }
 
 t_type	token_type(char **input)
