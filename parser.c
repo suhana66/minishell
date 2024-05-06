@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 14:45:48 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:24:19 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_cmd	*parser(t_token **token_list, int *err)
 		argv = cmd_argv(token_list);
 		if (!argv)
 			return (cmd_clear(&cmd_table), token_clear(&redirects), *err = -1, NULL);
-		node = cmd_new(argv, redirects);
-		cmd_addback(&cmd_table, node);
+		node = cmd_add(argv, redirects, &cmd_table);
 		if (!node)
 			return (cmd_clear(&cmd_table), token_clear(&redirects), array_clear(argv), *err = -1, NULL);
 	}
