@@ -1,8 +1,6 @@
 #include "../minishell.h"
 
-
-
-int built_env(t_info *info, t_simple_cmds *simple_cmd)
+int built_env(t_info *info, t_simple_cmd *simple_cmd)
 {
     t_env *t;
 
@@ -15,7 +13,7 @@ int built_env(t_info *info, t_simple_cmds *simple_cmd)
         while(t)
         {
             if (ft_strchr(t->value, '='))
-                ft_putendl_fd(t->value, 1);
+                printf("%s\n", t->value);
             t = t->next;
         }
         return (0);

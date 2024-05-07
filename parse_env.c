@@ -12,15 +12,13 @@ t_env *copy_env(char *str)
     pos_equal = ft_strchr(str, '=');
     if (!pos_equal || pos_equal==str)
         return (free(t), NULL);
-    //check if key_l should be size_t
     key_l = pos_equal - str;
     t->key = malloc(key_l + 1);
     if (!t->key)
         return(free(t), NULL);
     ft_strlcpy(t->key, str, key_l+1);
-    // t->key[key_l] = '\0';
-    //check if value should be after =
     t->value = ft_strdup(str);
+    //ft_putendl_fd(t->value, 1);
     t->next = NULL;
     return (t);
 }
@@ -118,3 +116,16 @@ int env_st(t_info *info, char **env)
     }
     return (0);
 }
+
+// int main (int av, char **ac, char **env)
+// {
+//     (void) av;
+//     (void) ac;
+//     t_info info;
+//     t_simple_cmd *simple_cmd;
+
+
+//     env_st(&info, env);
+//     printf("%s=%s\n",info.envv->key, info.envv->value);
+//     built_env(&info, simple_cmd);
+// }
