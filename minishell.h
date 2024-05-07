@@ -67,6 +67,8 @@ int env_st(t_info *info, char **env);
 int f_pwd(t_info *info);
 char *env_to_str(t_env *lst);
 char	*ft_strndup(const char *src, size_t n);
+int	equal_s(char *str);
+int	check_valid_identifier(char c);
 
 int	built_pwd(t_info *info, t_simple_cmd *simple_cmd);
 int built_env(t_info *info, t_simple_cmd *simple_cmd);
