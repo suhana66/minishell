@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 int f_pwd(t_info *info)
 {

@@ -1,6 +1,6 @@
 NAME := minishell
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -Wfatal-errors
 
 LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a
@@ -8,11 +8,22 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 
 READLINE_LIBRARY := -lreadline
 
-SRC := lexer.c \
-	token_utils.c \
+MAIN := cmd_utils.c \
+	find_pwd.c \
+	lexer.c \
+	main.c \
+	parse_env.c \
 	parser.c \
-	cmd_utils.c \
-	main.c
+	token_utils.c
+BUILTIN := built_in/built_in_utils.c \
+	built_in/cd_built_in.c \
+	built_in/echo_built_in.c \
+	built_in/env_built_in.c \
+	built_in/export_built_in.c \
+	built_in/pwd_buit_in.c \
+	built_in/unset_built_in.c \
+	built_in/exit_built_in.c
+SRC := $(BUILTIN) $(MAIN)
 OBJ := $(SRC:%.c=%.o)
 INCLUDES := -I$(LIBFT_PATH) -I.
 

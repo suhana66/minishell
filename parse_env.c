@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 t_env *copy_env(char *str)
 {
@@ -10,15 +10,15 @@ t_env *copy_env(char *str)
     if (!t)
         return (NULL);
     pos_equal = ft_strchr(str, '=');
-    if (!pos_equal || pos_equal==str)
+    if (!pos_equal || pos_equal == str)
         return (free(t), NULL);
     key_l = pos_equal - str;
     t->key = malloc(key_l + 1);
     if (!t->key)
-        return(free(t), NULL);
-    ft_strlcpy(t->key, str, key_l+1);
+        return (free(t), NULL);
+    ft_strlcpy(t->key, str, key_l + 1);
     t->value = ft_strdup(str);
-    //ft_putendl_fd(t->value, 1);
+    // ft_putendl_fd(t->value, 1);
     t->next = NULL;
     return (t);
 }
@@ -37,8 +37,7 @@ void free_env(t_env *head)
     }
 }
 
-
-t_env  *add_env(char **env)
+t_env *add_env(char **env)
 {
     int i;
     t_env *f;
@@ -69,14 +68,14 @@ t_env  *add_env(char **env)
 
 char *find_path_in_env(char **env)
 {
-    char  *e_path;
+    char *e_path;
     int i;
 
     e_path = NULL;
     i = 0;
     while (env[i])
     {
-        if(!(ft_strncmp(env[i], "PATH=", 5)))
+        if (!(ft_strncmp(env[i], "PATH=", 5)))
         {
             e_path = ft_substr(env[i], 5, ft_strlen(env[i]) - 5);
             break;
@@ -101,7 +100,7 @@ int env_st(t_info *info, char **env)
     if (!info->envv || !info->envv->path)
     {
         free_env(info->envv);
-        //error "env"
+        // error "env"
         exit(0);
     }
     while (info->envv->path[i])
@@ -122,8 +121,7 @@ int env_st(t_info *info, char **env)
 //     (void) av;
 //     (void) ac;
 //     t_info info;
-//     t_simple_cmd *simple_cmd;
-
+//     t_cmd *simple_cmd;
 
 //     env_st(&info, env);
 //     printf("%s=%s\n",info.envv->key, info.envv->value);

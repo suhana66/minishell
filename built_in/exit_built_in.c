@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 int	is_str_digit(char *str)
 {
@@ -31,16 +31,17 @@ void	determine_exit_code(char **str)
 	exit(exit_code);
 }
 
-int  build_exit(t_info *info, t_simple_cmd *simple_cmd)
+int  build_exit(t_info *info, t_cmd *simple_cmd)
 {
+	(void)info;
     printf("exit");
-    if (simple_cmd->str[1] && simple_cmd->str[2])
+    if (simple_cmd->argv[1] && simple_cmd->argv[2])
 	{
 		printf("minishell: exit: too many arguments\n");
 		return (1);
 	}
-	//str = ft_arrdup(simple_cmd->str);
+	//str = ft_arrdup(simple_cmd->argv);
 	// free_tools(tools);
-	determine_exit_code(simple_cmd->str);
+	determine_exit_code(simple_cmd->argv);
 	return (EXIT_SUCCESS);
 }

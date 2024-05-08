@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 int n_arg(char **args)
 {
@@ -10,27 +10,26 @@ int n_arg(char **args)
     return (i);
 }
 
-int  echo_b(t_info *info, t_simple_cmd *simple_cmd)
+int  echo_b(t_info *info, t_cmd *simple_cmd)
 {
     int i;
     int opt;
-    int j;
 
     i = 1;
     opt = 0;
     (void) info;
 
-    if (n_arg(simple_cmd->str) > 1)
+    if (n_arg(simple_cmd->argv) > 1)
     {
-        while (simple_cmd->str[i] && ft_strcmp(args[i], "-n") == 0)
+        while (simple_cmd->argv[i] && ft_strncmp(simple_cmd->argv[i], "-n", 2) == 0)
         {
             opt = 1;
             i++;
         }
-        while (simple_cmd->str[i])
+        while (simple_cmd->argv[i])
         {
-            ft_putstr_fd(args[i], 1);
-            if (simple_cmd->str[i + 1] && simple_cmd->str[i][0] != '\0')
+            ft_putstr_fd(simple_cmd->argv[i], 1);
+            if (simple_cmd->argv[i + 1] && simple_cmd->argv[i][0] != '\0')
                 write(1, " ", 1);
             i++;
         }
