@@ -6,15 +6,15 @@
 /*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 12:29:20 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:02:19 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void change_pwd(t_info *info)
+void	change_pwd(t_info *info)
 {
-	char *t;
+	char	*t;
 
 	t = ft_strdup(info->pwd);
 	free(info->old_pwd);
@@ -23,23 +23,22 @@ void change_pwd(t_info *info)
 	info->pwd = getcwd(NULL, 0);
 }
 
-int find_path(t_info *info, char *str)
+int	find_path(t_info *info, char *str)
 {
-	char *tmp;
-	int ret;
-	t_env *t;
+	char	*tmp;
+	int		ret;
+	t_env	*t;
 
 	ret = -1;
 	tmp = NULL;
 	t = info->envv;
-
 	while (t)
 	{
 		if ((ft_strncmp(t->value, str, ft_strlen(str)) == 0))
 		{
 			tmp = ft_substr(t->value, ft_strlen(str),
-							ft_strlen(t->value) - ft_strlen(str));
-			break;
+					ft_strlen(t->value) - ft_strlen(str));
+			break ;
 		}
 		t = t->next;
 	}
@@ -55,10 +54,10 @@ int find_path(t_info *info, char *str)
 	return (ret);
 }
 
-void add_pwd_to_env(t_info *info)
+void	add_pwd_to_env(t_info *info)
 {
-	t_env *t;
-	char *tmp;
+	t_env	*t;
+	char	*tmp;
 
 	t = info->envv;
 	while (t)
@@ -79,9 +78,9 @@ void add_pwd_to_env(t_info *info)
 	}
 }
 
-int cd_built(t_info *info, t_cmd *simple_cmd)
+int	cd_built(t_info *info, t_cmd *simple_cmd)
 {
-	int val;
+	int	val;
 
 	if (!simple_cmd->argv[1])
 		val = find_path(info, "HOME=");

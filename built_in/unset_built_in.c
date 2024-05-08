@@ -6,13 +6,13 @@
 /*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:46 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 12:29:47 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 13:55:51 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int remove_env_var(t_info *info, t_env *to_rem, t_env *p)
+int	remove_env_var(t_info *info, t_env *to_rem, t_env *p)
 {
 	if (to_rem)
 	{
@@ -30,7 +30,7 @@ int remove_env_var(t_info *info, t_env *to_rem, t_env *p)
 	return (0);
 }
 
-int check_unset_arg(char *str, t_info *info)
+int	check_unset_arg(char *str, t_info *info)
 {
 	if (ft_strncmp("PATH", str, 4) == 0)
 	{
@@ -42,12 +42,12 @@ int check_unset_arg(char *str, t_info *info)
 	return (1);
 }
 
-int del_var(t_env *env, char **str, t_info *info)
+int	del_var(t_env *env, char **str, t_info *info)
 {
-	t_env *t;
-	t_env *p;
-	t_env *k;
-	int i;
+	t_env	*t;
+	t_env	*p;
+	t_env	*k;
+	int		i;
 
 	i = 1;
 	while (str[i])
@@ -58,7 +58,7 @@ int del_var(t_env *env, char **str, t_info *info)
 			if (ft_strncmp(t->key, str[i], ft_strlen(str[i])) == 0)
 			{
 				k = t;
-				break;
+				break ;
 			}
 			t = t->next;
 		}
@@ -76,10 +76,10 @@ int del_var(t_env *env, char **str, t_info *info)
 	return (0);
 }
 
-int error_unset(t_info *info, t_cmd *simple_cmd)
+int	error_unset(t_info *info, t_cmd *simple_cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	(void)info;
 	i = 1;
@@ -88,7 +88,7 @@ int error_unset(t_info *info, t_cmd *simple_cmd)
 		printf("error, not valid identifier");
 		return (1);
 	}
-	// print error as well not enough argument
+	// print	error as well not enough argument
 	while (simple_cmd->argv[i])
 	{
 		if (!(ft_isalpha(simple_cmd->argv[i][0])) && simple_cmd->argv[i][0] != '_' && simple_cmd->argv[i][0] != '\"' && simple_cmd->argv[i][0] != '\'')
@@ -113,11 +113,10 @@ int error_unset(t_info *info, t_cmd *simple_cmd)
 		}
 		i++;
 	}
-
 	return (0);
 }
 
-int ft_unset(t_info *info, t_cmd *simple_cmd)
+int	ft_unset(t_info *info, t_cmd *simple_cmd)
 {
 	if (error_unset(info, simple_cmd))
 		return (1);

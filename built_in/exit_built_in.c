@@ -6,7 +6,7 @@
 /*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:34 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 12:29:35 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:05:40 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void	determine_exit_code(char **str)
 	exit(exit_code);
 }
 
-int  build_exit(t_info *info, t_cmd *simple_cmd)
+int	build_exit(t_info *info, t_cmd *simple_cmd)
 {
 	(void)info;
-    printf("exit");
-    if (simple_cmd->argv[1] && simple_cmd->argv[2])
+	printf("exit");
+	if (simple_cmd->argv[1] && simple_cmd->argv[2])
 	{
 		printf("minishell: exit: too many arguments\n");
 		return (1);

@@ -6,15 +6,15 @@
 /*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 12:29:38 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:15:38 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int equal_s(char *str)
+int	equal_s(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -26,44 +26,49 @@ int equal_s(char *str)
 	return (0);
 }
 
-int check_valid_identifier(char c)
+int	check_valid_identifier(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '[' || c == ']' || c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.' || c == ':' || c == '/' || c == '{' || c == '}' || c == '+' || c == '^' || c == '%' || c == '#' || c == '@' || c == '!' || c == '~' || c == '=' || c == '-' || c == '?' || c == '&' || c == '*');
 }
 
-int check_param(char *str)
+int	check_param(char *str)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	// if (ft_isdigit(str[0]))
-	// 	return (1); //should print error
+	// 	return (1); //should print	error
 	// if (str[0] == '=')
-	// 	return (1); //should print error
+	// 	return (1); //should print	error
 	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (1);
 	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) || check_valid_identifier(str[i]))
-			return (1); // should print error
+			return (1); // should print	error
 		i++;
 	}
 	return (0);
 }
 
-char *del_quotes(char *str, char c)
+char	*del_quotes(char *str, char c)
 {
-	int i = 0;
-	int len = ft_strlen(str);
+	int		i;
+	int		len;
+	char	*result;
+	int		result_index;
+	int		inside_quote;
 
-	char *result = malloc(len + 1);
+	i = 0;
+	len = ft_strlen(str);
+	result = malloc(len + 1);
 	if (!result)
 	{
 		fprintf(stderr, "Memory allocation failed\n");
 		exit(EXIT_FAILURE);
 	}
-	int result_index = 0;
-	int inside_quote = 0;
+	result_index = 0;
+	inside_quote = 0;
 	while (str[i])
 	{
 		if (str[i] == c && i > 0 && str[i - 1] == '=')
@@ -82,12 +87,12 @@ char *del_quotes(char *str, char c)
 		}
 	}
 	result[result_index] = '\0';
-	return result;
+	return (result);
 }
 
-int env_size(char **env)
+int	env_size(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env[i])
@@ -95,12 +100,12 @@ int env_size(char **env)
 	return (i);
 }
 
-void sort_env(char **env)
+void	sort_env(char **env)
 {
-	size_t i;
-	size_t env_len;
-	int ordered;
-	char *t;
+	size_t	i;
+	size_t	env_len;
+	int		ordered;
+	char	*t;
 
 	ordered = 0;
 	env_len = env_size(env);
@@ -123,11 +128,11 @@ void sort_env(char **env)
 	}
 }
 
-int var_exist(char *var, t_info *info)
+int	var_exist(char *var, t_info *info)
 {
-	t_env *cur;
-	char *pos_equal;
-	int key_l;
+	t_env	*cur;
+	char	*pos_equal;
+	int		key_l;
 
 	if (var[equal_s(var)] == '\"')
 		var = del_quotes(var, '\"');
@@ -140,7 +145,6 @@ int var_exist(char *var, t_info *info)
 	{
 		if (!(ft_strncmp(cur->key, var, ft_strlen(cur->key))))
 		{
-
 			pos_equal = ft_strchr(var, '=');
 			if (pos_equal)
 			{
@@ -158,13 +162,13 @@ int var_exist(char *var, t_info *info)
 	return (0);
 }
 
-int env_add(char *var, t_env *env)
+int	env_add(char *var, t_env *env)
 {
-	char *key;
-	char *value;
-	t_env *new;
-	t_env *temp;
-	int k;
+	char	*key;
+	char	*value;
+	t_env	*new;
+	t_env	*temp;
+	int		k;
 
 	if (!env)
 		return (1);
@@ -189,10 +193,10 @@ int env_add(char *var, t_env *env)
 	return (0);
 }
 
-void print_with_q(char *str)
+void	print_with_q(char *str)
 {
-	char *pos_e;
-	char *key;
+	char	*pos_e;
+	char	*key;
 
 	pos_e = ft_strchr(str, '=');
 	key = ft_strndup(str, pos_e - str);
@@ -204,11 +208,11 @@ void print_with_q(char *str)
 	free(key);
 }
 
-int dec_sorted(t_env *head)
+int	dec_sorted(t_env *head)
 {
-	char **t;
-	char *str;
-	int i;
+	char	**t;
+	char	*str;
+	int		i;
 
 	str = env_to_str(head);
 	t = ft_split(str, '\n');
@@ -231,9 +235,9 @@ int dec_sorted(t_env *head)
 	return (free(str), 1);
 }
 
-int ft_export(t_info *info, t_cmd *simple_cmd)
+int	ft_export(t_info *info, t_cmd *simple_cmd)
 {
-	int i;
+	int	i;
 
 	if (info->envv == NULL)
 		return (0);
@@ -248,36 +252,3 @@ int ft_export(t_info *info, t_cmd *simple_cmd)
 	}
 	return (0);
 }
-
-// int main (int av, char *ac, char **env)
-// {
-//     (void) av;
-//     (void) ac;
-//     t_info  info;
-// 	t_cmd smpl;
-// 	smpl.str = malloc(sizeof(char *) * 3);
-//     if (smpl.str == NULL) {
-//         return 1;
-//     }
-// 	smpl.str[0] = ft_strdup("export");
-// 	smpl.str[1] = ft_strdup ("x");
-// 	smpl.str[2] = NULL;
-
-// 	info.envv=NULL;
-//     //ft_putstr_fd("hello", 1);
-//     env_st(&info,env);
-// 	ft_export(&info, &smpl);
-
-// 	//dec_sorted(info.envv);
-// 	//built_env(&info, &smpl);
-// 	// f_pwd(&info);
-//     //mini_pwd(&info);
-//     //int a = var_exist("a=\"vfg\"", &info);
-// 	//printf("%d %s", a, info.envv->value);
-// 	// built_pwd(&info, &smpl);
-
-// 	// //ft_putstr_fd("hello", 1);
-// 	// cd_built(&info, &smpl);
-// 	//ft_putendl_fd(" ", 1);
-// 	//built_pwd(&info, &smpl);
-// }
