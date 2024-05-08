@@ -6,78 +6,51 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 08:31:34 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:52:17 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Bash delimiters can be found in the variable IFS (Internal Field Separator)
-int	lexer(char *input, t_list **token_list)
+int	lexer(char *input, t_token **token_list)
 {
-	t_list	*node;
-	t_type	type;
-	char	*str;
-	int		errcode;
+	t_token	*node;
+	int		err;
 
-	while (*input)
+	*token_list = NULL;
+	err = 0;
+	while (*input && !err)
 	{
 		if (*input && ft_strchr(" \n\t", *input) && (input++, 1))
 			continue ;
-		type = token_type(&input);
-		str = NULL;
-		if (!type)
-		{
-			errcode = token_str(&input, " \n\t|<>", &str);
-			if (errcode)
-				return (errcode);
-		}
-		node = token_new(str, type);
+		node = token_add(token_type(&input), NULL, token_list);
 		if (!node)
-			return (ft_lstclear(token_list, token_del),
-				ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), -1);
-		ft_lstadd_back(token_list, node);
+			err = -1;
+		else if (!node->type)
+			err = token_str(&input, " \n\t|<>", &node->str);
 	}
-	return (0);
-}
-
-t_list	*token_new(char *str, t_type type)
-{
-	t_token	*content;
-	t_list	*node;
-
-	content = (t_token *)malloc(sizeof(t_token));
-	if (!content)
-		return (free(str), NULL);
-	content->type = type;
-	content->str = str;
-	node = ft_lstnew(content);
-	if (!node)
-		return (token_del(content), NULL);
-	return (node);
-}
-
-void	token_del(void *token)
-{
-	free(((t_token *)token)->str);
-	free(token);
+	if (err)
+		token_clear(token_list);
+	return (err);
 }
 
 int	token_str(char **input, char *delimiters, char **result)
 {
 	size_t	i;
 	int		encloser;
+	char	*str;
 
 	i = 0;
 	encloser = 0;
-	while ((*input)[i] && (!ft_strchr(delimiters, (*input)[i]) || encloser))
+	str = *input;
+	while (str[i] && (!ft_strchr(delimiters, str[i]) || encloser))
 	{
-		if (((*input)[i] == '"' || (*input)[i] == '\'')
-			&& (!encloser || (*input)[i] == encloser))
+		if (str[i] == '"' || str[i] == '\'')
 		{
 			if (!encloser)
-				encloser = (*input)[i];
-			else
+				encloser = str[i];
+			else if (str[i] == encloser)
 				encloser = 0;
 		}
 		i++;
@@ -87,9 +60,8 @@ int	token_str(char **input, char *delimiters, char **result)
 				STDERR_FILENO), 1);
 	*result = ft_substr(*input, 0, i);
 	if (!*result)
-		return (ft_putendl_fd(MEM_ERR_MSG, STDERR_FILENO), -1);
-	*input += i;
-	return (0);
+		return (-1);
+	return (*input += i, 0);
 }
 
 t_type	token_type(char **input)

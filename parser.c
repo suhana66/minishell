@@ -6,40 +6,112 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/02 08:32:14 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:26:01 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*parser(t_list *token_list)
+int	parser(t_token **token_list, t_cmd **cmd_table)
 {
-	t_list	*cmd_table;
+	int		err;
+	t_cmd	*node;
 
-	if (!token_list)
-		return (NULL);
-	if (((t_token *)(token_list->content))->type == PIPE)
-		return (parser_token_error(PIPE), ft_lstclear(&token_list, token_del), NULL);
-	cmd_table = NULL;
-	return (cmd_table);
+	*cmd_table = NULL;
+	if ((*token_list)->type == PIPE)
+		return (type_error(*token_list), 1);
+	err = 0;
+	while (*token_list)
+	{
+		if (*token_list && (*token_list)->type == PIPE)
+			token_delone(token_list);
+		if (!*token_list || (*token_list)->type == PIPE)
+			return (cmd_clear(cmd_table), type_error(*token_list), 1);
+		node = cmd_add(NULL, NULL, cmd_table);
+		if (!node)
+			return (cmd_clear(cmd_table), -1);
+		err = cmd_redirects(token_list, &node->redirects);
+		if (err)
+			return (cmd_clear(cmd_table), err);
+		node->argv = cmd_argv(token_list);
+		if (!node->argv)
+			return (cmd_clear(cmd_table), -1);
+	}
+	return (0);
 }
 
-void	parser_token_error(t_type type)
+int	cmd_redirects(t_token **token_list, t_token **result)
+{
+	t_token	*node;
+	t_token	*token;
+
+	token = *token_list;
+	*result = NULL;
+	while (1)
+	{
+		while (token && !token->type)
+			token = token->next;
+		if (!token || token->type == PIPE)
+			break ;
+		if (!token->next || token->next->type)
+			return (token_clear(result), type_error(token->next), 1);
+		node = token_add(token->type, ft_strdup(token->next->str), result);
+		if (!node)
+			return (token_clear(result), -1);
+		if (token == *token_list)
+			*token_list = token->next->next;
+		token_delone(&token);
+		token_delone(&token);
+	}
+	return (0);
+}
+
+char	**cmd_argv(t_token **token_list)
+{
+	t_token	*temp;
+	size_t	argc;
+	char	**result;
+	size_t	i;
+
+	temp = *token_list;
+	argc = 0;
+	while (temp && temp->type != PIPE && ++argc)
+		temp = temp->next;
+	result = (char **)malloc((argc + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	result[argc] = NULL;
+	i = 0;
+	while (i < argc)
+	{
+		result[i] = ft_strdup((*token_list)->str);
+		if (!result[i++])
+			return (array_clear(result), NULL);
+		token_delone(token_list);
+	}
+	return (result);
+}
+
+void	type_error(t_token *token)
 {
 	char	*token_name;
 
-	token_name = "";
-	if (type == GREAT)
+	if (!token)
+		token_name = "newline";
+	else if (token->type == GREAT)
 		token_name = ">";
-	else if (type == GREATGREAT)
+	else if (token->type == GREATGREAT)
 		token_name = ">>";
-	else if (type == LESS)
+	else if (token->type == LESS)
 		token_name = "<";
-	else if (type == LESSLESS)
+	else if (token->type == LESSLESS)
 		token_name = "<<";
-	else if (type == PIPE)
+	else if (token->type == PIPE)
 		token_name = "|";
-	ft_putstr_fd("minishell: syntax error near unexpected token '", STDERR_FILENO);
+	else
+		return ;
+	ft_putstr_fd("minishell: syntax error near unexpected token '",
+		STDERR_FILENO);
 	ft_putstr_fd(token_name, STDERR_FILENO);
 	ft_putendl_fd("'", STDERR_FILENO);
 }
