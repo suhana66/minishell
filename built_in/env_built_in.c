@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int built_env(t_info *info, t_simple_cmd *simple_cmd)
+int built_env(t_info *info, t_cmd *simple_cmd)
 {
     t_env *t;
 

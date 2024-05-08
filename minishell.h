@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/08 11:13:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/08 11:19:06 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ typedef struct s_info
 	t_env			*envv;
 }				t_info;
 
-typedef struct s_simple_cmd
-{
-	char					**str;
-}	t_simple_cmd;
 typedef struct s_cmd
 {
 	char			**argv;
@@ -85,7 +81,7 @@ char	*ft_strndup(const char *src, size_t n);
 int	equal_s(char *str);
 int	check_valid_identifier(char c);
 
-int	built_pwd(t_info *info, t_simple_cmd *simple_cmd);
-int built_env(t_info *info, t_simple_cmd *simple_cmd);
+int	built_pwd(t_info *info, t_cmd *simple_cmd);
+int built_env(t_info *info, t_cmd *simple_cmd);
 
 #endif /* MINISHELL_H */
