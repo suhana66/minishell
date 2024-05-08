@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_built_in.c                                    :+:      :+:    :+:   */
+/*   mini_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:22 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 14:03:39 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:10:55 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	n_arg(char **args)
 	return (i);
 }
 
-int	echo_b(t_info *info, t_cmd *simple_cmd)
+int	mini_echo(t_info *info, t_cmd *simple_cmd)
 {
 	int	i;
 	int	opt;

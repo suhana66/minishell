@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_built_in.c                                      :+:      :+:    :+:   */
+/*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 14:02:19 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:13:41 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	add_pwd_to_env(t_info *info)
 	}
 }
 
-int	cd_built(t_info *info, t_cmd *simple_cmd)
+int	mini_cd(t_info *info, t_cmd *simple_cmd)
 {
 	int	val;
 

@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_built_in.c                                     :+:      :+:    :+:   */
+/*   mini_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/08 12:29:29 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 14:04:03 by smuneer          ###   ########.fr       */
+/*   Created: 2024/05/08 12:29:52 by smuneer           #+#    #+#             */
+/*   Updated: 2024/05/08 17:14:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	built_env(t_info *info, t_cmd *simple_cmd)
+int	mini_pwd(t_info *info, t_cmd *simple_cmd)
 {
-	t_env	*t;
-
 	(void)simple_cmd;
-	if (!info->envv)
-		return (1);
-	t = info->envv;
-	if (t)
-	{
-		while (t)
-		{
-			if (ft_strchr(t->value, '='))
-				printf("%s\n", t->value);
-			t = t->next;
-		}
-		return (0);
-	}
-	else
-		return (1);
+	ft_putendl_fd(info->pwd, 1);
+	return (0);
 }

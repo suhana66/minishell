@@ -6,14 +6,14 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/08 15:59:49 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/08 19:57:46 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft/libft.h"
+# include "libft.h"
 # include <readline/readline.h>
 
 typedef enum e_type
@@ -80,8 +80,5 @@ char	*env_to_str(t_env *lst);
 char	*ft_strndup(const char *src, size_t n);
 int		equal_s(char *str);
 int		check_valid_identifier(char c);
-
-int		built_pwd(t_info *info, t_cmd *simple_cmd);
-int		built_env(t_info *info, t_cmd *simple_cmd);
 
 #endif /* MINISHELL_H */

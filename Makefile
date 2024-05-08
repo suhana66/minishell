@@ -8,24 +8,29 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 
 READLINE_LIBRARY := -lreadline
 
-MAIN := cmd_utils.c \
+MAIN_SRCS := \
+	cmd_utils.c \
 	find_pwd.c \
 	lexer.c \
 	main.c \
 	parse_env.c \
 	parser.c \
 	token_utils.c
-BUILTIN := built_in/built_in_utils.c \
-	built_in/cd_built_in.c \
-	built_in/echo_built_in.c \
-	built_in/env_built_in.c \
-	built_in/export_built_in.c \
-	built_in/pwd_buit_in.c \
-	built_in/unset_built_in.c \
-	built_in/exit_built_in.c
-SRC := $(BUILTIN) $(MAIN)
+
+BUILTIN_PATH := builtin
+BUILTIN_SRCS := \
+	$(BUILTIN_PATH)/builtin_utils.c \
+	$(BUILTIN_PATH)/mini_cd.c \
+	$(BUILTIN_PATH)/mini_echo.c \
+	$(BUILTIN_PATH)/mini_env.c \
+	$(BUILTIN_PATH)/mini_exit.c \
+	$(BUILTIN_PATH)/mini_export.c \
+	$(BUILTIN_PATH)/mini_pwd.c \
+	$(BUILTIN_PATH)/mini_unset.c
+
+SRC := $(BUILTIN_SRCS) $(MAIN_SRCS)
 OBJ := $(SRC:%.c=%.o)
-INCLUDES := -I$(LIBFT_PATH) -I.
+INCLUDES := -I$(LIBFT_PATH) -I$(BUILTIN_PATH) -I.
 
 all: $(NAME)
 

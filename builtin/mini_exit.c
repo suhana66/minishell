@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_built_in.c                                    :+:      :+:    :+:   */
+/*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:34 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 14:05:40 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:13:54 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	determine_exit_code(char **str)
 	exit(exit_code);
 }
 
-int	build_exit(t_info *info, t_cmd *simple_cmd)
+int	mini_exit(t_info *info, t_cmd *simple_cmd)
 {
 	(void)info;
 	printf("exit");

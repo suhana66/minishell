@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_built_in.c                                   :+:      :+:    :+:   */
+/*   mini_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:46 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 13:55:51 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:14:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	error_unset(t_info *info, t_cmd *simple_cmd)
 	return (0);
 }
 
-int	ft_unset(t_info *info, t_cmd *simple_cmd)
+int	mini_unset(t_info *info, t_cmd *simple_cmd)
 {
 	if (error_unset(info, simple_cmd))
 		return (1);
