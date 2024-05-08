@@ -44,42 +44,32 @@ char *del_quotes(char *str, char c)
 	int i = 0;
 	int len = ft_strlen(str);
 
-	// Allocate memory for the modified string
-	char *result = malloc(len + 1); // +1 for the null terminator
+	char *result = malloc(len + 1);
 	if (!result)
 	{
 		fprintf(stderr, "Memory allocation failed\n");
 		exit(EXIT_FAILURE);
 	}
-
-	// Keep track of the position in the result string
 	int result_index = 0;
-
 	int inside_quote = 0;
-
 	while (str[i])
 	{
-		// Check if the character is a quote and is preceded by an equals sign
 		if (str[i] == c && i > 0 && str[i - 1] == '=')
 		{
-			// Skip over the quote character
 			i++;
 			inside_quote = 1;
 		}
 		else if (str[i] == c && inside_quote)
 		{
-			// Skip over the quote character if we are inside a quoted section
 			i++;
-			inside_quote = 0; // Exiting the quoted section
+			inside_quote = 0;
 		}
 		else
 		{
-			// Copy the character to the result string
 			result[result_index++] = str[i++];
 		}
 	}
-	result[result_index] = '\0'; // Null-terminate the modified string
-
+	result[result_index] = '\0';
 	return result;
 }
 

@@ -113,38 +113,3 @@ int ft_unset(t_info *info, t_cmd *simple_cmd)
 		del_var(info->envv, simple_cmd->argv, info);
 	return (0);
 }
-
-// int main (int av, char *ac, char **env)
-// {
-//     (void) av;
-//     (void) ac;
-//     t_info  info;
-// 	t_cmd smpl;
-// 	smpl.str = malloc(sizeof(char *) * 4);
-//     if (smpl.str == NULL) {
-//         return 1;
-//     }
-// 	smpl.str[0] = ft_strdup("unset");
-// 	smpl.str[1] = ft_strdup ("SHELL");
-// 	smpl.str[2] = ft_strdup ("HOSTNAME");
-// 	smpl.str[3] = NULL;
-
-// 	info.pwd=NULL;
-// 	info.old_pwd=NULL;
-// 	info.envv=NULL;
-//     //ft_putstr_fd("hello", 1);
-//     env_st(&info,env);
-// 	// int a=error_unset(&info, &smpl);
-// 	// printf("%d", a);
-// 	del_var(info.envv, smpl.str, &info);
-// 	// f_pwd(&info);
-// 	built_env(&info, &smpl);
-//     // //mini_pwd(&info);
-
-// 	// built_pwd(&info, &smpl);
-
-// 	// //ft_putstr_fd("hello", 1);
-// 	// cd_built(&info, &smpl);
-// 	// ft_putendl_fd(" ", 1);
-// 	//built_pwd(&info, &smpl);
-// }

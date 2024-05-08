@@ -91,32 +91,3 @@ int cd_built(t_info *info, t_cmd *simple_cmd)
 	add_pwd_to_env(info);
 	return (0);
 }
-
-// int main (int av, char *ac, char **env)
-// {
-//     (void) av;
-//     (void) ac;
-//     t_info  info;
-// 	t_cmd smpl;
-// 	smpl.str = malloc(sizeof(char *) * 2);
-//     if (smpl.str == NULL) {
-//         return 1;
-//     }
-// 	smpl.str[0] = ft_strdup("cd");
-// 	smpl.str[1] = ft_strdup ("hlo");
-
-// 	info.pwd=NULL;
-// 	info.old_pwd=NULL;
-// 	info.envv=NULL;
-//     //ft_putstr_fd("hello", 1);
-//     env_st(&info,env);
-// 	f_pwd(&info);
-//     //mini_pwd(&info);
-
-// 	built_pwd(&info, &smpl);
-
-// 	//ft_putstr_fd("hello", 1);
-// 	cd_built(&info, &smpl);
-// 	ft_putendl_fd(" ", 1);
-// 	//built_pwd(&info, &smpl);
-// }

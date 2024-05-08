@@ -21,13 +21,3 @@ int built_env(t_info *info, t_cmd *simple_cmd)
     else
         return (1);
 }
-
-// int main (int av, char *ac, char **env)
-// {
-//     (void) av;
-//     (void) ac;
-//     t_info  info;
-
-// 	env_st(&info,env);
-//     built_env(&info);
-// }
