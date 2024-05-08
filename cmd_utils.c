@@ -6,13 +6,13 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 15:43:13 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:11:41 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*cmd_add(char **argv, t_token *redirects, t_cmd **cmds)
+t_cmd	*cmd_add(t_cmd **cmds)
 {
 	t_cmd	*node;
 	t_cmd	*temp;
@@ -20,9 +20,6 @@ t_cmd	*cmd_add(char **argv, t_token *redirects, t_cmd **cmds)
 	node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!node)
 		return (NULL);
-	node->argv = argv;
-	node->redirects = redirects;
-	node->next = NULL;
 	if (!cmds)
 		return (node);
 	if (!*cmds)
@@ -31,6 +28,9 @@ t_cmd	*cmd_add(char **argv, t_token *redirects, t_cmd **cmds)
 	while (temp->next)
 		temp = temp->next;
 	temp->next = node;
+	node->next = NULL;
+	node->argv = NULL;
+	node->redirects = NULL;
 	return (node);
 }
 

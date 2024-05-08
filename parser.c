@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 16:26:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:47:02 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parser(t_token **token_list, t_cmd **cmd_table)
 			token_delone(token_list);
 		if (!*token_list || (*token_list)->type == PIPE)
 			return (cmd_clear(cmd_table), type_error(*token_list), 1);
-		node = cmd_add(NULL, NULL, cmd_table);
+		node = cmd_add(cmd_table);
 		if (!node)
 			return (cmd_clear(cmd_table), -1);
 		err = cmd_redirects(token_list, &node->redirects);
