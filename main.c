@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/08 11:16:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/09 10:02:57 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
-	env_st(&info,envp);
+	env_st(&info, envp);
 	f_pwd(&info);
 	while (1)
 	{

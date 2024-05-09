@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/08 15:47:02 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/10 19:11:41 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	parser(t_token **token_list, t_cmd **cmd_table)
 		node->argv = cmd_argv(token_list);
 		if (!node->argv)
 			return (cmd_clear(cmd_table), -1);
+		node->builtin = cmd_builtin(node->argv[0]);
 	}
 	return (0);
 }
@@ -90,6 +91,16 @@ char	**cmd_argv(t_token **token_list)
 		token_delone(token_list);
 	}
 	return (result);
+}
+
+/*
+	returns a function pointer with the prototype:
+		int	func(t_info *, t_cmd *);
+*/
+int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
+{
+	(void)argv_0;
+	return (NULL);
 }
 
 void	type_error(t_token *token)

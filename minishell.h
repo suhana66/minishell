@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/08 19:57:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/09 09:59:16 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,21 @@
 
 # include "libft.h"
 # include <readline/readline.h>
+
+typedef struct s_info
+{
+	char			*pwd;
+	char			*old_pwd;
+	struct s_env	*envv;
+}	t_info;
+
+typedef struct s_env
+{
+	char			**path;
+	char			*value;
+	char			*key;
+	struct s_env	*next;
+}	t_env;
 
 typedef enum e_type
 {
@@ -33,25 +48,11 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_env
-{
-	char			**path;
-	char			*value;
-	char			*key;
-	struct s_env	*next;
-}				t_env;
-
-typedef struct s_info
-{
-	char			*pwd;
-	char			*old_pwd;
-	t_env			*envv;
-}				t_info;
-
 typedef struct s_cmd
 {
 	char			**argv;
-	t_token			*redirects;
+	struct s_token	*redirects;
+	int				(*builtin)(struct s_info *, struct s_cmd *);
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -68,6 +69,7 @@ void	token_clear(t_token **tokens);
 int		parser(t_token **token_list, t_cmd **cmd_table);
 int		cmd_redirects(t_token **token_list, t_token **result);
 char	**cmd_argv(t_token **token_list);
+int		(*cmd_builtin(char *argv_0))(t_info *, t_cmd *cmd);
 void	type_error(t_token *token);
 
 t_cmd	*cmd_add(t_cmd **cmds);
