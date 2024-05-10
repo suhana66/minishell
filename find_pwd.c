@@ -3,33 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   find_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:30:17 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 13:47:21 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/10 23:06:40 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	f_pwd(t_info *info)
+int	find_pwd(t_info *info)
 {
-	t_env	*t;
+	t_env	*env;
 
-	t = info->envv;
-	while (t)
+	env = info->env;
+	info->old_pwd = NULL;
+	info->pwd = NULL;
+	while (env)
 	{
-		if (!(ft_strncmp(t->value, "PWD=", 4)))
+		if (!(ft_strncmp(env->value, "PWD=", 4)))
 		{
 			if (info->pwd == NULL)
-				info->pwd = ft_substr(t->value, 4, ft_strlen(t->value) - 4);
+				info->pwd = ft_strdup(env->value + 4);
 		}
-		else if (!(ft_strncmp(t->value, "OLDPWD=", 7)))
+		else if (!(ft_strncmp(env->value, "OLDPWD=", 7)))
 		{
 			if (info->old_pwd == NULL)
-				info->old_pwd = ft_substr(t->value, 4, ft_strlen(t->value) - 4);
+				info->old_pwd = ft_strdup(env->value + 7);
 		}
-		t = t->next;
+		env = env->next;
 	}
 	if (!info->pwd || !info->old_pwd)
 		return (0);

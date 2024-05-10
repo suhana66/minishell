@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/10 18:14:27 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/10 23:07:38 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ char	**split_path_in_env(char **env);
 t_env	*env_new(char *str);
 t_env	*env_list(char **env);
 void	free_env(t_env *head);
+int		find_pwd(t_info *info);
 
-int		f_pwd(t_info *info);
 char	*env_to_str(t_env *lst);
 char	*ft_strndup(const char *src, size_t n);
 int		equal_s(char *str);
