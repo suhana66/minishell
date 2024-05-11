@@ -6,11 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:29 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/10 23:35:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:57:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 
 int	mini_env(t_info *info, t_cmd *simple_cmd)
 {

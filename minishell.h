@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/11 07:49:55 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:54:25 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,5 @@ t_env	*env_new(char *str);
 t_env	*env_list(char **env);
 void	free_env(t_env *head);
 int		find_pwd(t_info *info);
-
-char	*env_to_str(t_env *lst);
-char	*ft_strndup(const char *src, size_t n);
-int		equal_s(char *str);
-int		check_valid_identifier(char c);
 
 #endif /* MINISHELL_H */
