@@ -13,6 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define HEREDOC_MSG	"\033[1;34m> \033[0m"
+
 # include "libft.h"
 # include <readline/readline.h>
 
