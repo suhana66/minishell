@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/10 18:14:44 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:50:17 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmd	*cmd_table;
 	int		err;
 	t_info	info;
 
@@ -22,19 +21,20 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
 	if (parse_env(&info, envp))
 		return (memory_error(), 1);
-	f_pwd(&info);
+	find_pwd(&info);
 	while (1)
 	{
-		err = get_cmd_table(&cmd_table);
+		err = get_cmd_table(&info.cmd_table);
 		if (err > 0)
 			continue ;
 		if (err < 0)
 			return (2);
 		// executor
-		cmd_clear(&cmd_table);
+		cmd_clear(&info.cmd_table);
 	}
 	(void)argv;
 	(void)envp;
+	free_info(&info);
 	return (0);
 }
 
@@ -64,4 +64,13 @@ int	get_cmd_table(t_cmd **cmd_table)
 void	memory_error(void)
 {
 	ft_putendl_fd("minishell: unable to assign memory", STDERR_FILENO);
+}
+
+void	free_info(t_info *info)
+{
+	array_clear(info->path);
+	free_env(info->env);
+	free(info->pwd);
+	free(info->old_pwd);
+	cmd_clear(&info->cmd_table);
 }

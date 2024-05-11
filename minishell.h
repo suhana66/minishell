@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/10 23:07:38 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:49:55 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_info
 	char			*pwd;
 	char			*old_pwd;
 	struct s_env	*env;
+	struct s_cmd	*cmd_table;
 }	t_info;
 
 typedef struct s_env
@@ -58,6 +59,7 @@ typedef struct s_cmd
 
 int		get_cmd_table(t_cmd **cmd_table);
 void	memory_error(void);
+void	free_info(t_info *info);
 
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
