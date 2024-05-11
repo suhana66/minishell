@@ -77,7 +77,7 @@ void	handle_cmd(t_cmd *cmd, t_info *info)
 
 	exit_code = 0;
 	if (cmd->redirects)
-		//if (check_redirections(cmd))
+		//if (ck_redirects(cmd))
 			//exit(1);
 	if (cmd->builtin != NULL)
 	{
