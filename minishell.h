@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/09 09:59:16 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:20:24 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@
 
 typedef struct s_info
 {
+	char			**path;
 	char			*pwd;
 	char			*old_pwd;
-	struct s_env	*envv;
+	struct s_env	*env;
+	struct s_cmd	*cmd_table;
 }	t_info;
 
 typedef struct s_env
 {
-	char			**path;
 	char			*value;
 	char			*key;
 	struct s_env	*next;
@@ -59,6 +60,8 @@ typedef struct s_cmd
 }	t_cmd;
 
 int		get_cmd_table(t_cmd **cmd_table);
+void	memory_error(void);
+void	free_info(t_info *info);
 
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
@@ -78,11 +81,11 @@ t_cmd	*cmd_add(t_cmd **cmds);
 void	cmd_clear(t_cmd **cmds);
 void	array_clear(char **array);
 
-int		env_st(t_info *info, char **env);
-int		f_pwd(t_info *info);
-char	*env_to_str(t_env *lst);
-char	*ft_strndup(const char *src, size_t n);
-int		equal_s(char *str);
-int		check_valid_identifier(char c);
+int		parse_env(t_info *info, char **env);
+char	**split_path_in_env(char **env);
+t_env	*env_new(char *str);
+t_env	*env_list(char **env);
+void	free_env(t_env *head);
+int		find_pwd(t_info *info);
 
 #endif /* MINISHELL_H */

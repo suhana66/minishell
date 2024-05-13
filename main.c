@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/09 10:02:57 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:14:11 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmd	*cmd_table;
 	int		err;
 	t_info	info;
 
 	if (argc != 1)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
-	env_st(&info, envp);
-	f_pwd(&info);
+	if (parse_env(&info, envp) || find_pwd(&info))
+		return (memory_error(), free_info(&info), 1);
 	while (1)
 	{
-		err = get_cmd_table(&cmd_table);
+		err = get_cmd_table(&info.cmd_table);
 		if (err > 0)
 			continue ;
 		if (err < 0)
-			return (1);
+			return (memory_error(), free_info(&info), 2);
 		// executor
-		cmd_clear(&cmd_table);
+		cmd_clear(&info.cmd_table);
 	}
 	(void)argv;
 	(void)envp;
+	free_info(&info);
 	return (0);
 }
 
@@ -55,7 +55,19 @@ int	get_cmd_table(t_cmd **cmd_table)
 		err = parser(&token_list, cmd_table);
 	free(input);
 	token_clear(&token_list);
-	if (err < 0)
-		ft_putendl_fd("minishell: unable to assign memory", STDERR_FILENO);
 	return (err);
+}
+
+void	memory_error(void)
+{
+	ft_putendl_fd("minishell: unable to assign memory", STDERR_FILENO);
+}
+
+void	free_info(t_info *info)
+{
+	array_clear(info->path);
+	free_env(info->env);
+	free(info->pwd);
+	free(info->old_pwd);
+	cmd_clear(&info->cmd_table);
 }

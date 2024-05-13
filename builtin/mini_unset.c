@@ -6,11 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:46 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 17:14:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:58:47 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 
 int	remove_env_var(t_info *info, t_env *to_rem, t_env *p)
 {
@@ -19,8 +19,8 @@ int	remove_env_var(t_info *info, t_env *to_rem, t_env *p)
 		if (p)
 			p->next = to_rem->next;
 		else
-			info->envv = to_rem->next;
-		if (info->envv && !info->envv->key)
+			info->env = to_rem->next;
+		if (info->env && !info->env->key)
 			return (1);
 		free(to_rem->key);
 		free(to_rem->value);
@@ -34,7 +34,7 @@ int	check_unset_arg(char *str, t_info *info)
 {
 	if (ft_strncmp("PATH", str, 4) == 0)
 	{
-		if (!info->envv)
+		if (!info->env)
 			return (0);
 		printf("check if path must be removed or not");
 		return (0);
@@ -121,6 +121,6 @@ int	mini_unset(t_info *info, t_cmd *simple_cmd)
 	if (error_unset(info, simple_cmd))
 		return (1);
 	else
-		del_var(info->envv, simple_cmd->argv, info);
+		del_var(info->env, simple_cmd->argv, info);
 	return (0);
 }

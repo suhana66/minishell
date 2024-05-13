@@ -3,126 +3,131 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:30:36 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 13:47:10 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:11:42 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*copy_env(char *str)
+int	parse_env(t_info *info, char **env)
 {
-	t_env	*t;
-	int		key_l;
-	char	*pos_equal;
+	size_t	i;
+	char	*temp;
 
-	t = malloc(sizeof(t_env));
-	if (!t)
-		return (NULL);
-	pos_equal = ft_strchr(str, '=');
-	if (!pos_equal || pos_equal == str)
-		return (free(t), NULL);
-	key_l = pos_equal - str;
-	t->key = malloc(key_l + 1);
-	if (!t->key)
-		return (free(t), NULL);
-	ft_strlcpy(t->key, str, key_l + 1);
-	t->value = ft_strdup(str);
-	t->next = NULL;
-	return (t);
-}
-
-void	free_env(t_env *head)
-{
-	t_env	*t;
-
-	while (head)
-	{
-		t = head;
-		head = head->next;
-		free(t->key);
-		free(t->value);
-		free(t);
-	}
-}
-
-t_env	*add_env(char **env)
-{
-	int		i;
-	t_env	*f;
-	t_env	*t;
-	t_env	*n;
-
+	info->env = NULL;
+	info->pwd = NULL;
+	info->old_pwd = NULL;
+	info->cmd_table = NULL;
+	info->path = split_path_in_env(env);
+	if (!info->path)
+		return (1);
 	i = 0;
-	f = NULL;
-	t = NULL;
-	n = NULL;
-	while (env[i])
+	while (info->path[i])
 	{
-		n = copy_env(env[i]);
-		if (!n)
+		if (info->path[i][ft_strlen(info->path[i]) - 1] != '/')
 		{
-			free_env(f);
-			return (0);
+			temp = ft_strjoin(info->path[i], "/");
+			free(info->path[i]);
+			info->path[i] = temp;
 		}
-		if (!f)
-			f = n;
-		else
-			t->next = n;
-		t = n;
 		i++;
 	}
-	return (f);
+	info->env = env_list(env);
+	if (!info->env)
+		return (2);
+	return (0);
 }
 
-char	*find_path_in_env(char **env)
+char	**split_path_in_env(char **env)
 {
-	char	*e_path;
-	int		i;
+	size_t	i;
+	char	**result;
 
-	e_path = NULL;
 	i = 0;
+	result = NULL;
 	while (env[i])
 	{
 		if (!(ft_strncmp(env[i], "PATH=", 5)))
 		{
-			e_path = ft_substr(env[i], 5, ft_strlen(env[i]) - 5);
-			break ;
+			result = ft_split(env[i] + 5, ':');
+			if (!result)
+				return (NULL);
 		}
 		i++;
 	}
-	if (!e_path)
-		return (NULL);
-	return (e_path);
+	if (!result)
+	{
+		result = malloc(sizeof(char *));
+		if (result)
+			result[0] = NULL;
+	}
+	return (result);
 }
 
-int	env_st(t_info *info, char **env)
+t_env	*env_new(char *str)
 {
-	int		i;
-	char	*t;
+	t_env	*node;
+	size_t	key_l;
+	char	*pos_equal;
 
-	info->envv = add_env(env);
-	t = find_path_in_env(env);
-	info->envv->path = ft_split(t, ':');
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	pos_equal = ft_strchr(str, '=');
+	if (!pos_equal)
+		return (free(node), NULL);
+	key_l = pos_equal - str;
+	node->key = malloc(key_l + 1);
+	if (!node->key)
+		return (free(node), NULL);
+	ft_strlcpy(node->key, str, key_l + 1);
+	node->value = ft_strdup(str);
+	if (!node->value)
+		return (free(node->key), free(node), NULL);
+	node->next = NULL;
+	return (node);
+}
+
+t_env	*env_list(char **env)
+{
+	t_env	*node;
+	t_env	*result;
+	t_env	*temp;
+	size_t	i;
+
 	i = 0;
-	free(t);
-	if (!info->envv || !info->envv->path)
+	result = NULL;
+	while (env[i])
 	{
-		free_env(info->envv);
-		// error "env"
-		exit(0);
-	}
-	while (info->envv->path[i])
-	{
-		if (info->envv->path[i][ft_strlen(info->envv->path[i]) - 1] != '/')
+		node = env_new(env[i]);
+		if (!node)
 		{
-			t = ft_strjoin(info->envv->path[i], "/");
-			free(info->envv->path[i]);
-			info->envv->path[i] = t;
+			free_env(result);
+			return (NULL);
 		}
+		if (!result)
+			result = node;
+		else
+			temp->next = node;
+		temp = node;
 		i++;
 	}
-	return (0);
+	return (result);
+}
+
+void	free_env(t_env *head)
+{
+	t_env	*to_delete;
+
+	while (head)
+	{
+		to_delete = head;
+		head = head->next;
+		free(to_delete->key);
+		free(to_delete->value);
+		free(to_delete);
+	}
 }

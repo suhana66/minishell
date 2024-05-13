@@ -6,11 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 17:13:41 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:58:21 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 
 void	change_pwd(t_info *info)
 {
@@ -31,7 +31,7 @@ int	find_path(t_info *info, char *str)
 
 	ret = -1;
 	tmp = NULL;
-	t = info->envv;
+	t = info->env;
 	while (t)
 	{
 		if ((ft_strncmp(t->value, str, ft_strlen(str)) == 0))
@@ -59,7 +59,7 @@ void	add_pwd_to_env(t_info *info)
 	t_env	*t;
 	char	*tmp;
 
-	t = info->envv;
+	t = info->env;
 	while (t)
 	{
 		if (!ft_strncmp(t->value, "PWD=", 4))
