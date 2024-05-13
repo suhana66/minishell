@@ -23,6 +23,8 @@ typedef struct s_info
 	char			*pwd;
 	char			*old_pwd;
 	struct s_env	*envv;
+	int				*pid;
+	int				reset;
 }	t_info;
 
 typedef struct s_env
