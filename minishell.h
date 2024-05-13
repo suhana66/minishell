@@ -58,6 +58,7 @@ typedef struct s_cmd
 	char			**argv;
 	struct s_token	*redirects;
 	int				(*builtin)(struct s_info *, struct s_cmd *);
+	char			*hd_f_name;
 	struct s_cmd	*next;
 }	t_cmd;
 

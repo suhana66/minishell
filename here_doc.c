@@ -103,7 +103,6 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 	t_token	*start;
 	int		sl;
     int     error_num;
-	char	*f_name;
 
 	start = cmd->redirects;
 	sl = 0;
@@ -111,8 +110,10 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 	{	
 		if (cmd->redirects->type == LESSLESS)
 		{
-			f_name = heredoc_temp_file();
-			sl = ft_heredoc(info, cmd->redirects, f_name);
+			if (cmd->hd_file_name)
+				free(cmd->hd_file_name);
+			cmd->hd_f_name = heredoc_temp_file();
+			sl = ft_heredoc(info, cmd->redirects, cmd->hd_f_name);
 			if (sl)
 			{
 				error_num = 1;
