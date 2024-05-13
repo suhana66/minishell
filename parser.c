@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/09 10:04:00 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:16:35 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ char	**cmd_argv(t_token **token_list)
 	return (result);
 }
 
-// TODO
 /*
 	returns a function pointer with the prototype:
 		int	func(t_info *, t_cmd *);

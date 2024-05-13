@@ -6,11 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 17:13:57 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:59:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 
 int	equal_s(char *str)
 {
@@ -138,8 +138,8 @@ int	var_exist(char *var, t_info *info)
 		var = del_quotes(var, '\"');
 	if (var[equal_s(var)] == '\'')
 		var = del_quotes(var, '\'');
-	cur = info->envv;
-	if (!info->envv)
+	cur = info->env;
+	if (!info->env)
 		return (0);
 	while (cur)
 	{
@@ -189,7 +189,6 @@ int	env_add(char *var, t_env *env)
 	new->value = value;
 	new->next = NULL;
 	temp->next = new;
-	new->path = NULL;
 	return (0);
 }
 
@@ -239,15 +238,15 @@ int	mini_export(t_info *info, t_cmd *simple_cmd)
 {
 	int	i;
 
-	if (info->envv == NULL)
+	if (info->env == NULL)
 		return (0);
 	if (!simple_cmd->argv[1] || simple_cmd->argv[1][0] == '\0')
-		dec_sorted(info->envv);
+		dec_sorted(info->env);
 	i = 1;
 	while (simple_cmd->argv[i])
 	{
 		if (check_param(simple_cmd->argv[i]) == 0 && !var_exist(simple_cmd->argv[i], info))
-			env_add(simple_cmd->argv[i], info->envv);
+			env_add(simple_cmd->argv[i], info->env);
 		i++;
 	}
 	return (0);

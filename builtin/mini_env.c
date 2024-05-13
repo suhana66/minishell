@@ -6,30 +6,25 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:29 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/08 17:13:22 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/11 07:57:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 
 int	mini_env(t_info *info, t_cmd *simple_cmd)
 {
-	t_env	*t;
+	t_env	*env;
 
 	(void)simple_cmd;
-	if (!info->envv)
+	env = info->env;
+	if (!env)
 		return (1);
-	t = info->envv;
-	if (t)
+	while (env)
 	{
-		while (t)
-		{
-			if (ft_strchr(t->value, '='))
-				printf("%s\n", t->value);
-			t = t->next;
-		}
-		return (0);
+		if (ft_strchr(env->value, '='))
+			ft_putendl_fd(env->value, STDOUT_FILENO);
+		env = env->next;
 	}
-	else
-		return (1);
+	return (0);
 }
