@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:30:36 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/10 22:49:55 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:11:42 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int	parse_env(t_info *info, char **env)
 	size_t	i;
 	char	*temp;
 
+	info->env = NULL;
+	info->pwd = NULL;
+	info->old_pwd = NULL;
+	info->cmd_table = NULL;
 	info->path = split_path_in_env(env);
 	if (!info->path)
 		return (1);
@@ -33,7 +37,7 @@ int	parse_env(t_info *info, char **env)
 	}
 	info->env = env_list(env);
 	if (!info->env)
-		return (array_clear(info->path), 2);
+		return (2);
 	return (0);
 }
 

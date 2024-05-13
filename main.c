@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/11 07:50:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:06:30 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,15 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
-	if (parse_env(&info, envp))
-		return (memory_error(), 1);
-	find_pwd(&info);
+	if (parse_env(&info, envp) || find_pwd(&info))
+		return (memory_error(), free_info(&info), 1);
 	while (1)
 	{
 		err = get_cmd_table(&info.cmd_table);
 		if (err > 0)
 			continue ;
 		if (err < 0)
-			return (2);
+			return (memory_error(), free_info(&info), 2);
 		// executor
 		cmd_clear(&info.cmd_table);
 	}
@@ -56,8 +55,6 @@ int	get_cmd_table(t_cmd **cmd_table)
 		err = parser(&token_list, cmd_table);
 	free(input);
 	token_clear(&token_list);
-	if (err < 0)
-		memory_error();
 	return (err);
 }
 
