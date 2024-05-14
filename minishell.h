@@ -20,6 +20,7 @@
 
 typedef struct s_info
 {
+	char			**env_arr;
 	char			**path;
 	char			*pwd;
 	char			*old_pwd;

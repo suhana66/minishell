@@ -59,12 +59,12 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 	i = 0;
 	cmd->argv = split_again(cmd->argv);
 	if (!access(cmd->argv[0], F_OK))
-		execve(cmd->argv[0], cmd->argv, info->envv->value);
+		execve(cmd->argv[0], cmd->argv, info->envv_arr);
 	while (info->paths[i])
 	{
 		mycmd = ft_strjoin(info->envv->paths[i], cmd->argv[0]);
 		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->argv, info->envv->value);
+			execve(mycmd, cmd->argv, info->envv_arr);
 		free(mycmd);
 		i++;
 	}
