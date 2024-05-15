@@ -1,6 +1,6 @@
 NAME := minishell
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Wfatal-errors
+CFLAGS := -Wall -Wextra -Werror
 
 LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a
@@ -9,14 +9,19 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 READLINE_LIBRARY := -lreadline
 
 MAIN_SRCS := \
-	utils.c \
 	cmd_utils.c \
-	find_pwd.c \
+	expander.c \
 	lexer.c \
+	utils.c \
+	token_utils.c \
 	main.c \
-	parse_env.c \
 	parser.c \
-	token_utils.c
+	parse_env.c \
+	find_pwd.c \
+	here_doc.c \
+	redirection.c \
+	single_cmd.c \
+	execution.c
 
 BUILTIN_PATH := builtin
 BUILTIN_SRCS := \
