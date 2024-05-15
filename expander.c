@@ -6,13 +6,14 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/14 14:39:50 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:51:34 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	replace_enviornment_variable(char **str, size_t *var_i, t_env *env);
+char	*env_search(t_env *env, char *key);
 
 int	expander(t_cmd *cmd)
 {
@@ -84,4 +85,23 @@ int	replace_enviornment_variable(char **str, size_t *var_i, t_env *env)
 	*str = temp;
 	*var_i += ft_strlen(env_val);
 	return (0);
+}
+
+char	*env_search(t_env *env, char *key)
+{
+	char	*result;
+
+	while (env)
+	{
+		if (!ft_strncmp(env->value, key, ft_strlen(key)) && *(env->value + ft_strlen(key)) == '=')
+		{
+			result = env->value + ft_strlen(key) + 1;
+			if (*result)
+				return (NULL);
+			else
+				return (result);
+		}
+		env = env->next;
+	}
+	return (NULL);
 }
