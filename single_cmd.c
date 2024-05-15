@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 void	free_arr(char **strs)
 {
@@ -59,15 +59,16 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 	i = 0;
 	cmd->argv = split_again(cmd->argv);
 	if (!access(cmd->argv[0], F_OK))
-		execve(cmd->argv[0], cmd->argv, info->envv_arr);
-	while (info->paths[i])
+		execve(cmd->argv[0], cmd->argv, info->env_arr);
+	while (info->path[i])
 	{
-		mycmd = ft_strjoin(info->envv->paths[i], cmd->argv[0]);
+		mycmd = ft_strjoin(info->path[i], cmd->argv[0]);
 		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->argv, info->envv_arr);
+			execve(mycmd, cmd->argv, info->env_arr);
 		free(mycmd);
 		i++;
 	}
+	return (0);
 	//return (cmd_not_found(cmd->str[0]));
 }
 
@@ -77,8 +78,8 @@ void	handle_cmd(t_cmd *cmd, t_info *info)
 
 	exit_code = 0;
 	if (cmd->redirects)
-		//if (ck_redirects(cmd))
-			//exit(1);
+		if (ck_redirects(cmd))
+			exit(1);
 	if (cmd->builtin != NULL)
 	{
 		exit_code = cmd->builtin(info, cmd);
@@ -89,45 +90,56 @@ void	handle_cmd(t_cmd *cmd, t_info *info)
 	exit(exit_code);
 }
 
-void	single_cmd(t_cmd *cmd, t_info *t_info)
+void	single_cmd(t_cmd *cmd, t_info *info)
 {
 	int	pid;
 	int	status;
     int error_num;
 
 	//tools->simple_cmds = call_expander(tools, tools->simple_cmds); expander should be added
-	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
-		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
-	{
-		error_num = cmd->builtin(tools, cmd);
-		return ;
-	}
-	//send_heredoc(tools, cmd); do here_doc
+	// if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
+	// 	|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
+	// {
+	// 	error_num = cmd->builtin(info, cmd);
+	// 	return ;
+	// }
+	//send_heredoc(info, cmd); //do here_doc
 	pid = fork();
 	if (pid < 0)
 		printf("error child not created");
 	if (pid == 0)
-		handle_cmd(cmd, tools);
+		handle_cmd(cmd, info);
 	waitpid(pid, &status, 0);
 	// if (WIFEXITED(status))
 	// 	g_global.error_num = WEXITSTATUS(status);
 }
 
-int main() {
-    // Example input array of strings with extra spaces
-    char *double_arr[] = {"ls", "-l", "   how ", "are  you", "   today", NULL};
+// #include "minishell.h" // Include your header file here
 
-    // Call the resplit_str function to process the input array
-    char **result = split_again(double_arr);
+// int main(int ac, char **av, char **env) {
+//     // Initialize necessary variables or data structures
+//     t_info info;
+//     // Assuming you have initialized the 'info' structure and its members appropriately
+    
+// 	info.env_arr = env;
+// 	parse_env(&info, env);
+//     // Example command to test
+//     t_cmd cmd;
+//     cmd.argv = malloc(sizeof(char *) * 2);
+//     cmd.argv[0] = strdup("ls"); // Example command name
+//     cmd.argv[1] = NULL; // NULL terminator
+//     cmd.builtin = NULL; // Assuming no built-in command
+    
+//     // Call the single_cmd function to execute the command
+//     single_cmd(&cmd, &info);
+    
+//     // After single_cmd returns, you can check its behavior, e.g., whether it executed the command successfully
+    
+//     // Free allocated memory
+//     free(cmd.argv[0]);
+//     free(cmd.argv);
+    
+//     return 0;
+// }
 
-    // Print the resulting array of strings
-    printf("Resulting array of strings:\n");
-    for (int i = 0; result[i] != NULL; i++) {
-        printf("%s\n", result[i]);
-    }
-
-    // Free memory allocated for the resulting array
-    //free_arr(result);
-
-    return 0;
-}
+//need to check after combining
