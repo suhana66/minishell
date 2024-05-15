@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/13 11:16:35 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:18:24 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,21 @@ char	**cmd_argv(t_token **token_list)
 */
 int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
 {
-	(void)argv_0;
+	static void	*builtins[7][2] = {
+	{"echo", mini_echo},
+	{"cd", mini_cd},
+	{"pwd", mini_pwd},
+	{"export", mini_export},
+	{"unset", mini_unset},
+	{"env", mini_env},
+	{"exit", mini_exit}
+	};
+	int			i;
+
+	i = 0;
+	while (i < 7)
+		if (ft_strncmp(builtins[i][0], argv_0, ft_strlen(argv_0)) == 0)
+			return (builtins[i][1]);
 	return (NULL);
 }
 

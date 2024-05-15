@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 10:13:37 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:21:32 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,14 @@ t_env	*env_new(char *str);
 t_env	*env_list(char **env);
 void	free_env(t_env *head);
 int		find_pwd(t_info *info);
+
+int		mini_echo(t_info *info, t_cmd *simple_cmd);
+int		mini_cd(t_info *info, t_cmd *simple_cmd);
+int		mini_pwd(t_info *info, t_cmd *simple_cmd);
+int		mini_export(t_info *info, t_cmd *simple_cmd);
+int		mini_unset(t_info *info, t_cmd *simple_cmd);
+int		mini_env(t_info *info, t_cmd *simple_cmd);
+int		mini_exit(t_info *info, t_cmd *simple_cmd);
 
 //
 char	*env_to_str(t_env *lst);
