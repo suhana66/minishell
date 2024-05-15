@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/13 11:20:24 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:13:37 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,11 @@ t_env	*env_new(char *str);
 t_env	*env_list(char **env);
 void	free_env(t_env *head);
 int		find_pwd(t_info *info);
+
+//
+char	*env_to_str(t_env *lst);
+int		equal_s(char *str);
+int		determine_exit_code(char **str);
+int		is_str_digit(char *str);
 
 #endif /* MINISHELL_H */

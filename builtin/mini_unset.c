@@ -6,11 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:46 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/11 07:58:47 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:09:56 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "minishell.h"
 
 int	remove_env_var(t_info *info, t_env *to_rem, t_env *p)
 {

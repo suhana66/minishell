@@ -6,11 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/11 07:59:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:08:34 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "minishell.h"
 
 int	equal_s(char *str)
 {
@@ -179,7 +179,7 @@ int	env_add(char *var, t_env *env)
 	if (!value)
 		return (1);
 	k = ft_strchr(var, '=') - var;
-	key = ft_strndup(var, k);
+	key = ft_substr(var, 0, k);
 	if (!key)
 		return (free(value), 1);
 	temp = env;
@@ -198,7 +198,7 @@ void	print_with_q(char *str)
 	char	*key;
 
 	pos_e = ft_strchr(str, '=');
-	key = ft_strndup(str, pos_e - str);
+	key = ft_substr(str, 0, pos_e - str);
 	ft_putstr_fd(key, 1);
 	ft_putchar_fd('=', 1);
 	ft_putchar_fd('"', 1);

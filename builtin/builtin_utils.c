@@ -6,39 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:07 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/11 07:58:10 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:09:34 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
-
-char	*ft_strndup(const char *src, size_t n)
-{
-	size_t		len;
-	char		*dst;
-	const char	*ptr;
-	size_t		i;
-
-	ptr = src;
-	len = 0;
-	i = 0;
-	while (len < n && *ptr != '\0')
-	{
-		len++;
-		ptr++;
-	}
-	dst = (char *)malloc(sizeof(char) * (len + 1));
-	if (dst == NULL)
-		return (NULL);
-	ptr = src;
-	while (i < len)
-	{
-		dst[i] = ptr[i];
-		i++;
-	}
-	dst[len] = '\0';
-	return (dst);
-}
+#include "minishell.h"
 
 int	total_size_env(t_env *l)
 {
