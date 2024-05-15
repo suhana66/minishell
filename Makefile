@@ -9,6 +9,7 @@ LIBFT_LINK := -L$(LIBFT_PATH) -lft
 READLINE_LIBRARY := -lreadline
 
 MAIN_SRCS := \
+	utils.c \
 	cmd_utils.c \
 	find_pwd.c \
 	lexer.c \

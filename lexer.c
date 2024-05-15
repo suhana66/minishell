@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/06 15:52:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:24:21 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	lexer(char *input, t_token **token_list)
 int	token_str(char **input, char *delimiters, char **result)
 {
 	size_t	i;
-	int		encloser;
+	char	encloser;
 	char	*str;
 
 	i = 0;
@@ -46,13 +46,7 @@ int	token_str(char **input, char *delimiters, char **result)
 	str = *input;
 	while (str[i] && (!ft_strchr(delimiters, str[i]) || encloser))
 	{
-		if (str[i] == '"' || str[i] == '\'')
-		{
-			if (!encloser)
-				encloser = str[i];
-			else if (str[i] == encloser)
-				encloser = 0;
-		}
+		get_encloser(str[i], &encloser);
 		i++;
 	}
 	if (encloser)

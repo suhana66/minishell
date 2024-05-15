@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/08 16:11:41 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:25:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,4 @@ void	cmd_clear(t_cmd **cmds)
 		free(to_delete);
 	}
 	*cmds = NULL;
-}
-
-void	array_clear(char **array)
-{
-	size_t	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
 }

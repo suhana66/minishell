@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 10:21:32 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:24:05 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_cmd
 int		get_cmd_table(t_cmd **cmd_table);
 void	memory_error(void);
 void	free_info(t_info *info);
+
+char	get_encloser(char c, char *encloser);
 
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
