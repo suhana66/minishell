@@ -6,18 +6,30 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 10:51:34 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 11:22:58 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	replace_enviornment_variable(char **str, size_t *var_i, t_env *env);
-char	*env_search(t_env *env, char *key);
-
-int	expander(t_cmd *cmd)
+int	expander(t_cmd *cmd, t_env *env)
 {
-	(void)cmd;
+	char	**argv;
+	t_token	*redirects;
+	size_t	i;
+
+	argv = cmd->argv;
+	i = 0;
+	while (argv[i])
+		if (expand_arg(&argv[i++], env))
+			return (1);
+	redirects = cmd->redirects;
+	while (redirects)
+	{
+		if (redirects->type != LESSLESS)
+			expand_arg(&redirects->str, env);
+		redirects = redirects->next;
+	}
 	return (0);
 }
 
@@ -44,7 +56,9 @@ int	expand_arg(char **str, t_env *env)
 		{
 			if ((*str)[i + 1] == '?')
 				; // TODO
-			else if ((*str)[i + 1] == '!' || (*str)[i + 1] == '$' || (*str)[i + 1] == '@' || (*str)[i + 1] == '*' || ft_isdigit((*str)[i + 1]))
+			else if ((*str)[i + 1] == '!' || (*str)[i + 1] == '$'
+				|| (*str)[i + 1] == '@' || (*str)[i + 1] == '*'
+				|| ft_isdigit((*str)[i + 1]))
 				ft_strlcpy(*str + i, *str + i + 2, ft_strlen(*str + i + 2) + 1);
 			else if (replace_enviornment_variable(str, &i, env))
 				return (1);

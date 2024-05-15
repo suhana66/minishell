@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 10:24:05 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 11:18:17 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,11 @@ int		mini_export(t_info *info, t_cmd *simple_cmd);
 int		mini_unset(t_info *info, t_cmd *simple_cmd);
 int		mini_env(t_info *info, t_cmd *simple_cmd);
 int		mini_exit(t_info *info, t_cmd *simple_cmd);
+
+int		expander(t_cmd *cmd, t_env *env);
+int		expand_arg(char **str, t_env *env);
+int		replace_enviornment_variable(char **str, size_t *var_i, t_env *env);
+char	*env_search(t_env *env, char *key);
 
 //
 char	*env_to_str(t_env *lst);
