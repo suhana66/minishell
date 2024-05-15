@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd_clear(&info.cmd_table);
 	}
 	(void)argv;
-	(void)envp;
+	info.env_arr = envp;
 	free_info(&info);
 	return (0);
 }

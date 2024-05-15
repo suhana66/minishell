@@ -20,11 +20,14 @@
 
 typedef struct s_info
 {
+	char			**env_arr;
 	char			**path;
 	char			*pwd;
 	char			*old_pwd;
 	struct s_env	*env;
 	struct s_cmd	*cmd_table;
+	int				*pid;
+	int				pip_n;
 }	t_info;
 
 typedef struct s_env
@@ -56,6 +59,7 @@ typedef struct s_cmd
 	char			**argv;
 	struct s_token	*redirects;
 	int				(*builtin)(struct s_info *, struct s_cmd *);
+	char			*hd_f_name;
 	struct s_cmd	*next;
 }	t_cmd;
 
