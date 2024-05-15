@@ -76,7 +76,7 @@ int	check_fd_heredoc(t_info *info, int end[2], t_cmd *cmd)
 	if (info->heredoc)
 	{
 		close(end[0]);
-		fd_in = open(cmd->hd_file_name, O_RDONLY);
+		fd_in = open(cmd->hd_f_name, O_RDONLY);
 	}
 	else
 		fd_in = end[0];

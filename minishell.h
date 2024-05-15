@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 11:18:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/15 11:49:53 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 # include "libft.h"
 # include <readline/readline.h>
+# include <stdbool.h>
+# include <fcntl.h>
 
 typedef struct s_info
 {
@@ -112,5 +114,8 @@ char	*env_to_str(t_env *lst);
 int		equal_s(char *str);
 int		determine_exit_code(char **str);
 int		is_str_digit(char *str);
+
+int		ck_redirects(t_cmd *cmd);
+char	*del_quotes(char *str, char c);
 
 #endif /* MINISHELL_H */

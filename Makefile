@@ -20,8 +20,8 @@ MAIN_SRCS := \
 	find_pwd.c \
 	here_doc.c \
 	redirection.c \
-	single_cmd.c \
-	execution.c
+	single_cmd.c
+# execution.c
 
 BUILTIN_PATH := builtin
 BUILTIN_SRCS := \
