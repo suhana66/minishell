@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 11:49:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/16 08:59:46 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 # define HEREDOC_MSG	"\033[1;34m> \033[0m"
 
 # include "libft.h"
+# include <stdio.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdbool.h>
 # include <fcntl.h>
+#include <sys/wait.h>
 
 typedef struct s_info
 {
@@ -65,7 +68,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-int		get_cmd_table(t_cmd **cmd_table);
+int		get_cmd_table(t_info *info);
 void	memory_error(void);
 void	free_info(t_info *info);
 

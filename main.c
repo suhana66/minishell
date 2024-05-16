@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/13 11:14:11 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/16 09:10:33 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 		return (memory_error(), free_info(&info), 1);
 	while (1)
 	{
-		err = get_cmd_table(&info.cmd_table);
+		err = get_cmd_table(&info);
 		if (err > 0)
 			continue ;
 		if (err < 0)
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-int	get_cmd_table(t_cmd **cmd_table)
+int	get_cmd_table(t_info *info)
 {
 	char	*input;
 	t_token	*token_list;
@@ -45,14 +45,17 @@ int	get_cmd_table(t_cmd **cmd_table)
 
 	input = readline("\033[1;32mminishell $ \033[0m");
 	if (!input)
-		return (ft_putendl_fd("minishell: unable to read input",
-				STDERR_FILENO), -1);
+	{
+		free_info(info);
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		exit(0);
+	}
 	if (!*input)
 		return (free(input), 1);
 	add_history(input);
 	err = lexer(input, &token_list);
 	if (!err)
-		err = parser(&token_list, cmd_table);
+		err = parser(&token_list, &info->cmd_table);
 	free(input);
 	token_clear(&token_list);
 	return (err);
