@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/16 08:59:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:57:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_cmd
 	struct s_token	*redirects;
 	int				(*builtin)(struct s_info *, struct s_cmd *);
 	char			*hd_f_name;
+	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
 
