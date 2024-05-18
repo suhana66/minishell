@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 14:11:11 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:19:02 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_info
 	char			**path;
 	char			*pwd;
 	char			*old_pwd;
-	struct s_env	*env;
+	char			**env;
 	struct s_cmd	*cmd_table;
 	int				*pid;
 	int				pip_n;
