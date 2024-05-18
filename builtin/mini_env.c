@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:29 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/15 10:12:50 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:47:46 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	mini_env(t_info *info, t_cmd *simple_cmd)
 {
-	t_env	*env;
+	size_t	i;
 
 	(void)simple_cmd;
-	env = info->env;
-	if (!env)
+	if (!info->env)
 		return (1);
-	while (env)
+	i = 0;
+	while (info->env[i])
 	{
-		if (ft_strchr(env->value, '='))
-			ft_putendl_fd(env->value, STDOUT_FILENO);
-		env = env->next;
+		if (ft_strchr(info->env[i], '='))
+			ft_putendl_fd(info->env[i], STDOUT_FILENO);
+		i++;
 	}
 	return (0);
 }

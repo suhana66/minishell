@@ -6,29 +6,29 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:46 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/15 10:09:56 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:09:53 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	remove_env_var(t_info *info, t_env *to_rem, t_env *p)
-{
-	if (to_rem)
-	{
-		if (p)
-			p->next = to_rem->next;
-		else
-			info->env = to_rem->next;
-		if (info->env && !info->env->key)
-			return (1);
-		free(to_rem->key);
-		free(to_rem->value);
-		free(to_rem);
-		return (1);
-	}
-	return (0);
-}
+// int	remove_env_var(t_info *info, t_env *to_rem, t_env *p)
+// {
+// 	if (to_rem)
+// 	{
+// 		if (p)
+// 			p->next = to_rem->next;
+// 		else
+// 			info->env = to_rem->next;
+// 		if (info->env && !info->env->key)
+// 			return (1);
+// 		free(to_rem->key);
+// 		free(to_rem->value);
+// 		free(to_rem);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 int	check_unset_arg(char *str, t_info *info)
 {
@@ -40,35 +40,30 @@ int	check_unset_arg(char *str, t_info *info)
 	return (1);
 }
 
-int	del_var(t_env *env, char **str, t_info *info)
+int	del_var(char **env, char **argv, t_info *info)
 {
-	t_env	*t;
-	t_env	*p;
-	t_env	*k;
-	int		i;
+	size_t	i;
+	size_t	j;
+	char	*temp;
 
 	i = 1;
-	while (str[i])
+	j = 0;
+	while (argv[i])
 	{
-		t = env;
-		while (t)
+		while (env[j])
 		{
-			if (ft_strncmp(t->key, str[i], ft_strlen(str[i])) == 0)
-			{
-				k = t;
+			if (ft_strncmp(env[j], argv[i], ft_strlen(argv[i])) == 0 && (env[j][ft_strlen(argv[i])] == '=' || env[j][ft_strlen(argv[i])] == 0))
 				break ;
-			}
-			t = t->next;
+			j++;
 		}
-		t = env;
-		p = NULL;
-		check_unset_arg(str[i], info);
-		while (t && t != k)
+		check_unset_arg(argv[i], info);
+		temp = env[j];
+		while (env[j])
 		{
-			p = t;
-			t = t->next;
+			env[j] = env[j + 1];
+			j++;
 		}
-		remove_env_var(info, k, p);
+		free(temp);
 		i++;
 	}
 	return (0);
