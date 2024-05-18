@@ -1,11 +1,9 @@
 1. Exit status
-2. Expander // Finished
-3. env if we have time
-4. Signal
-5. Free and type_error
-6. Path Variable Update
-7. Test.
-8. Execution.
-9. Connect parser to executer
-10. Norminette
-11. Compiling errors
+2. Free and type_error
+3. Path Variable Update
+4. Test.
+5. Connect parser to executer
+6. Norminette
+7. Prepare executor function
+8. Mini Export (env_to_str)
+9. Here_doc ctrl+D

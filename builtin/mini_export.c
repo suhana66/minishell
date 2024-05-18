@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/15 10:08:34 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:12:51 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,29 +209,29 @@ void	print_with_q(char *str)
 
 int	dec_sorted(t_env *head)
 {
-	char	**t;
-	char	*str;
+	char	**env_arr;
 	int		i;
 
-	str = env_to_str(head);
-	t = ft_split(str, '\n');
-	if (!t || !str)
+	if (!head)
+		return (0);
+	env_arr = env_to_str(head);
+	if (!env_arr)
 		return (1);
-	sort_env(t);
+	sort_env(env_arr);
 	i = 0;
-	if (!t)
+	if (!env_arr)
 		return (1);
-	while (t[i])
+	while (env_arr[i])
 	{
 		ft_putstr_fd("declare -x ", 1);
-		if (ft_strchr(t[i], '='))
-			print_with_q(t[i]);
+		if (ft_strchr(env_arr[i], '='))
+			print_with_q(env_arr[i]);
 		else
-			ft_putendl_fd(t[i], 1);
+			ft_putendl_fd(env_arr[i], 1);
 		i++;
 	}
-	// free array t
-	return (free(str), 1);
+	array_clear(env_arr);
+	return (1);
 }
 
 int	mini_export(t_info *info, t_cmd *simple_cmd)

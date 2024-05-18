@@ -6,11 +6,13 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/16 09:10:33 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:55:43 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,6 +23,8 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
 	if (parse_env(&info, envp) || find_pwd(&info))
 		return (memory_error(), free_info(&info), 1);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		err = get_cmd_table(&info);
@@ -28,11 +32,14 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		if (err < 0)
 			return (memory_error(), free_info(&info), 2);
+		signal(SIGINT, cmd_sigint_handler);
+		signal(SIGQUIT, cmd_sigquit_handler);
 		// executor
+		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
 		cmd_clear(&info.cmd_table);
 	}
 	(void)argv;
-	info.env_arr = envp;
 	free_info(&info);
 	return (0);
 }
@@ -55,7 +62,7 @@ int	get_cmd_table(t_info *info)
 	add_history(input);
 	err = lexer(input, &token_list);
 	if (!err)
-		err = parser(&token_list, &info->cmd_table);
+		err = parser(&token_list, info);
 	free(input);
 	token_clear(&token_list);
 	return (err);
@@ -75,6 +82,7 @@ void	free_info(t_info *info)
 	free(info->pwd);
 	free(info->old_pwd);
 	cmd_clear(&info->cmd_table);
+	// pid
 }
 
 void implement_info(t_info *info)

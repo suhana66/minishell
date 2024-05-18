@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:25:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/14 13:13:12 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:59:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,18 @@ void	array_clear(char **array)
 	while (array[i])
 		free(array[i++]);
 	free(array);
+}
+
+size_t	count_pipes(t_token *token_list)
+{
+	size_t	result;
+
+	result = 0;
+	while (token_list)
+	{
+		if (token_list->type == PIPE)
+			result++;
+		token_list = token_list->next;
+	}
+	return (result);
 }
