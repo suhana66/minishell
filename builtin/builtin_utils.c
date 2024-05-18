@@ -6,37 +6,37 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:07 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/15 10:09:34 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:11:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	total_size_env(t_env *l)
+int	total_size_env(t_env *env)
 {
 	int	len;
 
 	len = 0;
-	while (l && l->next != NULL)
+	while (env && env->next != NULL)
 	{
-		if (l->value != NULL)
+		if (env->value != NULL)
 		{
-			len += ft_strlen(l->value);
+			len += ft_strlen(env->value);
 			len++;
 		}
-		l = l->next;
+		env = env->next;
 	}
 	return (len);
 }
 
-char	*env_to_str(t_env *lst)
+char	**env_to_str(t_env *lst)
 {
-	char	*env;
+	char	*str;
 	int		i;
 	int		j;
 
-	env = malloc(sizeof(char) * total_size_env(lst) + 1);
-	if (!env)
+	str = malloc(sizeof(char) * total_size_env(lst) + 1);
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (lst)
@@ -46,15 +46,15 @@ char	*env_to_str(t_env *lst)
 			j = 0;
 			while (lst->value[j])
 			{
-				env[i] = lst->value[j];
+				str[i] = lst->value[j];
 				i++;
 				j++;
 			}
 		}
 		if (lst->next)
-			env[i++] = '\n';
+			str[i++] = '\n';
 		lst = lst->next;
 	}
-	env[i] = '\0';
-	return (env);
+	str[i] = '\0';
+	return (ft_split(str, '\n'));
 }

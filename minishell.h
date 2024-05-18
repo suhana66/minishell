@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 13:59:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:11:11 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	cmd_sigquit_handler(int sig);
 int		send_heredoc(t_info *info, t_cmd *cmd);
 int		ck_redirects(t_cmd *cmd);
 void	handle_cmd(t_cmd *cmd, t_info *info);
-char	*env_to_str(t_env *lst);
+char	**env_to_str(t_env *lst);
 int		equal_s(char *str);
 int		determine_exit_code(char **str);
 int		is_str_digit(char *str);
