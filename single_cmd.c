@@ -81,7 +81,7 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 {
 	int	pid;
 	int	status;
-    int error_num;
+    // int error_num;
 
 	//tools->simple_cmds = call_expander(tools, tools->simple_cmds); expander should be added
 	// if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
@@ -107,7 +107,7 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 //     // Initialize necessary variables or data structures
 //     t_info info;
 //     // Assuming you have initialized the 'info' structure and its members appropriately
-    
+
 // 	info.env_arr = env;
 // 	parse_env(&info, env);
 //     // Example command to test
@@ -116,16 +116,16 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 //     cmd.argv[0] = strdup("ls"); // Example command name
 //     cmd.argv[1] = NULL; // NULL terminator
 //     cmd.builtin = NULL; // Assuming no built-in command
-    
+
 //     // Call the single_cmd function to execute the command
 //     single_cmd(&cmd, &info);
-    
+
 //     // After single_cmd returns, you can check its behavior, e.g., whether it executed the command successfully
-    
+
 //     // Free allocated memory
 //     free(cmd.argv[0]);
 //     free(cmd.argv);
-    
+
 //     return 0;
 // }
 

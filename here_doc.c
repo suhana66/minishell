@@ -20,49 +20,10 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 	if (!line)
 		return (1);
 	close(fd);
+	(void)quotes;
+	(void)info;
 	return (0);
 }
-
-char	*del_quotes(char *str, char c)
-{
-	int		i;
-	int		len;
-	char	*result;
-	int		result_index;
-	int		inside_quote;
-
-	i = 0;
-	len = ft_strlen(str);
-	result = malloc(len + 1);
-	if (!result)
-	{
-		fprintf(stderr, "Memory allocation failed\n");
-		exit(EXIT_FAILURE);
-	}
-	result_index = 0;
-	inside_quote = 0;
-	while (str[i])
-	{
-		if (str[i] == c && i > 0 && str[i - 1] == '=')
-		{
-			i++;
-			inside_quote = 1;
-		}
-		else if (str[i] == c && inside_quote)
-		{
-			i++;
-			inside_quote = 0;
-		}
-		else
-		{
-			result[result_index++] = str[i++];
-		}
-	}
-	result[result_index] = '\0';
-	return (result);
-}
-
-
 
 int	ft_heredoc(t_info *info, t_token *heredoc, char *f_name)
 {
@@ -107,11 +68,11 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 	start = cmd->redirects;
 	sl = 0;
 	while (cmd->redirects)
-	{	
+	{
 		if (cmd->redirects->type == LESSLESS)
 		{
-			if (cmd->hd_file_name)
-				free(cmd->hd_file_name);
+			if (cmd->hd_f_name)
+				free(cmd->hd_f_name);
 			cmd->hd_f_name = heredoc_temp_file();
 			sl = ft_heredoc(info, cmd->redirects, cmd->hd_f_name);
 			if (sl)
@@ -124,6 +85,7 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 		cmd->redirects = cmd->redirects->next;
 	}
 	cmd->redirects = start;
+	(void)error_num;
 	return (0);
 }
 

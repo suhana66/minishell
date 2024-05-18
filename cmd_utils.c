@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 10:25:14 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:58:24 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_cmd	*cmd_add(t_cmd **cmds)
 	temp = *cmds;
 	while (temp->next)
 		temp = temp->next;
+	node->prev = temp;
 	temp->next = node;
 	node->next = NULL;
 	node->argv = NULL;

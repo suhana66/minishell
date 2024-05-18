@@ -6,7 +6,7 @@ LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a
 LIBFT_LINK := -L$(LIBFT_PATH) -lft
 
-READLINE_LIBRARY := -lreadline
+READLINE_LIB := -lreadline
 
 MAIN_SRCS := \
 	cmd_utils.c \
@@ -20,8 +20,8 @@ MAIN_SRCS := \
 	find_pwd.c \
 	here_doc.c \
 	redirection.c \
-	single_cmd.c \
-	execution.c
+	single_cmd.c
+# execution.c
 
 BUILTIN_PATH := builtin
 BUILTIN_SRCS := \
@@ -41,7 +41,7 @@ INCLUDES := -I$(LIBFT_PATH) -I$(BUILTIN_PATH) -I.
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJ) $(LIBFT_LINK) $(READLINE_LIBRARY)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJ) $(LIBFT_LINK) $(READLINE_LIB)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 11:18:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:57:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 
 # define HEREDOC_MSG	"\033[1;34m> \033[0m"
 
-# include "libft/libft.h"
+# include "libft.h"
+# include <stdio.h>
 # include <readline/readline.h>
-# include <sys/wait.h>
+# include <readline/history.h>
+# include <stdbool.h>
 # include <fcntl.h>
-#include <stdbool.h>
+#include <sys/wait.h>
 
 typedef struct s_info
 {
@@ -64,11 +66,12 @@ typedef struct s_cmd
 	struct s_token	*redirects;
 	int				(*builtin)(struct s_info *, struct s_cmd *);
 	char			*hd_f_name;
+	struct s_cmd	*prev;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }	t_cmd;
 
-int		get_cmd_table(t_cmd **cmd_table);
+int		get_cmd_table(t_info *info);
 void	memory_error(void);
 void	free_info(t_info *info);
 
@@ -120,5 +123,8 @@ char	*env_to_str(t_env *lst);
 int		equal_s(char *str);
 int		determine_exit_code(char **str);
 int		is_str_digit(char *str);
+
+int		ck_redirects(t_cmd *cmd);
+char	*del_quotes(char *str, char c);
 
 #endif /* MINISHELL_H */
