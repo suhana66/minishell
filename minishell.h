@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/16 11:57:00 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:20:49 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
 typedef struct s_info
 {
-	char			**env_arr;
 	char			**path;
 	char			*pwd;
 	char			*old_pwd;
@@ -111,6 +110,10 @@ int		expander(t_cmd *cmd, t_env *env);
 int		expand_arg(char **str, t_env *env);
 int		replace_enviornment_variable(char **str, size_t *var_i, t_env *env);
 char	*env_search(t_env *env, char *key);
+
+void	sigint_handler(int sig);
+void	cmd_sigint_handler(int sig);
+void	cmd_sigquit_handler(int sig);
 
 //
 char	*env_to_str(t_env *lst);

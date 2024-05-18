@@ -6,7 +6,7 @@ LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a
 LIBFT_LINK := -L$(LIBFT_PATH) -lft
 
-READLINE_DIR := /opt/homebrew/opt/readline
+READLINE_DIR := $(shell brew --prefix readline)
 READLINE_LIB := -L$(READLINE_DIR)/lib -lreadline
 
 MAIN_SRCS := \
@@ -17,6 +17,7 @@ MAIN_SRCS := \
 	token_utils.c \
 	main.c \
 	parser.c \
+	signals.c \
 	parse_env.c \
 	find_pwd.c \
 	here_doc.c \
