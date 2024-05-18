@@ -246,7 +246,11 @@ int	mini_export(t_info *info, t_cmd *simple_cmd)
 	while (simple_cmd->argv[i])
 	{
 		if (check_param(simple_cmd->argv[i]) == 0 && !var_exist(simple_cmd->argv[i], info))
-			env_add(simple_cmd->argv[i], info->env);
+			{
+				env_add(simple_cmd->argv[i], info->env);
+				if(strncmp(simple_cmd->argv[i], "PATH=", 5))
+					path_update(info);
+			}
 		i++;
 	}
 	return (0);
