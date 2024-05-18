@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 13:55:43 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:44:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	memory_error(void)
 void	free_info(t_info *info)
 {
 	array_clear(info->path);
-	free_env(info->env);
+	array_clear(info->env);
 	free(info->pwd);
 	free(info->old_pwd);
 	cmd_clear(&info->cmd_table);

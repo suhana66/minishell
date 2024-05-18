@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajidstudent.42abudhabi.ae>     +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:30:36 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/13 11:11:42 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:45:43 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parse_env(t_info *info, char **env)
+int	parse_env(t_info *info, char **envp)
 {
 	size_t	i;
 	char	*temp;
@@ -21,7 +21,7 @@ int	parse_env(t_info *info, char **env)
 	info->pwd = NULL;
 	info->old_pwd = NULL;
 	info->cmd_table = NULL;
-	info->path = split_path_in_env(env);
+	info->path = split_path_in_env(envp);
 	if (!info->path)
 		return (1);
 	i = 0;
@@ -35,7 +35,7 @@ int	parse_env(t_info *info, char **env)
 		}
 		i++;
 	}
-	info->env = env_list(env);
+	info->env = array_dup(envp, array_len(envp) + 1);
 	if (!info->env)
 		return (2);
 	return (0);
