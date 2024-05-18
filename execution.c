@@ -104,31 +104,30 @@ t_cmd	*ft_simple_cmdsfirst(t_cmd *cmd)
 	return (cmd);
 }
 
-int	many_cmd_executor(t_info *info, t_cmd *cmds)
+int	many_cmd_executor(t_info *info)
 {
 	int		end[2];
 	int		fd_in;
 
 	fd_in = 0;
-	while (cmds)
+	while (info->cmds)
 	{
-		//cmds = call_expander(info, cmds);
-		if (cmds->next)
+		//info->cmds = call_expander(info, info->cmds);
+		if (info->cmds->next)
 			pipe(end);
-		send_heredoc(info, cmds);
-		printf("hi");
-		ft_fork(info, end, fd_in, cmds);
+		send_heredoc(info, info->cmds);
+		ft_fork(info, end, fd_in, info->cmds);
 		close(end[1]);
-		if (cmds->prev)
+		if (info->cmds->prev)
 		 	close(fd_in);
-		fd_in = check_fd_heredoc(info, end, cmds);
-		if (cmds->next)
-		 	cmds = cmds->next;
+		fd_in = check_fd_heredoc(info, end, info->cmds);
+		if (info->cmds->next)
+		 	info->cmds = info->cmds->next;
 		else
 			break ;
 	}
 	pipe_wait(info->pid, info->pip_n);
-	cmds = ft_simple_cmdsfirst(cmds);
+	cmds = ft_simple_cmdsfirst(info->cmds);
 	return (0);
 }
 

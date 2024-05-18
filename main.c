@@ -35,6 +35,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, cmd_sigint_handler);
 		signal(SIGQUIT, cmd_sigquit_handler);
 		// executor
+		prepare_executor(&info);
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
 		cmd_clear(&info.cmd_table);

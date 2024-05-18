@@ -50,3 +50,23 @@ size_t	count_pipes(t_token *token_list)
 	}
 	return (result);
 }
+
+int	prepare_executor(t_info *info)
+{
+	//signal(SIGQUIT, sigquit_handler);
+	//g_global.in_cmd = 1;
+	if (info->pipes == 0)
+		single_cmd(info->cmds, info);
+	else
+	{
+		info->pid = ft_calloc(sizeof(int), info->pip_n + 2);
+		if (!info->pid)
+		{
+			ft_putstr_fd("memory error: unable to assign memory\n", 2);
+			reset_info(info);
+			return(1);
+		}
+		many_cmd_executor(info);
+	}
+	return (0);
+}
