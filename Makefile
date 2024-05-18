@@ -6,7 +6,8 @@ LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a
 LIBFT_LINK := -L$(LIBFT_PATH) -lft
 
-READLINE_LIB := -lreadline
+READLINE_DIR := /opt/homebrew/opt/readline
+READLINE_LIB := -L$(READLINE_DIR)/lib -lreadline
 
 MAIN_SRCS := \
 	cmd_utils.c \
@@ -36,7 +37,7 @@ BUILTIN_SRCS := \
 
 SRC := $(BUILTIN_SRCS) $(MAIN_SRCS)
 OBJ := $(SRC:%.c=%.o)
-INCLUDES := -I$(LIBFT_PATH) -I$(BUILTIN_PATH) -I.
+INCLUDES := -I$(READLINE_DIR)/include -I$(LIBFT_PATH) -I$(BUILTIN_PATH) -I.
 
 all: $(NAME)
 
