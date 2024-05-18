@@ -61,7 +61,6 @@ char	**env_to_str(t_env *lst)
 
 void path_update (t_info *info)
 {
-	t_env *e;
 	int i;
 	char *temp;
 
@@ -70,15 +69,8 @@ void path_update (t_info *info)
 	temp = NULL;
 
 	free_array(info->path);
-	while (e)
-	{
-		if (!(ft_strncmp(e->key, "PATH", 4)))
-		{
-			info->path = ft_split(e->value, ':');
-			break;
-		}
-		e = e->next;
-	}
+	if(env_search(info->env, "PATH"))
+		info->path = ft_split(env_search(info->env, "PATH"), ':');
 	while (info->path[i])
 	{
 		if (info->path[i][ft_strlen(info->path[i]) - 1] != '/')
