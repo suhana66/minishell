@@ -42,19 +42,22 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 {
 	int		i;
 	char	*mycmd;
+	char	**envv;
 
 	i = 0;
 	cmd->argv = split_again(cmd->argv);
+	envv = env_to_str(info->env);
 	if (!access(cmd->argv[0], F_OK))
-		execve(cmd->argv[0], cmd->argv, info->env_arr);
+		execve(cmd->argv[0], cmd->argv, envv);
 	while (info->path[i])
 	{
 		mycmd = ft_strjoin(info->path[i], cmd->argv[0]);
 		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->argv, info->env_arr);
+			execve(mycmd, cmd->argv, envv);
 		free(mycmd);
 		i++;
 	}
+	free_array(envv);
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
