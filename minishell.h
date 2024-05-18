@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <fcntl.h>
+#include <sys/wait.h>
 
 typedef struct s_info
 {
@@ -31,6 +32,7 @@ typedef struct s_info
 	struct s_cmd	*cmd_table;
 	int				*pid;
 	int				pip_n;
+	int				here_doc;
 }	t_info;
 
 typedef struct s_env
@@ -65,6 +67,7 @@ typedef struct s_cmd
 	char			*hd_f_name;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }	t_cmd;
 
 int		get_cmd_table(t_info *info);
@@ -116,6 +119,9 @@ void	cmd_sigint_handler(int sig);
 void	cmd_sigquit_handler(int sig);
 
 //
+int		send_heredoc(t_info *info, t_cmd *cmd);
+int		ck_redirects(t_cmd *cmd);
+void	handle_cmd(t_cmd *cmd, t_info *info);
 char	*env_to_str(t_env *lst);
 int		equal_s(char *str);
 int		determine_exit_code(char **str);

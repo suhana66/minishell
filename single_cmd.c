@@ -1,18 +1,5 @@
 #include "minishell.h"
 
-void	free_arr(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i])
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
-}
-
 char	*join_split_str(char **str, char *new_str)
 {
 	char	*t;
@@ -103,7 +90,7 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	// 	error_num = cmd->builtin(info, cmd);
 	// 	return ;
 	// }
-	//send_heredoc(info, cmd); //do here_doc
+	send_heredoc(info, cmd);
 	pid = fork();
 	if (pid < 0)
 		printf("error child not created");
