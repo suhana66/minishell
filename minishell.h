@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 14:19:02 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:28:02 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	free_info(t_info *info);
 
 char	get_encloser(char c, char *encloser);
 size_t	count_pipes(t_token *token_list);
+size_t	array_len(char **array);
+char	**array_dup(char **array, size_t size);
 
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);

@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 14:12:51 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:28:23 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,65 +130,46 @@ void	sort_env(char **env)
 
 int	var_exist(char *var, t_info *info)
 {
-	t_env	*cur;
-	char	*pos_equal;
-	int		key_l;
+	size_t	i;
 
 	if (var[equal_s(var)] == '\"')
 		var = del_quotes(var, '\"');
 	if (var[equal_s(var)] == '\'')
 		var = del_quotes(var, '\'');
-	cur = info->env;
 	if (!info->env)
 		return (0);
-	while (cur)
+	i = 0;
+	while (info->env[i])
 	{
-		if (!(ft_strncmp(cur->key, var, ft_strlen(cur->key))))
+		if (!(ft_strncmp(info->env[i], var, equal_s(info->env[i]))))
 		{
-			pos_equal = ft_strchr(var, '=');
-			if (pos_equal)
-			{
-				free(cur->key);
-				free(cur->value);
-				key_l = pos_equal - var;
-				cur->key = malloc(key_l + 1);
-				ft_strlcpy(cur->key, var, key_l + 1);
-				cur->value = ft_strdup(var);
-			}
+			free(info->env[i]);
+			info->env[i] = ft_strdup(var);
 			return (1);
 		}
-		cur = cur->next;
+		i++;
 	}
 	return (0);
 }
 
-int	env_add(char *var, t_env *env)
+int	env_add(char *var, char ***env)
 {
-	char	*key;
-	char	*value;
-	t_env	*new;
-	t_env	*temp;
-	int		k;
+	char	**temp;
+	size_t	len;
 
-	if (!env)
+	if (!*env)
+		return (0);
+	if (var[equal_s(var)] == '\"')
+		var = del_quotes(var, '\"');
+	if (var[equal_s(var)] == '\'')
+		var = del_quotes(var, '\'');
+	len = array_len(*env);
+	temp = array_dup(*env, len + 2);
+	if (!temp)
 		return (1);
-	new = malloc(sizeof(t_env));
-	if (!new)
-		return (1);
-	value = ft_strdup(var);
-	if (!value)
-		return (1);
-	k = ft_strchr(var, '=') - var;
-	key = ft_substr(var, 0, k);
-	if (!key)
-		return (free(value), 1);
-	temp = env;
-	while (temp->next != NULL)
-		temp = temp->next;
-	new->key = key;
-	new->value = value;
-	new->next = NULL;
-	temp->next = new;
+	temp[len] = ft_strdup(var);
+	array_clear(*env);
+	*env = temp;
 	return (0);
 }
 
@@ -207,16 +188,12 @@ void	print_with_q(char *str)
 	free(key);
 }
 
-int	dec_sorted(t_env *head)
+int	dec_sorted(char **env_arr)
 {
-	char	**env_arr;
 	int		i;
 
-	if (!head)
-		return (0);
-	env_arr = env_to_str(head);
 	if (!env_arr)
-		return (1);
+		return (0);
 	sort_env(env_arr);
 	i = 0;
 	if (!env_arr)
@@ -236,9 +213,9 @@ int	dec_sorted(t_env *head)
 
 int	mini_export(t_info *info, t_cmd *simple_cmd)
 {
-	int	i;
+	int		i;
 
-	if (info->env == NULL)
+	if (!info->env)
 		return (0);
 	if (!simple_cmd->argv[1] || simple_cmd->argv[1][0] == '\0')
 		dec_sorted(info->env);
@@ -246,7 +223,7 @@ int	mini_export(t_info *info, t_cmd *simple_cmd)
 	while (simple_cmd->argv[i])
 	{
 		if (check_param(simple_cmd->argv[i]) == 0 && !var_exist(simple_cmd->argv[i], info))
-			env_add(simple_cmd->argv[i], info->env);
+			env_add(simple_cmd->argv[i], &info->env);
 		i++;
 	}
 	return (0);

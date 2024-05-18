@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:25:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 13:59:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 15:59:21 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,41 @@ size_t	count_pipes(t_token *token_list)
 			result++;
 		token_list = token_list->next;
 	}
+	return (result);
+}
+
+size_t	array_len(char **array)
+{
+	size_t	result;
+
+	result = 0;
+	while (array[result])
+		result++;
+	return (result);
+}
+
+char	**array_dup(char **array, size_t size)
+{
+	char	**result;
+	size_t	i;
+
+	result = malloc(size * sizeof(char *));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (array[i] && i < size)
+	{
+		result[i] = ft_strdup(array[i]);
+		if (!result[i])
+		{
+			while (--i < size)
+				free(result[i]);
+			free(result);
+			return (NULL);
+		}
+		i++;
+	}
+	while (i < size)
+		result[i++] = NULL;
 	return (result);
 }
