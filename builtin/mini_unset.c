@@ -34,9 +34,7 @@ int	check_unset_arg(char *str, t_info *info)
 {
 	if (ft_strncmp("PATH", str, 4) == 0)
 	{
-		if (!info->env)
-			return (0);
-		printf("check if path must be removed or not");
+		free_array(info->path);
 		return (0);
 	}
 	return (1);

@@ -5,4 +5,5 @@
 5. Connect parser to executer
 6. Norminette
 7. Prepare executor function
-8. Here_doc ctrl+D
+8. Mini Export (env_to_str)
+9. Here_doc ctrl+D

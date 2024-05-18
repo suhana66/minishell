@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:25:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 15:59:21 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:32:04 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,23 @@ char	**array_dup(char **array, size_t size)
 	while (i < size)
 		result[i++] = NULL;
 	return (result);
+}
+int	prepare_executor(t_info *info)
+{
+	//signal(SIGQUIT, sigquit_handler);
+	//g_global.in_cmd = 1;
+	if (info->pipes == 0)
+		single_cmd(info->cmds, info);
+	else
+	{
+		info->pid = ft_calloc(sizeof(int), info->pip_n + 2);
+		if (!info->pid)
+		{
+			ft_putstr_fd("memory error: unable to assign memory\n", 2);
+			reset_info(info);
+			return(1);
+		}
+		many_cmd_executor(info);
+	}
+	return (0);
 }

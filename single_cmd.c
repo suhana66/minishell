@@ -42,21 +42,26 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 {
 	int		i;
 	char	*mycmd;
+	char	**envv;
 
 	i = 0;
 	cmd->argv = split_again(cmd->argv);
+	envv = env_to_str(info->env);
 	if (!access(cmd->argv[0], F_OK))
-		execve(cmd->argv[0], cmd->argv, info->env_arr);
+		execve(cmd->argv[0], cmd->argv, envv);
 	while (info->path[i])
 	{
 		mycmd = ft_strjoin(info->path[i], cmd->argv[0]);
 		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->argv, info->env_arr);
+			execve(mycmd, cmd->argv, envv);
 		free(mycmd);
 		i++;
 	}
-	return (0);
-	//return (cmd_not_found(cmd->str[0]));
+	free_array(envv);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);
 }
 
 void	handle_cmd(t_cmd *cmd, t_info *info)
@@ -83,22 +88,25 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	int	status;
     // int error_num;
 
-	//tools->simple_cmds = call_expander(tools, tools->simple_cmds); expander should be added
-	// if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
-	// 	|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
-	// {
-	// 	error_num = cmd->builtin(info, cmd);
-	// 	return ;
-	// }
+	//info->cmd_table = call_expander(info, info->cmd_table); expander should be added
+	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
+		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
+	{
+		g_exit_status = cmd->builtin(info, cmd);
+		return ;
+	}
 	send_heredoc(info, cmd);
 	pid = fork();
 	if (pid < 0)
-		printf("error child not created");
+	{ 
+		ft_putstr_fd("Failed to fork\n", 2);
+		reset_info(info);
+	}
 	if (pid == 0)
 		handle_cmd(cmd, info);
 	waitpid(pid, &status, 0);
-	// if (WIFEXITED(status))
-	// 	g_global.error_num = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
 }
 
 // #include "minishell.h" // Include your header file here

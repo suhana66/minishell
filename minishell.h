@@ -69,6 +69,8 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+extern int	g_exit_status;
+
 int		get_cmd_table(t_info *info);
 void	memory_error(void);
 void	free_info(t_info *info);
