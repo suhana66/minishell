@@ -43,7 +43,7 @@ int	ft_heredoc(t_info *info, t_token *heredoc, char *f_name)
 	// g_global.in_heredoc = 1;
 	sl = here_doc(heredoc, quotes, info, f_name);
 	//g_global.in_heredoc = 0;
-	//info->heredoc = true;
+	info->heredoc = true;
 	return (sl);
 }
 
@@ -78,8 +78,7 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 			if (sl)
 			{
 				error_num = 1;
-				//return (reset_info(info));
-				return(1);
+				return (reset_info(info));
 			}
 		}
 		cmd->redirects = cmd->redirects->next;
