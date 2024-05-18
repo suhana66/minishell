@@ -6,36 +6,36 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 10:18:24 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:57:24 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parser(t_token **token_list, t_cmd **cmd_table)
+int	parser(t_token **token_list, t_info *info)
 {
 	int		err;
 	t_cmd	*node;
 
-	*cmd_table = NULL;
+	info->cmd_table = NULL;
+	info->pip_n = count_pipes(*token_list);
 	if ((*token_list)->type == PIPE)
 		return (type_error(*token_list), 1);
-	err = 0;
 	while (*token_list)
 	{
 		if (*token_list && (*token_list)->type == PIPE)
 			token_delone(token_list);
 		if (!*token_list || (*token_list)->type == PIPE)
-			return (cmd_clear(cmd_table), type_error(*token_list), 1);
-		node = cmd_add(cmd_table);
+			return (cmd_clear(&info->cmd_table), type_error(*token_list), 1);
+		node = cmd_add(&info->cmd_table);
 		if (!node)
-			return (cmd_clear(cmd_table), -1);
+			return (cmd_clear(&info->cmd_table), -1);
 		err = cmd_redirects(token_list, &node->redirects);
 		if (err)
-			return (cmd_clear(cmd_table), err);
+			return (cmd_clear(&info->cmd_table), err);
 		node->argv = cmd_argv(token_list);
 		if (!node->argv)
-			return (cmd_clear(cmd_table), -1);
+			return (cmd_clear(&info->cmd_table), -1);
 		node->builtin = cmd_builtin(node->argv[0]);
 	}
 	return (0);

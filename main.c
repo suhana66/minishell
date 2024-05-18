@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 13:21:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:55:43 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	get_cmd_table(t_info *info)
 	add_history(input);
 	err = lexer(input, &token_list);
 	if (!err)
-		err = parser(&token_list, &info->cmd_table);
+		err = parser(&token_list, info);
 	free(input);
 	token_clear(&token_list);
 	return (err);

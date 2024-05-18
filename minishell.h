@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 13:20:49 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:59:53 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_cmd
 	char			*hd_f_name;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
-	struct s_cmd	*prev;
 }	t_cmd;
 
 int		get_cmd_table(t_info *info);
@@ -75,6 +74,7 @@ void	memory_error(void);
 void	free_info(t_info *info);
 
 char	get_encloser(char c, char *encloser);
+size_t	count_pipes(t_token *token_list);
 
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
@@ -84,7 +84,7 @@ t_token	*token_add(t_type type, char *str, t_token **tokens);
 void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
 
-int		parser(t_token **token_list, t_cmd **cmd_table);
+int		parser(t_token **token_list, t_info *info);
 int		cmd_redirects(t_token **token_list, t_token **result);
 char	**cmd_argv(t_token **token_list);
 int		(*cmd_builtin(char *argv_0))(t_info *, t_cmd *cmd);
