@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 13:57:24 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:27:22 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,11 @@ int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
 
 	i = 0;
 	while (i < 7)
+	{
 		if (ft_strncmp(builtins[i][0], argv_0, ft_strlen(argv_0)) == 0)
 			return (builtins[i][1]);
+		i++;
+	}
 	return (NULL);
 }
 
