@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/15 10:12:28 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:43:46 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@ int	find_path(t_info *info, char *str)
 {
 	char	*tmp;
 	int		ret;
-	t_env	*t;
+	size_t	i;
 
 	ret = -1;
 	tmp = NULL;
-	t = info->env;
-	while (t)
+	i = 0;
+	while (info->env[i])
 	{
-		if ((ft_strncmp(t->value, str, ft_strlen(str)) == 0))
+		if ((ft_strncmp(info->env[i], str, ft_strlen(str)) == 0))
 		{
-			tmp = ft_substr(t->value, ft_strlen(str),
-					ft_strlen(t->value) - ft_strlen(str));
+			tmp = ft_substr(info->env[i], ft_strlen(str),
+					ft_strlen(info->env[i]) - ft_strlen(str));
 			break ;
 		}
-		t = t->next;
+		i++;
 	}
 	ret = chdir(tmp);
 	free(tmp);
@@ -56,25 +56,25 @@ int	find_path(t_info *info, char *str)
 
 void	add_pwd_to_env(t_info *info)
 {
-	t_env	*t;
+	size_t	i;
 	char	*tmp;
 
-	t = info->env;
-	while (t)
+	i = 0;
+	while (info->env[i])
 	{
-		if (!ft_strncmp(t->value, "PWD=", 4))
+		if (!ft_strncmp(info->env[i], "PWD=", 4))
 		{
 			tmp = ft_strjoin("PWD=", info->pwd);
-			free(t->value);
-			t->value = tmp;
+			free(info->env[i]);
+			info->env[i] = tmp;
 		}
-		else if (!ft_strncmp(t->value, "OLDPWD=", 7) && info->old_pwd)
+		else if (!ft_strncmp(info->env[i], "OLDPWD=", 7) && info->old_pwd)
 		{
 			tmp = ft_strjoin("OLDPWD=", info->old_pwd);
-			free(t->value);
-			t->value = tmp;
+			free(info->env[i]);
+			info->env[i] = tmp;
 		}
-		t = t->next;
+		i++;
 	}
 }
 
