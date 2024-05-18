@@ -30,8 +30,8 @@ int	pipe_wait(int *pid, int pipe_n)
 		i++;
 	}
 	waitpid(pid[i], &status, 0);
-	// if (WIFEXITED(status))
-	// 	g_global.error_num = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+	 	g_exit_status = WEXITSTATUS(status);
 	return (0);
 }
 

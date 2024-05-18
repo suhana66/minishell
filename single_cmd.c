@@ -89,7 +89,7 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
 		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{
-		error_num = cmd->builtin(info, cmd);
+		g_exit_status = cmd->builtin(info, cmd);
 		return ;
 	}
 	send_heredoc(info, cmd);
@@ -102,8 +102,8 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	if (pid == 0)
 		handle_cmd(cmd, info);
 	waitpid(pid, &status, 0);
-	// if (WIFEXITED(status))
-	// 	g_global.error_num = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
 }
 
 // #include "minishell.h" // Include your header file here

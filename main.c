@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-int	g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -83,10 +82,12 @@ void	free_info(t_info *info)
 	free(info->pwd);
 	free(info->old_pwd);
 	cmd_clear(&info->cmd_table);
-	// pid
+	if (info->pipe_n)
+		free(info->pid);
 }
 
 void implement_info(t_info *info)
 {
-	
+	g_exit_status = 0;
+	info_pid
 }
