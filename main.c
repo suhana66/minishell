@@ -70,7 +70,14 @@ void	free_info(t_info *info)
 {
 	array_clear(info->path);
 	free_env(info->env);
+	if (info->pid)
+		free (info->pid);
 	free(info->pwd);
 	free(info->old_pwd);
 	cmd_clear(&info->cmd_table);
+}
+
+void implement_info(t_info *info)
+{
+	
 }

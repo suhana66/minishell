@@ -55,8 +55,10 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 		free(mycmd);
 		i++;
 	}
-	return (0);
-	//return (cmd_not_found(cmd->str[0]));
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);
 }
 
 void	handle_cmd(t_cmd *cmd, t_info *info)
@@ -83,17 +85,20 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	int	status;
     // int error_num;
 
-	//tools->simple_cmds = call_expander(tools, tools->simple_cmds); expander should be added
-	// if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
-	// 	|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
-	// {
-	// 	error_num = cmd->builtin(info, cmd);
-	// 	return ;
-	// }
+	//info->cmd_table = call_expander(info, info->cmd_table); expander should be added
+	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
+		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
+	{
+		error_num = cmd->builtin(info, cmd);
+		return ;
+	}
 	send_heredoc(info, cmd);
 	pid = fork();
 	if (pid < 0)
-		printf("error child not created");
+	{ 
+		ft_putstr_fd("Failed to fork\n", 2);
+		reset_info(info);
+	}
 	if (pid == 0)
 		handle_cmd(cmd, info);
 	waitpid(pid, &status, 0);
