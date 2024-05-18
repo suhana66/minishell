@@ -38,13 +38,13 @@ int	pipe_wait(int *pid, int pipe_n)
 void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in)
 {
 	if (cmd->prev && dup2(fd_in, 0) < 0)
-    { 
+    {
 		ft_putstr_fd("Failed to create pipe\n", 2);
 		reset_info(info);
 	}
 	close(end[0]);
 	if (cmd->next && dup2(end[1], 1) < 0)
-    { 
+    {
 		ft_putstr_fd("Failed to create pipe\n", 2);
 		reset_info(info);
 	}
@@ -65,7 +65,7 @@ int	ft_fork(t_info *info, int end[2], int fd_in, t_cmd *cmd)
 	}
 	info->pid[i] = fork();
 	if (info->pid[i] < 0)
-       { 
+       {
 		ft_putstr_fd("Failed to fork\n", 2);
 		reset_info(info);
 		}
@@ -91,15 +91,11 @@ int	check_fd_heredoc(t_info *info, int end[2], t_cmd *cmd)
 
 t_cmd	*ft_simple_cmdsfirst(t_cmd *cmd)
 {
-	int	i;
-
-	i = 0;
 	if (!cmd)
 		return (NULL);
 	while (cmd->prev != NULL)
 	{
 		cmd = cmd->prev;
-		i++;
 	}
 	return (cmd);
 }
@@ -110,24 +106,24 @@ int	many_cmd_executor(t_info *info)
 	int		fd_in;
 
 	fd_in = 0;
-	while (info->cmds)
+	while (info->cmd_table)
 	{
-		//info->cmds = call_expander(info, info->cmds);
-		if (info->cmds->next)
+		//info->cmd_table = call_expander(info, info->cmd_table);
+		if (info->cmd_table->next)
 			pipe(end);
-		send_heredoc(info, info->cmds);
-		ft_fork(info, end, fd_in, info->cmds);
+		send_heredoc(info, info->cmd_table);
+		ft_fork(info, end, fd_in, info->cmd_table);
 		close(end[1]);
-		if (info->cmds->prev)
+		if (info->cmd_table->prev)
 		 	close(fd_in);
-		fd_in = check_fd_heredoc(info, end, info->cmds);
-		if (info->cmds->next)
-		 	info->cmds = info->cmds->next;
+		fd_in = check_fd_heredoc(info, end, info->cmd_table);
+		if (info->cmd_table->next)
+		 	info->cmd_table = info->cmd_table->next;
 		else
 			break ;
 	}
 	pipe_wait(info->pid, info->pip_n);
-	cmds = ft_simple_cmdsfirst(info->cmds);
+	info->cmd_table = ft_simple_cmdsfirst(info->cmd_table);
 	return (0);
 }
 
@@ -146,7 +142,7 @@ int	many_cmd_executor(t_info *info)
 //     info.pid = NULL; // Example initialization
 //     info.pip_n = 2; // Example initialization
 // 	info.here_doc = 0;
-    
+
 // 	info.pid = ft_calloc(sizeof(int), info.pip_n + 2);
 //     // Example commands to test
 //     t_cmd cmd1, cmd2, cmd3;
@@ -189,12 +185,12 @@ int	many_cmd_executor(t_info *info)
 //     cmd3.builtin = NULL; // Assuming no built-in command
 //     cmd3.prev = &cmd2; // Previous command
 //     cmd3.next = NULL; // No next command
-    
+
 //     // Call the many_cmd_executor function to execute the commands
 //     many_cmd_executor(&info, &cmd1);
-    
+
 //     // After many_cmd_executor returns, you can check its behavior, e.g., whether it executed the commands successfully
-    
+
 //     // Free allocated memory for command arguments
 //     free(cmd1.argv[0]);
 //     free(cmd1.argv);
@@ -202,6 +198,6 @@ int	many_cmd_executor(t_info *info)
 //     free(cmd2.argv);
 //     free(cmd3.argv[0]);
 //     free(cmd3.argv);
-    
+
 //     return 0;
 // }

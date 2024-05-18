@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-int	reset_info(t_info *info, t_cmd *cmds)
+int	reset_info(t_info *info)
 {
-	ft_simple_cmdsclear(&cmds);
+	cmd_clear(&info->cmd_table);
 	if (info->pid)
 		free(info->pid);
-	free_arr(info->path);
+	array_clear(info->path);
 	implement_info(info);
 	info->reset = true;
-	minishell_loop(info);
+	// minishell_loop(info);
 	return (1);
 }

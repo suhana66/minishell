@@ -11,19 +11,20 @@ READLINE_LIB := -L$(READLINE_DIR)/lib -lreadline
 
 MAIN_SRCS := \
 	cmd_utils.c \
+	error_nd_free.c \
+	execution.c \
 	expander.c \
-	lexer.c \
-	utils.c \
-	token_utils.c \
-	main.c \
-	parser.c \
-	signals.c \
-	parse_env.c \
 	find_pwd.c \
 	here_doc.c \
+	lexer.c \
+	main.c \
+	parse_env.c \
+	parser.c \
 	redirection.c \
-	single_cmd.c
-# execution.c
+	signals.c \
+	single_cmd.c \
+	token_utils.c \
+	utils.c
 
 BUILTIN_PATH := builtin
 BUILTIN_SRCS := \

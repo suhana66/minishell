@@ -6,12 +6,13 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 18:31:39 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:10:40 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -82,12 +83,13 @@ void	free_info(t_info *info)
 	free(info->pwd);
 	free(info->old_pwd);
 	cmd_clear(&info->cmd_table);
-	if (info->pipe_n)
+	if (info->pip_n)
 		free(info->pid);
 }
 
 void implement_info(t_info *info)
 {
-	g_exit_status = 0;
-	info_pid
+	(void)info;
+	// g_exit_status = 0;
+	// info_pid
 }

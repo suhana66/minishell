@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:25:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 18:32:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:47:28 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int	prepare_executor(t_info *info)
 {
 	//signal(SIGQUIT, sigquit_handler);
 	//g_global.in_cmd = 1;
-	if (info->pipes == 0)
-		single_cmd(info->cmds, info);
+	if (info->pip_n == 0)
+		single_cmd(info->cmd_table, info);
 	else
 	{
 		info->pid = ft_calloc(sizeof(int), info->pip_n + 2);

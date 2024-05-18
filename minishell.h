@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 16:28:02 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:10:11 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_info
 	int				*pid;
 	int				pip_n;
 	int				here_doc;
+	bool			reset;
 }	t_info;
 
 typedef struct s_env
@@ -73,7 +74,9 @@ extern int	g_exit_status;
 
 int		get_cmd_table(t_info *info);
 void	memory_error(void);
+void 	implement_info(t_info *info);
 void	free_info(t_info *info);
+int		reset_info(t_info *info);
 
 char	get_encloser(char c, char *encloser);
 size_t	count_pipes(t_token *token_list);
@@ -113,25 +116,30 @@ int		mini_unset(t_info *info, t_cmd *simple_cmd);
 int		mini_env(t_info *info, t_cmd *simple_cmd);
 int		mini_exit(t_info *info, t_cmd *simple_cmd);
 
-int		expander(t_cmd *cmd, t_env *env);
-int		expand_arg(char **str, t_env *env);
-int		replace_enviornment_variable(char **str, size_t *var_i, t_env *env);
-char	*env_search(t_env *env, char *key);
+int		expander(t_cmd *cmd, char **env);
+int		expand_arg(char **str, char **env);
+int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
+char	*env_search(char **env, char *key);
 
 void	sigint_handler(int sig);
 void	cmd_sigint_handler(int sig);
 void	cmd_sigquit_handler(int sig);
 
+int		determine_exit_code(char **str, t_info *info);
 //
 int		send_heredoc(t_info *info, t_cmd *cmd);
 int		ck_redirects(t_cmd *cmd);
 void	handle_cmd(t_cmd *cmd, t_info *info);
 char	**env_to_str(t_env *lst);
 int		equal_s(char *str);
-int		determine_exit_code(char **str);
 int		is_str_digit(char *str);
 
 int		ck_redirects(t_cmd *cmd);
 char	*del_quotes(char *str, char c);
+
+int		prepare_executor(t_info *info);
+int		many_cmd_executor(t_info *info);
+void	single_cmd(t_cmd *cmd, t_info *info);
+void 	path_update (t_info *info);
 
 #endif /* MINISHELL_H */

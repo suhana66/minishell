@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:07 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 14:11:04 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:58:51 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,9 @@ void path_update (t_info *info)
 	char *temp;
 
 	i = 0;
-	e = info->env;
 	temp = NULL;
 
-	free_array(info->path);
+	array_clear(info->path);
 	if(env_search(info->env, "PATH"))
 		info->path = ft_split(env_search(info->env, "PATH"), ':');
 	while (info->path[i])

@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:34 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/15 10:13:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:01:22 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	determine_exit_code(char **str, t_info *info)
 
 int	mini_exit(t_info *info, t_cmd *simple_cmd)
 {
-	int	err_code;
-
 	(void)info;
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (simple_cmd->argv[1] && simple_cmd->argv[2])

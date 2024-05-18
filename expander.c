@@ -6,13 +6,13 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 11:22:58 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:08:01 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expander(t_cmd *cmd, t_env *env)
+int	expander(t_cmd *cmd, char **env)
 {
 	char	**argv;
 	t_token	*redirects;
@@ -41,7 +41,7 @@ int	expander(t_cmd *cmd, t_env *env)
 						(4) replace it with the enviornment variable value
 						(5) return the number of characters replaced
 */
-int	expand_arg(char **str, t_env *env)
+int	expand_arg(char **str, char **env)
 {
 	size_t	i;
 	char	encloser;
@@ -69,7 +69,7 @@ int	expand_arg(char **str, t_env *env)
 	return (0);
 }
 
-int	replace_enviornment_variable(char **str, size_t *var_i, t_env *env)
+int	replace_enviornment_variable(char **str, size_t *var_i, char **env)
 {
 	size_t	len;
 	char	*start;
@@ -101,21 +101,23 @@ int	replace_enviornment_variable(char **str, size_t *var_i, t_env *env)
 	return (0);
 }
 
-char	*env_search(t_env *env, char *key)
+char	*env_search(char **env, char *key)
 {
+	size_t	i;
 	char	*result;
 
-	while (env)
+	i = 0;
+	while (env[i])
 	{
-		if (!ft_strncmp(env->value, key, ft_strlen(key)) && *(env->value + ft_strlen(key)) == '=')
+		if (!ft_strncmp(env[i], key, ft_strlen(key)) && *(env[i] + ft_strlen(key)) == '=')
 		{
-			result = env->value + ft_strlen(key) + 1;
+			result = env[i] + ft_strlen(key) + 1;
 			if (*result)
 				return (NULL);
 			else
 				return (result);
 		}
-		env = env->next;
+		i++;
 	}
 	return (NULL);
 }

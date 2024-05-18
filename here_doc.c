@@ -43,7 +43,7 @@ int	ft_heredoc(t_info *info, t_token *heredoc, char *f_name)
 	// g_global.in_heredoc = 1;
 	sl = here_doc(heredoc, quotes, info, f_name);
 	//g_global.in_heredoc = 0;
-	info->heredoc = true;
+	info->here_doc = true;
 	return (sl);
 }
 

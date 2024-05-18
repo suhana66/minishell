@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:46 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 18:09:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:06:16 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,25 @@
 // 	return (0);
 // }
 
-int	check_unset_arg(char *str, t_info *info)
+void	check_unset_arg(char *str, t_info *info)
 {
+	if (!str)
+		return ;
 	if (ft_strncmp("PATH", str, 4) == 0)
 	{
-		free_array(info->path);
-		return (0);
+		array_clear(info->path);
+		info->path = NULL;
 	}
-	return (1);
+	if (ft_strncmp("PWD", str, 3) == 0)
+	{
+		free(info->pwd);
+		info->pwd = NULL;
+	}
+	if (ft_strncmp("OLDPWD", str, 6) == 0)
+	{
+		free(info->old_pwd);
+		info->old_pwd = NULL;
+	}
 }
 
 int	del_var(char **env, char **argv, t_info *info)

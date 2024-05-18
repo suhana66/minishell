@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 16:28:23 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:01:59 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,15 +223,11 @@ int	mini_export(t_info *info, t_cmd *simple_cmd)
 	while (simple_cmd->argv[i])
 	{
 		if (check_param(simple_cmd->argv[i]) == 0 && !var_exist(simple_cmd->argv[i], info))
-<<<<<<< HEAD
+		{
 			env_add(simple_cmd->argv[i], &info->env);
-=======
-			{
-				env_add(simple_cmd->argv[i], info->env);
-				if(strncmp(simple_cmd->argv[i], "PATH=", 5))
-					path_update(info);
-			}
->>>>>>> f6c7bab85f5026a5bd9b8c78bc1589d223470987
+			if(strncmp(simple_cmd->argv[i], "PATH=", 5))
+				path_update(info);
+		}
 		i++;
 	}
 	return (0);
