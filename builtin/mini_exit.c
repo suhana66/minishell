@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:34 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 19:01:22 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 20:09:32 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	determine_exit_code(char **str, t_info *info)
 	{
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(str[1], STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required\n", STDERR_FILENO);
+		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		exit_code = 255;
 	}
 	free_info(info);

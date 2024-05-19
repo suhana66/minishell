@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 19:10:40 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 20:18:18 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1)
 		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
+	implement_info(&info);
 	if (parse_env(&info, envp) || find_pwd(&info))
 		return (memory_error(), free_info(&info), 1);
 	signal(SIGINT, sigint_handler);
@@ -78,8 +79,6 @@ void	free_info(t_info *info)
 {
 	array_clear(info->path);
 	array_clear(info->env);
-	if (info->pid)
-		free (info->pid);
 	free(info->pwd);
 	free(info->old_pwd);
 	cmd_clear(&info->cmd_table);
@@ -89,7 +88,7 @@ void	free_info(t_info *info)
 
 void implement_info(t_info *info)
 {
-	(void)info;
+	info->pip_n = 0;
 	// g_exit_status = 0;
 	// info_pid
 }

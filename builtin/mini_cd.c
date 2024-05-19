@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 14:43:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/18 20:33:06 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,18 @@ int	mini_cd(t_info *info, t_cmd *simple_cmd)
 	if (!simple_cmd->argv[1] || (ft_strlen(simple_cmd->argv[1] == 1 && simple_cmd->argv[1][0] == '~')))
 		val = find_path(info, "HOME=");
 	else if (!ft_strncmp(simple_cmd->argv[1], "-", 1) && ft_strlen(simple_cmd->argv[1]) == 1)
+	{
 		val = find_path(info, "OLDPWD=");
+		if_print = true;
+	}
 	else
 	{
 		val = chdir(simple_cmd->argv[1]);
 		if (val != 0)
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(simple_cmd->argv[1], 2);
-			// perror(" ");
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(simple_cmd->argv[1], STDERR_FILENO);
+			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 		}
 	}
 	if (val != 0)
@@ -131,5 +134,7 @@ int	mini_cd(t_info *info, t_cmd *simple_cmd)
 	if(change_pwd(info, old_pd));
 		return (1);
 	add_pwd_to_env(info);
+	if (if_print)
+		ft_putendl_fd(info->pwd, STDOUT_FILENO);
 	return (0);
 }

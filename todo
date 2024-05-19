@@ -7,3 +7,12 @@
 7. Prepare executor function
 8. Mini Export (env_to_str)
 9. Here_doc ctrl+D
+
+Testing Success
+echo
+^D in main
+Exit
+env
+single command
+cd
+pwd
