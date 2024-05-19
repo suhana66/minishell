@@ -7,6 +7,10 @@
 7. Prepare executor function
 8. Mini Export (env_to_str)
 9. Here_doc ctrl+D
+10. Error conditions for export
+11. Path Unset -> error condition for execve
+12. Check redirects parser
+13. Failed to create pipe
 
 Testing Success
 echo
