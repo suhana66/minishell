@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/19 11:46:44 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/19 12:12:27 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int		mini_exit(t_info *info, t_cmd *simple_cmd);
 int		expander(t_cmd *cmd, char **env);
 int		expand_arg(char **str, char **env);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
+int		replace_exit_status(char **str, size_t *var_i);
 char	*env_search(char **env, char *key);
 
 void	sigint_handler(int sig);
