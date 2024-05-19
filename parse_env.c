@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:30:36 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 20:16:54 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/19 11:43:20 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,67 +67,26 @@ char	**split_path_in_env(char **env)
 	return (result);
 }
 
-t_env	*env_new(char *str)
+int	find_pwd(t_info *info)
 {
-	t_env	*node;
-	size_t	key_l;
-	char	*pos_equal;
-
-	node = malloc(sizeof(t_env));
-	if (!node)
-		return (NULL);
-	pos_equal = ft_strchr(str, '=');
-	if (!pos_equal)
-		return (free(node), NULL);
-	key_l = pos_equal - str;
-	node->key = malloc(key_l + 1);
-	if (!node->key)
-		return (free(node), NULL);
-	ft_strlcpy(node->key, str, key_l + 1);
-	node->value = ft_strdup(str);
-	if (!node->value)
-		return (free(node->key), free(node), NULL);
-	node->next = NULL;
-	return (node);
-}
-
-t_env	*env_list(char **env)
-{
-	t_env	*node;
-	t_env	*result;
-	t_env	*temp;
 	size_t	i;
 
 	i = 0;
-	result = NULL;
-	while (env[i])
+	while (info->env[i])
 	{
-		node = env_new(env[i]);
-		if (!node)
+		if (!(ft_strncmp(info->env[i], "PWD=", 4)))
 		{
-			free_env(result);
-			return (NULL);
+			info->pwd = ft_strdup(info->env[i] + 4);
+			if (!info->pwd)
+				return (1);
 		}
-		if (!result)
-			result = node;
-		else
-			temp->next = node;
-		temp = node;
+		else if (!(ft_strncmp(info->env[i], "OLDPWD=", 7)))
+		{
+			info->old_pwd = ft_strdup(info->env[i] + 7);
+			if (!info->old_pwd)
+				return (2);
+		}
 		i++;
 	}
-	return (result);
-}
-
-void	free_env(t_env *head)
-{
-	t_env	*to_delete;
-
-	while (head)
-	{
-		to_delete = head;
-		head = head->next;
-		free(to_delete->key);
-		free(to_delete->value);
-		free(to_delete);
-	}
+	return (0);
 }

@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 {

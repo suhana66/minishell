@@ -14,7 +14,6 @@ MAIN_SRCS := \
 	error_nd_free.c \
 	execution.c \
 	expander.c \
-	find_pwd.c \
 	here_doc.c \
 	lexer.c \
 	main.c \

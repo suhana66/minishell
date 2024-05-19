@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 19:10:11 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/19 12:12:27 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ typedef struct s_info
 	int				here_doc;
 	bool			reset;
 }	t_info;
-
-typedef struct s_env
-{
-	char			*value;
-	char			*key;
-	struct s_env	*next;
-}	t_env;
 
 typedef enum e_type
 {
@@ -103,9 +96,6 @@ void	array_clear(char **array);
 
 int		parse_env(t_info *info, char **env);
 char	**split_path_in_env(char **env);
-t_env	*env_new(char *str);
-t_env	*env_list(char **env);
-void	free_env(t_env *head);
 int		find_pwd(t_info *info);
 
 int		mini_echo(t_info *info, t_cmd *simple_cmd);
@@ -119,6 +109,7 @@ int		mini_exit(t_info *info, t_cmd *simple_cmd);
 int		expander(t_cmd *cmd, char **env);
 int		expand_arg(char **str, char **env);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
+int		replace_exit_status(char **str, size_t *var_i);
 char	*env_search(char **env, char *key);
 
 void	sigint_handler(int sig);
@@ -126,11 +117,9 @@ void	cmd_sigint_handler(int sig);
 void	cmd_sigquit_handler(int sig);
 
 int		determine_exit_code(char **str, t_info *info);
-//
 int		send_heredoc(t_info *info, t_cmd *cmd);
 int		ck_redirects(t_cmd *cmd);
 void	handle_cmd(t_cmd *cmd, t_info *info);
-char	**env_to_str(t_env *lst);
 int		equal_s(char *str);
 int		is_str_digit(char *str);
 
