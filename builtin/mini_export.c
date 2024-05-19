@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 19:01:59 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/19 13:35:41 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	sort_env(char **env)
 int	var_exist(char *var, t_info *info)
 {
 	size_t	i;
+	size_t	eq_s;
 
 	if (var[equal_s(var)] == '\"')
 		var = del_quotes(var, '\"');
@@ -141,7 +142,10 @@ int	var_exist(char *var, t_info *info)
 	i = 0;
 	while (info->env[i])
 	{
-		if (!(ft_strncmp(info->env[i], var, equal_s(info->env[i]))))
+		eq_s = equal_s(info->env[i]);
+		if (eq_s == 0)
+			eq_s = ft_strlen(info->env[i]);
+		if (!(ft_strncmp(info->env[i], var, eq_s)))
 		{
 			free(info->env[i]);
 			info->env[i] = ft_strdup(var);
@@ -207,7 +211,6 @@ int	dec_sorted(char **env_arr)
 			ft_putendl_fd(env_arr[i], 1);
 		i++;
 	}
-	array_clear(env_arr);
 	return (1);
 }
 
@@ -223,11 +226,11 @@ int	mini_export(t_info *info, t_cmd *simple_cmd)
 	while (simple_cmd->argv[i])
 	{
 		if (check_param(simple_cmd->argv[i]) == 0 && !var_exist(simple_cmd->argv[i], info))
-		{
 			env_add(simple_cmd->argv[i], &info->env);
-			if(strncmp(simple_cmd->argv[i], "PATH=", 5))
-				path_update(info);
-		}
+		if(!ft_strncmp(simple_cmd->argv[i], "PATH=", 5))
+			path_update(info);
+		info->pwd = env_search(info->env, "PWD");
+		info->old_pwd = env_search(info->env, "OLDPWD");
 		i++;
 	}
 	return (0);
