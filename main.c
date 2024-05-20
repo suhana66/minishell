@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 12:25:14 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 14:11:27 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ void	minishell_loop(t_info *info)
 		free_info(info);
 		exit(EXIT_FAILURE);
 	}
-	signal(SIGINT, cmd_sigint_handler);
-	signal(SIGQUIT, cmd_sigquit_handler);
 	prepare_executor(info);
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
 	reset_info(info);
 }
 

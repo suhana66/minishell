@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 12:03:34 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 13:51:28 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ int		replace_exit_status(char **str, size_t *var_i);
 char	*env_search(char **env, char *key);
 
 void	sigint_handler(int sig);
+void	sigquit_handler(int sig);
 void	cmd_sigint_handler(int sig);
-void	cmd_sigquit_handler(int sig);
 
 int		determine_exit_code(char **str, t_info *info);
 int		send_heredoc(t_info *info, t_cmd *cmd);

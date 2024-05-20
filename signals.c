@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:57:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/16 14:21:26 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 13:56:40 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ extern int	g_exit_status;
 
 void	sigint_handler(int sig)
 {
-	if (sig != SIGINT)
-		return ;
-	ft_putchar_fd('\n', STDOUT_FILENO);
+	(void)sig;
+	ft_putchar_fd('\n', STDERR_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -35,19 +34,15 @@ void	sigint_handler(int sig)
 
 void	cmd_sigint_handler(int sig)
 {
-	if (sig != SIGINT)
-		return ;
+	(void)sig;
 	ft_putchar_fd('\n', STDOUT_FILENO);
-	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_exit_status = 130;
 }
 
-void	cmd_sigquit_handler(int sig)
+void	sigquit_handler(int sig)
 {
 	ft_putstr_fd("Quit: ", STDERR_FILENO);
 	ft_putnbr_fd(sig, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	g_exit_status = 131;
 }

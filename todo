@@ -3,7 +3,6 @@
 3. Path Variable Update
 4. Test.
 5. Norminette
-6. Here_doc ctrl+D
 7. Error conditions for export
 8. Path Unset -> error condition for execve
 9. Failed to create pipe
