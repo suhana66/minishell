@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 10:47:50 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 12:03:34 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_info
 	struct s_cmd	*cmd_table;
 	int				*pid;
 	int				pip_n;
-	int				here_doc;
+	bool			here_doc;
 	bool			reset;
 }	t_info;
 
@@ -70,7 +70,8 @@ int		get_cmd_table(t_info *info);
 void	memory_error(void);
 void 	implement_info(t_info *info);
 void	free_info(t_info *info);
-int		reset_info(t_info *info);
+void	minishell_loop(t_info *info);
+void	reset_info(t_info *info);
 
 char	get_encloser(char c, char *encloser);
 size_t	count_pipes(t_token *token_list);
@@ -95,7 +96,7 @@ t_cmd	*cmd_add(t_cmd **cmds);
 void	cmd_clear(t_cmd **cmds);
 void	array_clear(char **array);
 
-int		parse_env(t_info *info, char **env);
+int		parse_env(t_info *info);
 char	**split_path_in_env(char **env);
 int		find_pwd(t_info *info);
 

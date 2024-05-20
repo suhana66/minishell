@@ -81,7 +81,8 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 			if (sl)
 			{
 				g_exit_status = 1;
-				return (reset_info(info));
+				reset_info(info);
+				return (1);
 			}
 		}
 		cmd->redirects = cmd->redirects->next;

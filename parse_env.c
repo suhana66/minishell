@@ -6,26 +6,20 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:30:36 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/20 09:48:41 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 11:54:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parse_env(t_info *info, char **envp)
+int	parse_env(t_info *info)
 {
 	size_t	i;
 	char	*temp;
 
-	info->env = array_dup(envp, array_len(envp) + 1);
-	if (!info->env)
-		return (1);
-	info->pwd = NULL;
-	info->old_pwd = NULL;
-	info->cmd_table = NULL;
-	info->path = split_path_in_env(envp);
+	info->path = split_path_in_env(info->env);
 	if (!info->path)
-		return (2);
+		return (1);
 	i = 0;
 	while (info->path[i])
 	{

@@ -1,6 +1,6 @@
 NAME := minishell
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -Wfatal-errors
 
 LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a
@@ -11,7 +11,6 @@ READLINE_LIB := -L$(READLINE_DIR)/lib -lreadline
 
 MAIN_SRCS := \
 	cmd_utils.c \
-	error_nd_free.c \
 	execution.c \
 	expander.c \
 	here_doc.c \
