@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 20:33:06 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 08:32:19 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void    add_pwd_to_env(t_info *info, char *str)
         i++;
     }
     if (str && *str == '-')
-        ft_putendl_fd(data->pwd, 1);
+        ft_putendl_fd(info->pwd, 1);
 }
 
 int mini_cd(t_info *info, t_cmd *simple_cmd)

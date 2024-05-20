@@ -6,13 +6,14 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/19 12:12:27 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 08:31:32 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define READLINE_MSG	"\033[1;32mminishell $ \033[0m"
 # define HEREDOC_MSG	"\033[1;34m> \033[0m"
 
 # include "libft.h"

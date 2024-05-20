@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/18 20:18:18 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 08:31:52 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	get_cmd_table(t_info *info)
 	t_token	*token_list;
 	int		err;
 
-	input = readline("\033[1;32mminishell $ \033[0m");
+	input = readline(READLINE_MSG);
 	if (!input)
 	{
 		free_info(info);

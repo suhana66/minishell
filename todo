@@ -2,15 +2,12 @@
 2. Free and type_error
 3. Path Variable Update
 4. Test.
-5. Connect parser to executer
-6. Norminette
-7. Prepare executor function
-8. Mini Export (env_to_str)
-9. Here_doc ctrl+D
-10. Error conditions for export
-11. Path Unset -> error condition for execve
-12. Check redirects parser
-13. Failed to create pipe
+5. Norminette
+6. Here_doc ctrl+D
+7. Error conditions for export
+8. Path Unset -> error condition for execve
+9. Check redirects parser
+10. Failed to create pipe
 
 Testing Success
 echo
