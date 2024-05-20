@@ -85,7 +85,12 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	int	status;
     // int error_num;
 
-	//info->cmd_table = call_expander(info, info->cmd_table); expander should be added
+	if (expander(cmd, info->env))
+	{
+		ft_putstr_fd("memory error: unable to assign memory\n", 2);
+		reset_info(info);
+		return ;
+	}
 	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
 		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{

@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 08:31:32 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 10:47:50 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,7 @@ int		prepare_executor(t_info *info);
 int		many_cmd_executor(t_info *info);
 void	single_cmd(t_cmd *cmd, t_info *info);
 void 	path_update (t_info *info);
+
+int		export_error(char *c);
 
 #endif /* MINISHELL_H */

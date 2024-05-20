@@ -4,17 +4,20 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 {
 	int		fd;
 	char	*line;
+	size_t	len;
 
 	fd = open(f_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	line = readline(HEREDOC_MSG);
-	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str)))
+	len = ft_strlen(heredoc->str);
+	while (1)
 	{
 		//if (quotes == false) if quotes of delimiter is false we should expand it
-			//line = expander_str(info, line);
+			// line = expander_str(info, line);
+		line = readline(HEREDOC_MSG);
+		if (!line || (ft_strlen(line) == len && !ft_strncmp(heredoc->str, line, len)))
+			break ;
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
-		line = readline(HEREDOC_MSG);
 	}
 	free(line);
 	if (!line)

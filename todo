@@ -7,6 +7,7 @@
 7. Error conditions for export
 8. Path Unset -> error condition for execve
 9. Failed to create pipe
+10. Expander gives empty line
 
 Testing Success
 echo
@@ -14,5 +15,13 @@ echo
 Exit
 env
 single command
-cd
 pwd
+redirections
+export
+unset
+
+TO Test
+pipes
+signals
+exit code ($?)
+cd
