@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:30:36 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/19 11:43:20 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 09:48:41 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ int	parse_env(t_info *info, char **envp)
 	size_t	i;
 	char	*temp;
 
-	info->env = NULL;
+	info->env = array_dup(envp, array_len(envp) + 1);
+	if (!info->env)
+		return (1);
 	info->pwd = NULL;
 	info->old_pwd = NULL;
 	info->cmd_table = NULL;
 	info->path = split_path_in_env(envp);
 	if (!info->path)
-		return (1);
+		return (2);
 	i = 0;
 	while (info->path[i])
 	{
@@ -35,9 +37,6 @@ int	parse_env(t_info *info, char **envp)
 		}
 		i++;
 	}
-	info->env = array_dup(envp, array_len(envp) + 1);
-	if (!info->env)
-		return (2);
 	return (0);
 }
 

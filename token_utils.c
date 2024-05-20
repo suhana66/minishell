@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:10:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/08 16:04:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 09:32:42 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ t_token	*token_add(t_type type, char *str, t_token **tokens)
 	node = (t_token *)malloc(sizeof(t_token));
 	if (!node)
 		return (NULL);
+	node->type = type;
+	node->str = str;
+	node->prev = NULL;
+	node->next = NULL;
 	if (!tokens)
 		return (node);
 	if (!*tokens)
@@ -27,11 +31,8 @@ t_token	*token_add(t_type type, char *str, t_token **tokens)
 	temp = *tokens;
 	while (temp->next)
 		temp = temp->next;
-	temp->next = node;
 	node->prev = temp;
-	node->next = NULL;
-	node->type = type;
-	node->str = str;
+	temp->next = node;
 	return (node);
 }
 

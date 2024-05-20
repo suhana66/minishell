@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:13:22 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/16 11:58:24 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 09:32:06 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ t_cmd	*cmd_add(t_cmd **cmds)
 	node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!node)
 		return (NULL);
+	node->argv = NULL;
+	node->redirects = NULL;
+	node->builtin = NULL;
+	node->hd_f_name = NULL;
+	node->prev = NULL;
+	node->next = NULL;
 	if (!cmds)
 		return (node);
 	if (!*cmds)
@@ -29,9 +35,6 @@ t_cmd	*cmd_add(t_cmd **cmds)
 		temp = temp->next;
 	node->prev = temp;
 	temp->next = node;
-	node->next = NULL;
-	node->argv = NULL;
-	node->redirects = NULL;
 	return (node);
 }
 

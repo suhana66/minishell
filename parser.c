@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/19 12:48:59 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 09:28:05 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	cmd_redirects(t_token **token_list, t_token **result)
 {
 	t_token	*node;
 	t_token	*token;
+	char	*str;
 
 	token = *token_list;
 	*result = NULL;
@@ -56,8 +57,9 @@ int	cmd_redirects(t_token **token_list, t_token **result)
 			break ;
 		if (!token->next || token->next->type)
 			return (token_clear(result), type_error(token->next), 1);
-		node = token_add(token->type, ft_strdup(token->next->str), result);
-		if (!node)
+		str = ft_strdup(token->next->str);
+		node = token_add(token->type, str, result);
+		if (!str || !node)
 			return (token_clear(result), -1);
 		if (token == *token_list)
 			*token_list = token->next->next;

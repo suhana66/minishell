@@ -6,8 +6,7 @@
 6. Here_doc ctrl+D
 7. Error conditions for export
 8. Path Unset -> error condition for execve
-9. Check redirects parser
-10. Failed to create pipe
+9. Failed to create pipe
 
 Testing Success
 echo
