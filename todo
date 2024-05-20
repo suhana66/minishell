@@ -7,7 +7,6 @@
 7. Error conditions for export
 8. Path Unset -> error condition for execve
 9. Failed to create pipe
-10. Expander gives empty line
 
 Testing Success
 echo
