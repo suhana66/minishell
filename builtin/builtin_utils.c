@@ -35,6 +35,18 @@ void path_update (t_info *info)
 	}
 }
 
+int	export_error(char *c)
+{
+	ft_putstr_fd("minishell: export: ", STDERR_FILENO);
+	if (c)
+	{
+		ft_putchar_fd('\'', STDERR_FILENO);
+		ft_putstr_fd(c, STDERR_FILENO);
+		ft_putstr_fd("\': is ", STDERR_FILENO);
+	}
+	ft_putendl_fd("not a valid identifier", STDERR_FILENO);
+	return (EXIT_FAILURE);
+}
 // #include <stdio.h> // Include necessary headers
 // #include <stdlib.h> // Include necessary headers
 // #include <string.h> // Include necessary headers
