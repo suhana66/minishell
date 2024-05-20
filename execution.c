@@ -13,7 +13,7 @@ int	pipe_wait(int *pid, int pipe_n)
 	}
 	waitpid(pid[i], &status, 0);
 	if (WIFEXITED(status))
-	 	g_exit_status = WEXITSTATUS(status);
+	 	return(WEXITSTATUS(status));
 	return (0);
 }
 
@@ -104,7 +104,7 @@ int	many_cmd_executor(t_info *info)
 		else
 			break ;
 	}
-	pipe_wait(info->pid, info->pip_n);
+	info->exit_status = pipe_wait(info->pid, info->pip_n);
 	info->cmd_table = ft_simple_cmdsfirst(info->cmd_table);
 	return (0);
 }

@@ -80,7 +80,7 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 			sl = ft_heredoc(info, cmd->redirects, cmd->hd_f_name);
 			if (sl)
 			{
-				g_exit_status = 1;
+				info->exit_status = 1;
 				reset_info(info);
 				return (1);
 			}

@@ -83,9 +83,8 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 {
 	int	pid;
 	int	status;
-    // int error_num;
 
-	if (expander(cmd, info->env))
+	if (expander(cmd, info))
 	{
 		ft_putstr_fd("memory error: unable to assign memory\n", 2);
 		reset_info(info);
@@ -94,7 +93,7 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
 		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{
-		g_exit_status = cmd->builtin(info, cmd);
+		info->exit_status = cmd->builtin(info, cmd);
 		return ;
 	}
 	send_heredoc(info, cmd);
@@ -108,7 +107,7 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 		handle_cmd(cmd, info);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
+		info->exit_status = WEXITSTATUS(status);
 }
 
 // #include "minishell.h" // Include your header file here

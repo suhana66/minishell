@@ -6,28 +6,28 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 13:28:55 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:19:15 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expander(t_cmd *cmd, char **env)
+int expander(t_cmd *cmd, t_info *info)
 {
-	char	**argv;
-	t_token	*redirects;
-	size_t	i;
+	char **argv;
+	t_token *redirects;
+	size_t i;
 
 	argv = cmd->argv;
 	i = 0;
 	while (argv[i])
-		if (expand_arg(&argv[i++], env))
+		if (expand_arg(&argv[i++], info))
 			return (1);
 	redirects = cmd->redirects;
 	while (redirects)
 	{
 		if (redirects->type != LESSLESS)
-			expand_arg(&redirects->str, env);
+			expand_arg(&redirects->str, info);
 		redirects = redirects->next;
 	}
 	return (0);
@@ -35,16 +35,16 @@ int	expander(t_cmd *cmd, char **env)
 
 /*
 	Regex for enviornment variable identifier: [a-zA-Z_]+[a-zA-Z0-9_]*
-	Expansion steps:	(1) check if special variable (skip if necessary)
+	Expansion steps:	(1) check if special variable
 						(2) find the identifier string that follows the regex
 						(3) get the identifier's value
 						(4) replace it with the enviornment variable value
 						(5) return the number of characters replaced
 */
-int	expand_arg(char **str, char **env)
+int expand_arg(char **str, t_info *info)
 {
-	size_t	i;
-	char	encloser;
+	size_t i;
+	char encloser;
 
 	i = 0;
 	encloser = 0;
@@ -54,9 +54,9 @@ int	expand_arg(char **str, char **env)
 			ft_strlcpy(*str + i, *str + i + 1, ft_strlen(*str + i + 1) + 1);
 		else if (encloser != '\'' && (*str)[i] == '$')
 		{
-			if ((*str)[i + 1] == '?' && replace_exit_status(str, &i))
+			if ((*str)[i + 1] == '?' && replace_exit_status(str, &i, info->exit_status))
 				return (2);
-			else if (replace_enviornment_variable(str, &i, env))
+			else if (replace_enviornment_variable(str, &i, info->env))
 				return (1);
 		}
 		else
@@ -65,13 +65,13 @@ int	expand_arg(char **str, char **env)
 	return (0);
 }
 
-int	replace_enviornment_variable(char **str, size_t *var_i, char **env)
+int replace_enviornment_variable(char **str, size_t *var_i, char **env)
 {
-	size_t	len;
-	char	*start;
-	char	*temp;
-	char	*env_val;
-	size_t	result_size;
+	size_t len;
+	char *start;
+	char *temp;
+	char *env_val;
+	size_t result_size;
 
 	start = *str + *var_i + 1;
 	len = 0;
@@ -99,13 +99,13 @@ int	replace_enviornment_variable(char **str, size_t *var_i, char **env)
 	return (0);
 }
 
-int	replace_exit_status(char **str, size_t *var_i)
+int	replace_exit_status(char **str, size_t *var_i, int exit_status)
 {
-	char	*result;
-	size_t	result_size;
-	char	*exit_str;
+	char *result;
+	size_t result_size;
+	char *exit_str;
 
-	exit_str = ft_itoa(g_exit_status);
+	exit_str = ft_itoa(exit_status);
 	if (!exit_str)
 		return (1);
 	result_size = *var_i + ft_strlen(exit_str) + ft_strlen(*str + *var_i + 2) + 1;
@@ -122,10 +122,10 @@ int	replace_exit_status(char **str, size_t *var_i)
 	return (0);
 }
 
-char	*env_search(char **env, char *key)
+char *env_search(char **env, char *key)
 {
-	size_t	i;
-	char	*result;
+	size_t i;
+	char *result;
 
 	i = 0;
 	while (env[i])

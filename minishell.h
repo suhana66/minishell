@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 13:51:28 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:07:16 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_info
 	int				pip_n;
 	bool			here_doc;
 	bool			reset;
+	int				exit_status;
 }	t_info;
 
 typedef enum e_type
@@ -63,8 +64,6 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
-
-extern int	g_exit_status;
 
 int		get_cmd_table(t_info *info);
 void	memory_error(void);
@@ -108,10 +107,10 @@ int		mini_unset(t_info *info, t_cmd *simple_cmd);
 int		mini_env(t_info *info, t_cmd *simple_cmd);
 int		mini_exit(t_info *info, t_cmd *simple_cmd);
 
-int		expander(t_cmd *cmd, char **env);
-int		expand_arg(char **str, char **env);
+int		expander(t_cmd *cmd, t_info *info);
+int		expand_arg(char **str, t_info *info);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
-int		replace_exit_status(char **str, size_t *var_i);
+int		replace_exit_status(char **str, size_t *var_i, int exit_status);
 char	*env_search(char **env, char *key);
 
 void	sigint_handler(int sig);

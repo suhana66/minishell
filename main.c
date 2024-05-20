@@ -6,13 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 16:12:20 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:20:20 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -95,10 +93,10 @@ void implement_info(t_info *info)
 	info->pid = NULL;
 	info->here_doc = false;
 	info->pip_n = 0;
+	info->exit_status = 0;
 	parse_env(info);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	g_exit_status = 0;
 	// info_pid
 }
 
