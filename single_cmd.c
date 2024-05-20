@@ -47,7 +47,7 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 	cmd->argv = split_again(cmd->argv);
 	if (!access(cmd->argv[0], F_OK))
 		execve(cmd->argv[0], cmd->argv, info->env);
-	while (info->path[i])
+	while (info->path && info->path[i])
 	{
 		mycmd = ft_strjoin(info->path[i], cmd->argv[0]);
 		if (!access(mycmd, F_OK))

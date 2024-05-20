@@ -1,11 +1,14 @@
 1. Exit status
 2. Free and type_error
-3. Path Variable Update
-4. Test.
-5. Norminette
-7. Error conditions for export
-8. Path Unset -> error condition for execve
-9. Failed to create pipe
+3. Test
+4. Norminette
+5. Failed to create pipe
+6. Signal for heredoc
+7. Capitalize for builtin functions
+8. Error code 127
+10. Error code for ctrl+c (130)
+11. Error code for ctrl+\ (131)
+12. Segmentation fault for only redirections
 
 Testing Success
 echo
