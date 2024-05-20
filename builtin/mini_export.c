@@ -36,16 +36,12 @@ int	check_param(char *str)
 	int	i;
 
 	i = 1;
-	// if (ft_isdigit(str[0]))
-	// 	return (1); //should print	error
-	// if (str[0] == '=')
-	// 	return (1); //should print	error
 	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return (1);
+		return (export_error(str));
 	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) || check_valid_identifier(str[i]))
-			return (1); // should print	error
+			return (export_error(str)); // should print	error
 		i++;
 	}
 	return (0);
