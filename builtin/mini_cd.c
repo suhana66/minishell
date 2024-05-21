@@ -6,104 +6,104 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/20 08:32:19 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:53:10 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    change_pwd(t_info *info)
+void	change_pwd(t_info *info)
 {
-    char    *t;
+	char	*t;
 
-    t = ft_strdup(info->pwd);
-    free(info->old_pwd);
-    info->old_pwd = t;
-    free(info->pwd);
-    info->pwd = getcwd(NULL, 0);
+	t = ft_strdup(info->pwd);
+	free(info->old_pwd);
+	info->old_pwd = t;
+	free(info->pwd);
+	info->pwd = getcwd(NULL, 0);
 }
 
-int find_path(t_info *info, char *str)
+int	find_path(t_info *info, char *str)
 {
-    char    *tmp;
-    int     ret;
-    size_t  i;
+	char	*tmp;
+	int		ret;
+	size_t	i;
 
-    ret = -1;
-    tmp = NULL;
-    i = 0;
-    while (info->env[i])
-    {
-        if ((ft_strncmp(info->env[i], str, ft_strlen(str)) == 0))
-        {
-            tmp = ft_substr(info->env[i], ft_strlen(str),
-                    ft_strlen(info->env[i]) - ft_strlen(str));
-            break ;
-        }
-        i++;
-    }
-    ret = chdir(tmp);
-    free(tmp);
-    if (ret != 0)
-    {
-        str = ft_substr(str, 0, ft_strlen(str) - 1);
-        ft_putstr_fd("minishell: ", 2);
-        ft_putstr_fd(str, 2);
-        free(str);
-        ft_putendl_fd(" not set", 2);
-    }
-    return (ret);
+	ret = -1;
+	tmp = NULL;
+	i = 0;
+	while (info->env[i])
+	{
+		if ((ft_strncmp(info->env[i], str, ft_strlen(str)) == 0))
+		{
+			tmp = ft_substr(info->env[i], ft_strlen(str),
+					ft_strlen(info->env[i]) - ft_strlen(str));
+			break ;
+		}
+		i++;
+	}
+	ret = chdir(tmp);
+	free(tmp);
+	if (ret != 0)
+	{
+		str = ft_substr(str, 0, ft_strlen(str) - 1);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(str, 2);
+		free(str);
+		ft_putendl_fd(" not set", 2);
+	}
+	return (ret);
 }
 
-void    add_pwd_to_env(t_info *info, char *str)
+void	add_pwd_to_env(t_info *info, char *str)
 {
-    size_t  i;
-    char    *tmp;
+	size_t	i;
+	char	*tmp;
 
-    i = 0;
-    while (info->env[i])
-    {
-        if (!ft_strncmp(info->env[i], "PWD=", 4))
-        {
-            tmp = ft_strjoin("PWD=", info->pwd);
-            free(info->env[i]);
-            info->env[i] = tmp;
-        }
-        else if (!ft_strncmp(info->env[i], "OLDPWD=", 7) && info->old_pwd)
-        {
-            tmp = ft_strjoin("OLDPWD=", info->old_pwd);
-            free(info->env[i]);
-            info->env[i] = tmp;
-        }
-        i++;
-    }
-    if (str && *str == '-')
-        ft_putendl_fd(info->pwd, 1);
+	i = 0;
+	while (info->env[i])
+	{
+		if (!ft_strncmp(info->env[i], "PWD=", 4))
+		{
+			tmp = ft_strjoin("PWD=", info->pwd);
+			free(info->env[i]);
+			info->env[i] = tmp;
+		}
+		else if (!ft_strncmp(info->env[i], "OLDPWD=", 7) && info->old_pwd)
+		{
+			tmp = ft_strjoin("OLDPWD=", info->old_pwd);
+			free(info->env[i]);
+			info->env[i] = tmp;
+		}
+		i++;
+	}
+	if (str && *str == '-')
+		ft_putendl_fd(info->pwd, 1);
 }
 
-int mini_cd(t_info *info, t_cmd *simple_cmd)
+int	mini_cd(t_info *info, t_cmd *simple_cmd)
 {
-    int val;
+	int	val;
 
-    val = 0;
-    if (!simple_cmd->argv[1])
-        val = find_path(info, "HOME=");
-    else if (!ft_strncmp(simple_cmd->argv[1], "-", 1) && ft_strlen(simple_cmd->argv[1]) == 1)
-        val = find_path(info, "OLDPWD=");
-    else
-    {
-        val = chdir(simple_cmd->argv[1]);
-        if (val != 0)
-        {
-            ft_putstr_fd("minishell: ", 2);
-            ft_putstr_fd(simple_cmd->argv[1], 2);
-            ft_putstr_fd(": No such file or directory ", 2);
-            // perror(" ");
-        }
-    }
-    if (val != 0)
-        return (1);
-    change_pwd(info);
-    add_pwd_to_env(info, simple_cmd->argv[1]);
-    return (0);
+	val = 0;
+	if (!simple_cmd->argv[1])
+		val = find_path(info, "HOME=");
+	else if (!ft_strncmp(simple_cmd->argv[1], "-", 1) && ft_strlen(simple_cmd->argv[1]) == 1)
+		val = find_path(info, "OLDPWD=");
+	else
+	{
+		val = chdir(simple_cmd->argv[1]);
+		if (val != 0)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(simple_cmd->argv[1], 2);
+			ft_putstr_fd(": No such file or directory ", 2);
+			// perror(" ");
+		}
+	}
+	if (val != 0)
+		return (1);
+	change_pwd(info);
+	add_pwd_to_env(info, simple_cmd->argv[1]);
+	return (0);
 }

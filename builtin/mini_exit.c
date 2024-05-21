@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:34 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 20:09:32 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:45:35 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ int	mini_exit(t_info *info, t_cmd *simple_cmd)
 		return (ft_putendl_fd("minishell: exit: too many arguments",
 				STDERR_FILENO), 1);
 	determine_exit_code(simple_cmd->argv, info);
-	return(0);
+	return (0);
 }

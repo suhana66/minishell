@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 13:19:25 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:55:26 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <fcntl.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 
 # define READLINE_MSG	"\033[1;32mminishell $ \033[0m"
 # define HEREDOC_MSG	"\033[1;34m> \033[0m"
@@ -69,7 +69,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 int		get_cmd_table(t_info *info);
-void 	implement_info(t_info *info);
+void	implement_info(t_info *info);
 void	free_info(t_info *info);
 void	minishell_loop(t_info *info);
 void	reset_info(t_info *info);
@@ -134,7 +134,7 @@ int		prepare_executor(t_info *info);
 int		many_cmd_executor(t_info *info);
 void	single_cmd(t_cmd *cmd, t_info *info);
 int		get_exit_status(int cmd_status);
-void 	path_update (t_info *info);
+void	path_update(t_info *info);
 
 int		export_error(char *c);
 

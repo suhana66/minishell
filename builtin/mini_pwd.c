@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:52 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/19 13:40:45 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:45:52 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	mini_pwd(t_info *info, t_cmd *simple_cmd)
 {
 	char	*result;
+
 	(void)simple_cmd;
 	(void)info;
 	result = getcwd(NULL, 0);
