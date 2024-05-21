@@ -6,11 +6,13 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 17:20:20 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 06:59:41 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_recv_sig;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -53,6 +55,11 @@ int	get_cmd_table(t_info *info)
 	int		err;
 
 	input = readline(READLINE_MSG);
+	if (g_recv_sig == SIGINT)
+	{
+		info->exit_status = 1;
+		g_recv_sig = 0;
+	}
 	if (!input)
 	{
 		free_info(info);
@@ -86,6 +93,11 @@ void	free_info(t_info *info)
 		free(info->pid);
 }
 
+int	event(void)
+{
+	return (0);
+}
+
 void implement_info(t_info *info)
 {
 	info->cmd_table = NULL;
@@ -95,6 +107,8 @@ void implement_info(t_info *info)
 	info->pip_n = 0;
 	info->exit_status = 0;
 	parse_env(info);
+	g_recv_sig = 0;
+	rl_event_hook = event;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	// info_pid

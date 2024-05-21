@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+extern int	g_recv_sig;
+
 int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 {
 	int		fd;
@@ -13,14 +15,13 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 		//if (quotes == false) if quotes of delimiter is false we should expand it
 			// line = expander_str(info, line);
 		line = readline(HEREDOC_MSG);
-		if (!line || (ft_strlen(line) == len && !ft_strncmp(heredoc->str, line, len)))
+		if (!line || (ft_strlen(line) == len && !ft_strncmp(heredoc->str, line, len)) || g_recv_sig)
 			break ;
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 	}
-	free(line);
-	if (!line)
+	if (!line || g_recv_sig)
 		return (1);
 	close(fd);
 	(void)quotes;
@@ -43,9 +44,11 @@ int	ft_heredoc(t_info *info, t_token *heredoc, char *f_name)
 		quotes = false;
 	del_quotes(heredoc->str, '\"');
 	del_quotes(heredoc->str, '\'');
-	// g_global.in_heredoc = 1;
+	signal(SIGINT, heredoc_sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	sl = here_doc(heredoc, quotes, info, f_name);
-	//g_global.in_heredoc = 0;
+	signal(SIGINT, cmd_sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	info->here_doc = true;
 	return (sl);
 }
@@ -81,6 +84,7 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 			if (sl)
 			{
 				info->exit_status = 1;
+				g_recv_sig = 0;
 				reset_info(info);
 				return (1);
 			}
