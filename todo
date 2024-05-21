@@ -1,9 +1,8 @@
 1. Free and type_error (valgrind)
 2. Test
 3. Norminette
-4. Error code for ctrl+c (130)
-5. Error code for ctrl+\ (131)
-6. Segmentation fault for only redirections
+4. Segmentation fault for only redirections
+5. Delete temporary heredoc files of signal interrupt
 
 Testing Success
 echo

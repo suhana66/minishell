@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 06:53:05 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 10:23:35 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char	*del_quotes(char *str, char c);
 int		prepare_executor(t_info *info);
 int		many_cmd_executor(t_info *info);
 void	single_cmd(t_cmd *cmd, t_info *info);
+int		get_exit_status(int cmd_status);
 void 	path_update (t_info *info);
 
 int		export_error(char *c);

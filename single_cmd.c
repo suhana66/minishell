@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+extern int	g_recv_sig;
+
 char	*join_split_str(char **str, char *new_str)
 {
 	char	*t;
@@ -106,36 +108,16 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	if (pid == 0)
 		handle_cmd(cmd, info);
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		info->exit_status = WEXITSTATUS(status);
+	info->exit_status = get_exit_status(status);
 }
 
-// #include "minishell.h" // Include your header file here
-
-// int main(int ac, char **av, char **env) {
-//     // Initialize necessary variables or data structures
-//     t_info info;
-//     // Assuming you have initialized the 'info' structure and its members appropriately
-
-// 	info.env_arr = env;
-// 	parse_env(&info, env);
-//     // Example command to test
-//     t_cmd cmd;
-//     cmd.argv = malloc(sizeof(char *) * 2);
-//     cmd.argv[0] = strdup("ls"); // Example command name
-//     cmd.argv[1] = NULL; // NULL terminator
-//     cmd.builtin = NULL; // Assuming no built-in command
-
-//     // Call the single_cmd function to execute the command
-//     single_cmd(&cmd, &info);
-
-//     // After single_cmd returns, you can check its behavior, e.g., whether it executed the command successfully
-
-//     // Free allocated memory
-//     free(cmd.argv[0]);
-//     free(cmd.argv);
-
-//     return 0;
-// }
-
-//need to check after combining
+int	get_exit_status(int cmd_status)
+{
+	if (WIFEXITED(cmd_status))
+		return (WEXITSTATUS(cmd_status));
+	else if (g_recv_sig == SIGINT)
+		return (g_recv_sig = 0, 130);
+	else if (g_recv_sig == SIGQUIT)
+		return (g_recv_sig = 0, 131);
+	return (0);
+}
