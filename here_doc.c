@@ -14,7 +14,7 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 	{
 		line = readline(HEREDOC_MSG);
 		if (quotes == false)
-			expand_arg(&line, info, false);
+			parse_arg(&line, info, false, true);
 		if (!line || (ft_strlen(line) == len && !ft_strncmp(heredoc->str, line, len)) || g_recv_sig)
 			break ;
 		ft_putendl_fd(line, fd);
@@ -34,15 +34,11 @@ int	ft_heredoc(t_info *info, t_token *heredoc, char *f_name)
 	int		sl;
 
 	sl = 0;
-	if ((heredoc->str[0] == '\"'
-			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\"')
-		|| (heredoc->str[0] == '\''
-			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\''))
+	if (ft_strchr(heredoc->str, '\"') || ft_strchr(heredoc->str, '\''))
 		quotes = true;
 	else
 		quotes = false;
-	del_quotes(heredoc->str, '\"');
-	del_quotes(heredoc->str, '\'');
+	parse_arg(&heredoc->str, info, true, false);
 	signal(SIGINT, heredoc_sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	sl = here_doc(heredoc, quotes, info, f_name);

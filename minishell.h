@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 12:39:44 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 12:52:48 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int		mini_env(t_info *info, t_cmd *simple_cmd);
 int		mini_exit(t_info *info, t_cmd *simple_cmd);
 
 int		expander(t_cmd *cmd, t_info *info);
-int		expand_arg(char **str, t_info *info, bool if_del_quotes);
+int		parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
 int		replace_exit_status(char **str, size_t *var_i, int exit_status);
 char	*env_search(char **env, char *key);
