@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:25:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 14:03:48 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 10:51:42 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,4 @@ char	**array_dup(char **array, size_t size)
 	while (i < size)
 		result[i++] = NULL;
 	return (result);
-}
-int	prepare_executor(t_info *info)
-{
-	signal(SIGQUIT, sigquit_handler);
-	signal(SIGINT, cmd_sigint_handler);
-	if (info->pip_n == 0)
-		single_cmd(info->cmd_table, info);
-	else
-	{
-		info->pid = ft_calloc(sizeof(int), info->pip_n + 2);
-		if (!info->pid)
-		{
-			ft_putstr_fd("memory error: unable to assign memory\n", 2);
-			reset_info(info);
-			return(1);
-		}
-		many_cmd_executor(info);
-	}
-	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   single_cmd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
+/*   Updated: 2024/05/21 10:50:19 by smuneer          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*join_split_str(char **str, char *new_str)
@@ -27,14 +39,8 @@ char	**split_again(char **arr)
 	char	*joined_str;
 
 	joined_str = join_split_str(arr, NULL);
-	//free_arr(arr);
 	strs = ft_split(joined_str, ' ');
 	free(joined_str);
-	// if neccessary remove the commend below
-	// joined_str = join_split_str(strs, NULL);
-	// free_arr(strs);
-	// strs = ft_split(joined_str, ' ');
-	// free(joined_str);
 	return (strs);
 }
 
@@ -85,11 +91,8 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	int	status;
 
 	if (expander(cmd, info))
-	{
-		ft_putstr_fd("memory error: unable to assign memory\n", 2);
-		reset_info(info);
-		return ;
-	}
+		return (ft_putstr_fd("memory error: unable to assign memory\n", 2), \
+		reset_info(info));
 	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
 		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{
@@ -109,33 +112,3 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	if (WIFEXITED(status))
 		info->exit_status = WEXITSTATUS(status);
 }
-
-// #include "minishell.h" // Include your header file here
-
-// int main(int ac, char **av, char **env) {
-//     // Initialize necessary variables or data structures
-//     t_info info;
-//     // Assuming you have initialized the 'info' structure and its members appropriately
-
-// 	info.env_arr = env;
-// 	parse_env(&info, env);
-//     // Example command to test
-//     t_cmd cmd;
-//     cmd.argv = malloc(sizeof(char *) * 2);
-//     cmd.argv[0] = strdup("ls"); // Example command name
-//     cmd.argv[1] = NULL; // NULL terminator
-//     cmd.builtin = NULL; // Assuming no built-in command
-
-//     // Call the single_cmd function to execute the command
-//     single_cmd(&cmd, &info);
-
-//     // After single_cmd returns, you can check its behavior, e.g., whether it executed the command successfully
-
-//     // Free allocated memory
-//     free(cmd.argv[0]);
-//     free(cmd.argv);
-
-//     return 0;
-// }
-
-//need to check after combining

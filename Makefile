@@ -22,7 +22,8 @@ MAIN_SRCS := \
 	signals.c \
 	single_cmd.c \
 	token_utils.c \
-	utils.c
+	utils.c \
+	utils2.c
 
 BUILTIN_PATH := builtin
 BUILTIN_SRCS := \
