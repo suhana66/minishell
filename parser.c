@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 06:12:36 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 10:35:52 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,18 @@ int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
 	i = 0;
 	while (builtins[i][0])
 	{
-		if (builtins[i][1] == mini_echo || builtins[i][1] == mini_cd || builtins[i][1] == mini_pwd || builtins[i][1] == mini_env)
+		if (builtins[i][1] == mini_echo || builtins[i][1] == mini_cd || \
+		builtins[i][1] == mini_pwd || builtins[i][1] == mini_env)
 		{
 			j = 0;
-			while (argv_0[j] && ((char *)builtins[i][0])[j] && ft_tolower(argv_0[j]) == ft_tolower(((char *)builtins[i][0])[j]))
+			while (argv_0[j] && ((char *)builtins[i][0])[j] && \
+			ft_tolower(argv_0[j]) == ft_tolower(((char *)builtins[i][0])[j]))
 				j++;
 			if (argv_0[j] == 0 && ((char *)builtins[i][0])[j] == 0)
 				return (builtins[i][1]);
 		}
-		else if (ft_strlen(argv_0) == ft_strlen(builtins[i][0]) && !ft_strncmp(builtins[i][0], argv_0, ft_strlen(argv_0)))
+		else if (ft_strlen(argv_0) == ft_strlen(builtins[i][0]) && \
+		!ft_strncmp(builtins[i][0], argv_0, ft_strlen(argv_0)))
 			return (builtins[i][1]);
 		i++;
 	}

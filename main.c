@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 11:14:53 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:17:56 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,12 @@ int	get_cmd_table(t_info *info)
 	return (err);
 }
 
-void	free_info(t_info *info)
-{
-	array_clear(info->path);
-	array_clear(info->env);
-	free(info->pwd);
-	free(info->old_pwd);
-	cmd_clear(&info->cmd_table);
-	if (info->pip_n)
-		free(info->pid);
-}
-
 int	event(void)
 {
 	return (0);
 }
 
-void implement_info(t_info *info)
+void	implement_info(t_info *info)
 {
 	info->cmd_table = NULL;
 	info->reset = false;
@@ -106,16 +95,4 @@ void implement_info(t_info *info)
 	rl_event_hook = event;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	// info_pid
-}
-
-void	reset_info(t_info *info)
-{
-	cmd_clear(&info->cmd_table);
-	if (info->pid)
-		free(info->pid);
-	array_clear(info->path);
-	implement_info(info);
-	info->reset = true;
-	minishell_loop(info);
 }

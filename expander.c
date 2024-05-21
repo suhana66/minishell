@@ -6,17 +6,17 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 12:53:01 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:16:03 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int expander(t_cmd *cmd, t_info *info)
+int	expander(t_cmd *cmd, t_info *info)
 {
-	char **argv;
-	t_token *redirects;
-	size_t i;
+	char	**argv;
+	t_token	*redirects;
+	size_t	i;
 
 	argv = cmd->argv;
 	i = 0;
@@ -43,8 +43,8 @@ int expander(t_cmd *cmd, t_info *info)
 */
 int	parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand)
 {
-	size_t i;
-	char encloser;
+	size_t	i;
+	char	encloser;
 
 	i = 0;
 	encloser = 0;
@@ -54,7 +54,8 @@ int	parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand)
 			ft_strlcpy(*str + i, *str + i + 1, ft_strlen(*str + i + 1) + 1);
 		else if (if_expand && encloser != '\'' && (*str)[i] == '$')
 		{
-			if ((*str)[i + 1] == '?' && replace_exit_status(str, &i, info->exit_status))
+			if ((*str)[i + 1] == '?' && \
+			replace_exit_status(str, &i, info->exit_status))
 				return (2);
 			else if (replace_enviornment_variable(str, &i, info->env))
 				return (1);
@@ -65,13 +66,13 @@ int	parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand)
 	return (0);
 }
 
-int replace_enviornment_variable(char **str, size_t *var_i, char **env)
+int	replace_enviornment_variable(char **str, size_t *var_i, char **env)
 {
-	size_t len;
-	char *start;
-	char *temp;
-	char *env_val;
-	size_t result_size;
+	size_t	len;
+	char	*start;
+	char	*temp;
+	char	*env_val;
+	size_t	result_size;
 
 	start = *str + *var_i + 1;
 	len = 0;
@@ -101,14 +102,15 @@ int replace_enviornment_variable(char **str, size_t *var_i, char **env)
 
 int	replace_exit_status(char **str, size_t *var_i, int exit_status)
 {
-	char *result;
-	size_t result_size;
-	char *exit_str;
+	char	*result;
+	size_t	result_size;
+	char	*exit_str;
 
 	exit_str = ft_itoa(exit_status);
 	if (!exit_str)
 		return (1);
-	result_size = *var_i + ft_strlen(exit_str) + ft_strlen(*str + *var_i + 2) + 1;
+	result_size = *var_i + \
+	ft_strlen(exit_str) + ft_strlen(*str + *var_i + 2) + 1;
 	result = malloc(sizeof(char) * result_size);
 	if (!result)
 		return (free(exit_str), 2);
@@ -122,15 +124,16 @@ int	replace_exit_status(char **str, size_t *var_i, int exit_status)
 	return (0);
 }
 
-char *env_search(char **env, char *key)
+char	*env_search(char **env, char *key)
 {
-	size_t i;
-	char *result;
+	size_t	i;
+	char	*result;
 
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], key, ft_strlen(key)) && *(env[i] + ft_strlen(key)) == '=')
+		if (!ft_strncmp(env[i], key, ft_strlen(key)) && \
+		*(env[i] + ft_strlen(key)) == '=')
 		{
 			result = env[i] + ft_strlen(key) + 1;
 			if (!*result)

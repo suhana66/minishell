@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   single_cmd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
+/*   Updated: 2024/05/21 13:15:45 by susajid          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 extern int	g_recv_sig;
@@ -29,14 +41,8 @@ char	**split_again(char **arr)
 	char	*joined_str;
 
 	joined_str = join_split_str(arr, NULL);
-	//free_arr(arr);
 	strs = ft_split(joined_str, ' ');
 	free(joined_str);
-	// if neccessary remove the commend below
-	// joined_str = join_split_str(strs, NULL);
-	// free_arr(strs);
-	// strs = ft_split(joined_str, ' ');
-	// free(joined_str);
 	return (strs);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 10:23:50 by smuneer           #+#    #+#             */
+/*   Updated: 2024/05/21 13:14:23 by susajid          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 extern int	g_recv_sig;
@@ -64,7 +76,6 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 {
 	t_token	*start;
 	int		sl;
-    int     error_num;
 
 	start = cmd->redirects;
 	sl = 0;
@@ -80,13 +91,11 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 			{
 				info->exit_status = 1;
 				g_recv_sig = 0;
-				reset_info(info);
-				return (1);
+				return (reset_info(info), 1);
 			}
 		}
 		cmd->redirects = cmd->redirects->next;
 	}
 	cmd->redirects = start;
-	(void)error_num;
 	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 10:16:39 by smuneer           #+#    #+#             */
+/*   Updated: 2024/05/21 13:12:47 by susajid          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	pipe_wait(int *pid, int pipe_n)
@@ -18,13 +30,13 @@ int	pipe_wait(int *pid, int pipe_n)
 void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in)
 {
 	if (cmd->prev && dup2(fd_in, 0) < 0)
-    {
+	{
 		ft_putstr_fd("Failed to create pipe\n", 2);
 		reset_info(info);
 	}
 	close(end[0]);
 	if (cmd->next && dup2(end[1], 1) < 0)
-    {
+	{
 		ft_putstr_fd("Failed to create pipe\n", 2);
 		reset_info(info);
 	}
@@ -45,10 +57,10 @@ int	ft_fork(t_info *info, int end[2], int fd_in, t_cmd *cmd)
 	}
 	info->pid[i] = fork();
 	if (info->pid[i] < 0)
-       {
+	{
 		ft_putstr_fd("Failed to fork\n", 2);
 		reset_info(info);
-		}
+	}
 	if (info->pid[i] == 0)
 		dup_cmd(cmd, info, end, fd_in);
 	i++;
@@ -95,10 +107,10 @@ int	many_cmd_executor(t_info *info)
 		ft_fork(info, end, fd_in, info->cmd_table);
 		close(end[1]);
 		if (info->cmd_table->prev)
-		 	close(fd_in);
+			close(fd_in);
 		fd_in = check_fd_heredoc(info, end, info->cmd_table);
 		if (info->cmd_table->next)
-		 	info->cmd_table = info->cmd_table->next;
+			info->cmd_table = info->cmd_table->next;
 		else
 			break ;
 	}
