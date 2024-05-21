@@ -1,12 +1,9 @@
-1. Exit status
-2. Free and type_error
-3. Test
-4. Norminette
-5. Failed to create pipe
-6. Error code 127
-7. Error code for ctrl+c (130)
-8. Error code for ctrl+\ (131)
-9. Segmentation fault for only redirections
+1. Free and type_error (valgrind)
+2. Test
+3. Norminette
+4. Error code for ctrl+c (130)
+5. Error code for ctrl+\ (131)
+6. Segmentation fault for only redirections
 
 Testing Success
 echo

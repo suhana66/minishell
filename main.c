@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 06:59:41 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 09:46:38 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	info.env = array_dup(envp, array_len(envp) + 1);
 	if (!info.env)
 		return (1);
+	info.exit_status = 0;
 	find_pwd(&info);
 	implement_info(&info);
 	minishell_loop(&info);
@@ -105,7 +106,6 @@ void implement_info(t_info *info)
 	info->pid = NULL;
 	info->here_doc = false;
 	info->pip_n = 0;
-	info->exit_status = 0;
 	parse_env(info);
 	g_recv_sig = 0;
 	rl_event_hook = event;

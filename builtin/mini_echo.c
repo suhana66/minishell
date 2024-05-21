@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:22 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/15 10:12:38 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 09:44:26 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ int	mini_echo(t_info *info, t_cmd *simple_cmd)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 	if (!opt)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (1);
+	return (0);
 }
