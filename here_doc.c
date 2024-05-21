@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 10:23:50 by smuneer           #+#    #+#             */
+/*   Updated: 2024/05/21 10:27:07 by smuneer          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 extern int	g_recv_sig;
@@ -15,7 +27,8 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 		//if (quotes == false) if quotes of delimiter is false we should expand it
 			// line = expander_str(info, line);
 		line = readline(HEREDOC_MSG);
-		if (!line || (ft_strlen(line) == len && !ft_strncmp(heredoc->str, line, len)) || g_recv_sig)
+		if (!line || (ft_strlen(line) == len && \
+		!ft_strncmp(heredoc->str, line, len)) || g_recv_sig)
 			break ;
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -69,7 +82,6 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 {
 	t_token	*start;
 	int		sl;
-    int     error_num;
 
 	start = cmd->redirects;
 	sl = 0;
@@ -85,50 +97,11 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 			{
 				info->exit_status = 1;
 				g_recv_sig = 0;
-				reset_info(info);
-				return (1);
+				return (reset_info(info), 1);
 			}
 		}
 		cmd->redirects = cmd->redirects->next;
 	}
 	cmd->redirects = start;
-	(void)error_num;
 	return (0);
 }
-
-//After combining need to check with quotes and without also redirected to new file.
-
-// int main() {
-//     // Create a sample t_info structure
-//     t_info info;
-//     info.envv = NULL; // Initialize envv with appropriate values
-
-//     // Create a sample t_cmd structure with redirects
-//     t_cmd cmd;
-//     cmd.argv = (char *[]){"command", NULL}; // Example argv array
-//     cmd.redirects = malloc(sizeof(t_token));
-//     if (cmd.redirects == NULL) {
-//         perror("Memory allocation failed");
-//         return (1);
-//     }
-//     cmd.redirects->type = LESSLESS; // Example redirect type
-//     cmd.redirects->str = "hi"; // Example redirect string
-//     cmd.redirects->prev = NULL;
-//     cmd.redirects->next = NULL;
-//     cmd.builtin = NULL; // Example builtin function
-
-//     // Call the send_heredoc function
-//     int result = send_heredoc(&info, &cmd);
-//     if (result != 0) {
-//         printf("send_heredoc failed\n");
-//         // Handle error condition
-//     } else {
-//         printf("send_heredoc succeeded\n");
-//         // Proceed with further execution
-//     }
-
-//     // Free dynamically allocated memory
-//     free(cmd.redirects);
-
-//     return EXIT_SUCCESS;
-// }

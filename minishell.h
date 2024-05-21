@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 06:53:05 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 10:35:02 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <fcntl.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 
 typedef struct s_info
 {
@@ -67,7 +67,7 @@ typedef struct s_cmd
 
 int		get_cmd_table(t_info *info);
 void	memory_error(void);
-void 	implement_info(t_info *info);
+void	implement_info(t_info *info);
 void	free_info(t_info *info);
 void	minishell_loop(t_info *info);
 void	reset_info(t_info *info);
@@ -131,7 +131,7 @@ char	*del_quotes(char *str, char c);
 int		prepare_executor(t_info *info);
 int		many_cmd_executor(t_info *info);
 void	single_cmd(t_cmd *cmd, t_info *info);
-void 	path_update (t_info *info);
+void	path_update(t_info *info);
 
 int		export_error(char *c);
 
