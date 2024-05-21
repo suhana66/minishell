@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 09:46:38 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 11:14:53 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc != 1)
-		return (ft_putendl_fd("usage: ./minishell", STDERR_FILENO), 1);
+		return (ft_putendl_fd(USAGE_ERR, STDERR_FILENO), 1);
 	info.env = array_dup(envp, array_len(envp) + 1);
 	if (!info.env)
 		return (1);
@@ -41,7 +41,7 @@ void	minishell_loop(t_info *info)
 		return ((void)reset_info(info));
 	if (err < 0)
 	{
-		memory_error();
+		ft_putendl_fd(MEMORY_ERR, STDERR_FILENO);
 		free_info(info);
 		exit(EXIT_FAILURE);
 	}
@@ -76,11 +76,6 @@ int	get_cmd_table(t_info *info)
 	free(input);
 	token_clear(&token_list);
 	return (err);
-}
-
-void	memory_error(void)
-{
-	ft_putendl_fd("minishell: unable to assign memory", STDERR_FILENO);
 }
 
 void	free_info(t_info *info)

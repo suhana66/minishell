@@ -88,7 +88,7 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 
 	if (expander(cmd, info))
 	{
-		ft_putstr_fd("memory error: unable to assign memory\n", 2);
+		ft_putendl_fd(MEMORY_ERR, STDERR_FILENO);
 		reset_info(info);
 		return ;
 	}

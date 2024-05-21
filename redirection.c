@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:37:09 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/13 14:06:45 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/21 11:10:00 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,37 +94,3 @@ int	ck_redirects(t_cmd *cmd)
 	cmd->redirects = start;
 	return (0);
 }
-
-// int main() {
-
-// 	t_info info;
-//     info.envv = NULL; // Initialize envv with appropriate values
-
-//     // Create a sample t_cmd structure with redirects
-//     t_cmd cmd;
-//     cmd.argv = (char *[]){"command", NULL}; // Example argv array
-//     cmd.redirects = malloc(sizeof(t_token));
-//     if (cmd.redirects == NULL) {
-//         perror("Memory allocation failed");
-//         return (1);
-//     }
-// 	cmd.hd_f_name = "input.txt";
-//     cmd.redirects->type = LESSLESS; // Example redirect type
-//     cmd.redirects->str = NULL; // Example redirect string
-//     cmd.redirects->prev = NULL;
-//     cmd.redirects->next = NULL;
-//     cmd.builtin = NULL; // Example builtin function
-//     t_cmd command;
-//     // Initialize command with appropriate data, including redirects
-//     // For simplicity, assume we have a function to populate a t_cmd structure
-// 	int i = 0;
-//     // Test Input Redirection
-//     i = ck_redirects(&cmd); 
-// 	if (i)
-// 		printf("error");
-// 	else
-// 		printf("success");// Should return 0 for successful redirection
-
-
-//     return 0;
-// }

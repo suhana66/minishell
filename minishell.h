@@ -6,15 +6,12 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 10:23:35 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 12:39:44 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define READLINE_MSG	"\033[1;32mminishell $ \033[0m"
-# define HEREDOC_MSG	"\033[1;34m> \033[0m"
 
 # include "libft.h"
 # include <stdio.h>
@@ -23,6 +20,12 @@
 # include <stdbool.h>
 # include <fcntl.h>
 #include <sys/wait.h>
+
+# define READLINE_MSG	"\033[1;32mminishell $ \033[0m"
+# define HEREDOC_MSG	"\033[1;34m> \033[0m"
+
+# define USAGE_ERR	"usage: ./minishell"
+# define MEMORY_ERR	"minishell: unable to assign memory"
 
 typedef struct s_info
 {
@@ -66,7 +69,6 @@ typedef struct s_cmd
 }	t_cmd;
 
 int		get_cmd_table(t_info *info);
-void	memory_error(void);
 void 	implement_info(t_info *info);
 void	free_info(t_info *info);
 void	minishell_loop(t_info *info);
@@ -108,7 +110,7 @@ int		mini_env(t_info *info, t_cmd *simple_cmd);
 int		mini_exit(t_info *info, t_cmd *simple_cmd);
 
 int		expander(t_cmd *cmd, t_info *info);
-int		expand_arg(char **str, t_info *info);
+int		expand_arg(char **str, t_info *info, bool if_del_quotes);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
 int		replace_exit_status(char **str, size_t *var_i, int exit_status);
 char	*env_search(char **env, char *key);

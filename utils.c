@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:25:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 14:03:48 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 11:14:18 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	prepare_executor(t_info *info)
 		info->pid = ft_calloc(sizeof(int), info->pip_n + 2);
 		if (!info->pid)
 		{
-			ft_putstr_fd("memory error: unable to assign memory\n", 2);
+			ft_putendl_fd(MEMORY_ERR, STDERR_FILENO);
 			reset_info(info);
 			return(1);
 		}

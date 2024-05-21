@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 17:19:15 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 12:40:01 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int expander(t_cmd *cmd, t_info *info)
 	argv = cmd->argv;
 	i = 0;
 	while (argv[i])
-		if (expand_arg(&argv[i++], info))
+		if (expand_arg(&argv[i++], info, true))
 			return (1);
 	redirects = cmd->redirects;
 	while (redirects)
 	{
 		if (redirects->type != LESSLESS)
-			expand_arg(&redirects->str, info);
+			expand_arg(&redirects->str, info, true);
 		redirects = redirects->next;
 	}
 	return (0);
@@ -41,7 +41,7 @@ int expander(t_cmd *cmd, t_info *info)
 						(4) replace it with the enviornment variable value
 						(5) return the number of characters replaced
 */
-int expand_arg(char **str, t_info *info)
+int expand_arg(char **str, t_info *info, bool if_del_quotes)
 {
 	size_t i;
 	char encloser;
@@ -50,7 +50,7 @@ int expand_arg(char **str, t_info *info)
 	encloser = 0;
 	while ((*str)[i])
 	{
-		if (get_encloser((*str)[i], &encloser))
+		if (if_del_quotes && get_encloser((*str)[i], &encloser))
 			ft_strlcpy(*str + i, *str + i + 1, ft_strlen(*str + i + 1) + 1);
 		else if (encloser != '\'' && (*str)[i] == '$')
 		{

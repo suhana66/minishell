@@ -12,13 +12,12 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 	len = ft_strlen(heredoc->str);
 	while (1)
 	{
-		//if (quotes == false) if quotes of delimiter is false we should expand it
-			// line = expander_str(info, line);
 		line = readline(HEREDOC_MSG);
+		if (quotes == false)
+			expand_arg(&line, info, false);
 		if (!line || (ft_strlen(line) == len && !ft_strncmp(heredoc->str, line, len)) || g_recv_sig)
 			break ;
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	if (!line || g_recv_sig)
@@ -95,40 +94,3 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 	(void)error_num;
 	return (0);
 }
-
-//After combining need to check with quotes and without also redirected to new file.
-
-// int main() {
-//     // Create a sample t_info structure
-//     t_info info;
-//     info.envv = NULL; // Initialize envv with appropriate values
-
-//     // Create a sample t_cmd structure with redirects
-//     t_cmd cmd;
-//     cmd.argv = (char *[]){"command", NULL}; // Example argv array
-//     cmd.redirects = malloc(sizeof(t_token));
-//     if (cmd.redirects == NULL) {
-//         perror("Memory allocation failed");
-//         return (1);
-//     }
-//     cmd.redirects->type = LESSLESS; // Example redirect type
-//     cmd.redirects->str = "hi"; // Example redirect string
-//     cmd.redirects->prev = NULL;
-//     cmd.redirects->next = NULL;
-//     cmd.builtin = NULL; // Example builtin function
-
-//     // Call the send_heredoc function
-//     int result = send_heredoc(&info, &cmd);
-//     if (result != 0) {
-//         printf("send_heredoc failed\n");
-//         // Handle error condition
-//     } else {
-//         printf("send_heredoc succeeded\n");
-//         // Proceed with further execution
-//     }
-
-//     // Free dynamically allocated memory
-//     free(cmd.redirects);
-
-//     return EXIT_SUCCESS;
-// }
