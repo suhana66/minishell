@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:16:39 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 13:12:47 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/21 13:29:26 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	many_cmd_executor(t_info *info)
 	fd_in = 0;
 	while (info->cmd_table)
 	{
-		//info->cmd_table = call_expander(info, info->cmd_table);
+		expander(info->cmd_table, info);
 		if (info->cmd_table->next)
 			pipe(end);
 		send_heredoc(info, info->cmd_table);
