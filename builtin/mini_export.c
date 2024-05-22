@@ -12,25 +12,6 @@
 
 #include "minishell.h"
 
-int	equal_s(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
-
-int	check_valid_identifier(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '[' || c == ']' || c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.' || c == ':' || c == '/' || c == '{' || c == '}' || c == '+' || c == '^' || c == '%' || c == '#' || c == '@' || c == '!' || c == '~' || c == '=' || c == '-' || c == '?' || c == '&' || c == '*');
-}
-
 int	check_param(char *str)
 {
 	int	i;
@@ -45,45 +26,6 @@ int	check_param(char *str)
 		i++;
 	}
 	return (0);
-}
-
-char	*del_quotes(char *str, char c)
-{
-	int		i;
-	int		len;
-	char	*result;
-	int		result_index;
-	int		inside_quote;
-
-	i = 0;
-	len = ft_strlen(str);
-	result = malloc(len + 1);
-	if (!result)
-	{
-		fprintf(stderr, "Memory allocation failed\n");
-		exit(EXIT_FAILURE);
-	}
-	result_index = 0;
-	inside_quote = 0;
-	while (str[i])
-	{
-		if (str[i] == c && i > 0 && str[i - 1] == '=')
-		{
-			i++;
-			inside_quote = 1;
-		}
-		else if (str[i] == c && inside_quote)
-		{
-			i++;
-			inside_quote = 0;
-		}
-		else
-		{
-			result[result_index++] = str[i++];
-		}
-	}
-	result[result_index] = '\0';
-	return (result);
 }
 
 int	env_size(char **env)

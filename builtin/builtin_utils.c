@@ -46,3 +46,66 @@ int	export_error(char *c)
 	ft_putendl_fd("not a valid identifier", STDERR_FILENO);
 	return (EXIT_FAILURE);
 }
+
+int	equal_s(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}
+
+int	check_valid_identifier(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '[' || c == ']' \
+	|| c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.' ||\
+	c == ':' || c == '/' || c == '{' || c == '}' || c == '+' ||\
+	c == '^' || c == '%' || c == '#' || c == '@' || c == '!' ||\
+	c == '~' || c == '=' || c == '-' || c == '?' || c == '&' ||\
+	c == '*');
+}
+
+char	*del_quotes(char *str, char c)
+{
+	int		i;
+	int		len;
+	char	*result;
+	int		result_index;
+	int		inside_quote;
+
+	i = 0;
+	len = ft_strlen(str);
+	result = malloc(len + 1);
+	if (!result)
+	{
+		fprintf(stderr, "Memory allocation failed\n");
+		exit(EXIT_FAILURE);
+	}
+	result_index = 0;
+	inside_quote = 0;
+	while (str[i])
+	{
+		if (str[i] == c && i > 0 && str[i - 1] == '=')
+		{
+			i++;
+			inside_quote = 1;
+		}
+		else if (str[i] == c && inside_quote)
+		{
+			i++;
+			inside_quote = 0;
+		}
+		else
+		{
+			result[result_index++] = str[i++];
+		}
+	}
+	result[result_index] = '\0';
+	return (result);
+}
