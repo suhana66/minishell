@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-extern int	g_recv_sig;
-
 int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 {
 	int		fd;

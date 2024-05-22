@@ -12,11 +12,6 @@
 
 #include "minishell.h"
 
-void	memory_error(void)
-{
-	ft_putendl_fd("minishell: unable to assign memory", STDERR_FILENO);
-}
-
 void	free_info(t_info *info)
 {
 	array_clear(info->path);
@@ -37,6 +32,36 @@ void	reset_info(t_info *info)
 	implement_info(info);
 	info->reset = true;
 	minishell_loop(info);
+}
+
+int	get_exit_status(int cmd_status)
+{
+	if (WIFEXITED(cmd_status))
+		return (WEXITSTATUS(cmd_status));
+	else if (g_recv_sig == SIGINT)
+		return (g_recv_sig = 0, 130);
+	else if (g_recv_sig == SIGQUIT)
+		return (g_recv_sig = 0, 131);
+	return (0);
+}
+
+void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in)
+{
+	if (cmd->prev && dup2(fd_in, 0) < 0)
+	{
+		ft_putstr_fd("Failed to create pipe\n", 2);
+		reset_info(info);
+	}
+	close(end[0]);
+	if (cmd->next && dup2(end[1], 1) < 0)
+	{
+		ft_putstr_fd("Failed to create pipe\n", 2);
+		reset_info(info);
+	}
+	close(end[1]);
+	if (cmd->prev)
+		close(fd_in);
+	handle_cmd(cmd, info);
 }
 
 int	prepare_executor(t_info *info)
