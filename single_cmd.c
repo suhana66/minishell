@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 18:00:42 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:17:49 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,19 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 	cmd->argv = split_again(cmd->argv);
 	if (!access(cmd->argv[0], F_OK))
 		execve(cmd->argv[0], cmd->argv, info->env);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 	while (info->path && info->path[i])
-=======
-	if (info->path)
->>>>>>> Stashed changes
-=======
-	if (info->path)
->>>>>>> Stashed changes
 	{
-		while (info->path[i])
-		{
-			mycmd = ft_strjoin(info->path[i], cmd->argv[0]);
-			if (!access(mycmd, F_OK))
-				execve(mycmd, cmd->argv, info->env);
-			free(mycmd);
-			i++;
-		}
+		mycmd = ft_strjoin(info->path[i], cmd->argv[0]);
+		if (!access(mycmd, F_OK))
+			execve(mycmd, cmd->argv, info->env);
+		free(mycmd);
+		i++;
 	}
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	return (127);
 }
-
 
 void	handle_cmd(t_cmd *cmd, t_info *info)
 {

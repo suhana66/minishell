@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:37:09 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 13:17:31 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:18:47 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,3 @@ int	ck_redirects(t_cmd *cmd)
 	cmd->redirects = start;
 	return (0);
 }
-  
