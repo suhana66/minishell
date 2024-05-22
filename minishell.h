@@ -115,6 +115,7 @@ void	cmd_clear(t_cmd **cmds);
 int		parse_env(t_info *info);
 char	**split_path_in_env(char **env);
 int		find_pwd(t_info *info);
+char	*env_search(char **env, char *key);
 
 //builtin
 int		mini_echo(t_info *info, t_cmd *simple_cmd);
@@ -130,7 +131,6 @@ int		expander(t_cmd *cmd, t_info *info);
 int		parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
 int		replace_exit_status(char **str, size_t *var_i, int exit_status);
-char	*env_search(char **env, char *key);
 
 //signals
 void	sigint_handler(int sig);
@@ -164,13 +164,37 @@ int		check_fd_heredoc(t_info *info, int end[2], t_cmd *cmd);
 int		many_cmd_executor(t_info *info);
 t_cmd	*ft_simple_cmdsfirst(t_cmd *cmd);
 
+//buitin/mini_cd
+void	change_pwd(t_info *info);
+int		find_path(t_info *info, char *str);
+void	add_pwd_to_env(t_info *info, char *str);
+
+//buitin/mini_exit
 int		determine_exit_code(char **str, t_info *info);
-int		equal_s(char *str);
 int		is_str_digit(char *str);
+
+//buitin/mini_export
+int		var_exist(char *var, t_info *info);
+int		env_add(char *var, char ***env);
+void	print_with_q(char *str);
+int		dec_sorted(char **env_arr);
+
+//builtin/builtin_utils
+int		equal_s(char *str);
 char	*del_quotes(char *str, char c);
-
 void	path_update(t_info *info);
-
 int		export_error(char *c);
+int		check_valid_identifier(char c);
+
+//builtin/builtin_utils2
+int		check_param(char *str);
+int		env_size(char **env);
+void	sort_env(char **env);
+
+//buitin/mini_unset
+void	check_unset_arg(char *str, t_info *info);
+int		del_var(char **env, char **argv, t_info *info);
+char	*error_unset(t_info *info, t_cmd *simple_cmd);
+
 
 #endif /* MINISHELL_H */
