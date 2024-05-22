@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 10:35:52 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:46:17 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
 	int			i;
 	size_t		j;
 
+	if (!argv_0)
+		return (NULL);
 	i = 0;
 	while (builtins[i][0])
 	{

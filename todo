@@ -1,22 +1,3 @@
 1. Free and type_error (valgrind)
-2. Test
-3. Norminette
-4. Segmentation fault for only redirections
-5. Delete temporary heredoc files of signal interrupt
-
-Testing Success
-echo
-^D in main
-Exit
-env
-single command
-pwd
-redirections
-export
-unset
-
-TO Test
-pipes
-signals
-exit code ($?)
-cd
+2. Norminette
+3. Tester
