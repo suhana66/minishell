@@ -28,6 +28,7 @@ MAIN_SRCS := \
 BUILTIN_PATH := builtin
 BUILTIN_SRCS := \
 	$(BUILTIN_PATH)/builtin_utils.c \
+	$(BUILTIN_PATH)/builtin2_utils.c \
 	$(BUILTIN_PATH)/mini_cd.c \
 	$(BUILTIN_PATH)/mini_echo.c \
 	$(BUILTIN_PATH)/mini_env.c \
