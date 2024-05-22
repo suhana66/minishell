@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 13:46:48 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:03:53 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*del_quotes(char *str, char c)
 	result = malloc(len + 1);
 	if (!result)
 	{
-		fprintf(stderr, "Memory allocation failed\n");
+		ft_putendl_fd(MEMORY_ERR, STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	result_index = 0;

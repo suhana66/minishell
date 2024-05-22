@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:46 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 19:06:16 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:06:27 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,68 +63,61 @@ int	del_var(char **env, char **argv, t_info *info)
 	{
 		while (env[j])
 		{
-			if (ft_strncmp(env[j], argv[i], ft_strlen(argv[i])) == 0 && (env[j][ft_strlen(argv[i])] == '=' || env[j][ft_strlen(argv[i])] == 0))
+			if (ft_strncmp(env[j], argv[i], ft_strlen(argv[i])) == 0
+				&& (env[j][ft_strlen(argv[i])] == '='
+				|| env[j][ft_strlen(argv[i])] == 0))
 				break ;
 			j++;
 		}
 		check_unset_arg(argv[i], info);
 		temp = env[j];
-		while (env[j])
-		{
-			env[j] = env[j + 1];
-			j++;
-		}
+		while (env[j++])
+			env[j - 1] = env[j];
 		free(temp);
 		i++;
 	}
 	return (0);
 }
 
-int	error_unset(t_info *info, t_cmd *simple_cmd)
+char	*error_unset(t_info *info, t_cmd *simple_cmd)
 {
 	int	i;
 	int	j;
 
 	(void)info;
 	i = 1;
-	if (simple_cmd->argv[1] == NULL)
-	{
-		printf("error, not valid identifier");
-		return (1);
-	}
-	// print	error as well not enough argument
 	while (simple_cmd->argv[i])
 	{
-		if (!(ft_isalpha(simple_cmd->argv[i][0])) && simple_cmd->argv[i][0] != '_' && simple_cmd->argv[i][0] != '\"' && simple_cmd->argv[i][0] != '\'')
-		{
-			printf("error, not valid identifier");
-			return (1);
-		}
 		if (equal_s(simple_cmd->argv[i]) != 0)
-		{
-			printf("error, not valid identifier");
-			return (1);
-		}
+			return (simple_cmd->argv[i]);
 		j = 1;
 		while (simple_cmd->argv[i][j])
 		{
-			if (!ft_isalnum(simple_cmd->argv[i][j]) && simple_cmd->argv[i][j] != '_' && simple_cmd->argv[i][j] != '\'' && simple_cmd->argv[i][j] != '\"')
-			{
-				printf("error, not valid identifier");
-				return (1);
-			}
+			if ((!ft_isalnum(simple_cmd->argv[i][j])
+				&& simple_cmd->argv[i][j] != '_'
+				&& simple_cmd->argv[i][j] != '\''
+				&& simple_cmd->argv[i][j] != '\"')
+				|| ft_isdigit(simple_cmd->argv[i][0]))
+				return (simple_cmd->argv[i]);
 			j++;
 		}
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 int	mini_unset(t_info *info, t_cmd *simple_cmd)
 {
-	if (error_unset(info, simple_cmd))
+	char	*not_valid_id;
+
+	not_valid_id = error_unset(info, simple_cmd);
+	if (not_valid_id)
+	{
+		ft_putstr_fd("minishell: unset: '", STDERR_FILENO);
+		ft_putstr_fd(not_valid_id, STDERR_FILENO);
+		ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 		return (1);
-	else
-		del_var(info->env, simple_cmd->argv, info);
+	}
+	del_var(info->env, simple_cmd->argv, info);
 	return (0);
 }
