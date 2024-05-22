@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 17:56:33 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:00:42 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,8 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	int	status;
 
 	if (expander(cmd, info))
-	{
-		ft_putendl_fd(MEMORY_ERR, STDERR_FILENO);
-		reset_info(info);
-		return ;
-	}
+		return (ft_putendl_fd(MEMORY_ERR, STDERR_FILENO),
+			(void)reset_info(info));
 	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
 		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{

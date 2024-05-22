@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:23:50 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 13:14:23 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:01:14 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 		line = readline(HEREDOC_MSG);
 		if (quotes == false)
 			parse_arg(&line, info, false, true);
-		if (!line || (ft_strlen(line) == len && !ft_strncmp(heredoc->str, line, len)) || g_recv_sig)
+		if (!line || (ft_strlen(line) == len
+				&& !ft_strncmp(heredoc->str, line, len)) || g_recv_sig)
 			break ;
 		ft_putendl_fd(line, fd);
 		free(line);
