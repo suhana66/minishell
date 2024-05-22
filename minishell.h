@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 13:55:26 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:55:51 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,54 +70,54 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-//main
+// main
 int		get_cmd_table(t_info *info);
 void	implement_info(t_info *info);
 void	minishell_loop(t_info *info);
 int		event(void);
 
-//utils2
+// utils2
 void	free_info(t_info *info);
 void	reset_info(t_info *info);
 int		get_exit_status(int cmd_status);
 void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in);
 int		prepare_executor(t_info *info);
 
-//utils
+// utils
 char	get_encloser(char c, char *encloser);
 void	array_clear(char **array);
 size_t	count_pipes(t_token *token_list);
 size_t	array_len(char **array);
 char	**array_dup(char **array, size_t size);
 
-//lexer
+// lexer
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
 t_type	token_type(char **input);
 
-//token_utils
+// token_utils
 t_token	*token_add(t_type type, char *str, t_token **tokens);
 void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
 
-//parser
+// parser
 int		parser(t_token **token_list, t_info *info);
 int		cmd_redirects(t_token **token_list, t_token **result);
 char	**cmd_argv(t_token **token_list);
 int		(*cmd_builtin(char *argv_0))(t_info *, t_cmd *cmd);
 void	type_error(t_token *token);
 
-//cmd_utils
+// cmd_utils
 t_cmd	*cmd_add(t_cmd **cmds);
 void	cmd_clear(t_cmd **cmds);
 
-//parse_env
+// parse_env
 int		parse_env(t_info *info);
 char	**split_path_in_env(char **env);
 int		find_pwd(t_info *info);
 char	*env_search(char **env, char *key);
 
-//builtin
+// builtin
 int		mini_echo(t_info *info, t_cmd *simple_cmd);
 int		mini_cd(t_info *info, t_cmd *simple_cmd);
 int		mini_pwd(t_info *info, t_cmd *simple_cmd);
@@ -126,75 +126,74 @@ int		mini_unset(t_info *info, t_cmd *simple_cmd);
 int		mini_env(t_info *info, t_cmd *simple_cmd);
 int		mini_exit(t_info *info, t_cmd *simple_cmd);
 
-//expander
+// expander
 int		expander(t_cmd *cmd, t_info *info);
 int		parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
 int		replace_exit_status(char **str, size_t *var_i, int exit_status);
 
-//signals
+// signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	cmd_sigint_handler(int sig);
 void	heredoc_sigint_handler(int sig);
 
-//single_cmd
+// single_cmd
 char	*join_split_str(char **str, char *new_str);
 void	handle_cmd(t_cmd *cmd, t_info *info);
 char	**split_again(char **arr);
 int		find_cmd(t_cmd *cmd, t_info *info);
 void	single_cmd(t_cmd *cmd, t_info *info);
 
-//redirection
+// redirection
 int		check_append_outfile(t_token *redirects);
 int		handle_infile(char *file);
 int		handle_outfile(t_token *redirects);
 int		ck_redirects(t_cmd *cmd);
 
-//heredoc
+// heredoc
 int		here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name);
 int		send_heredoc(t_info *info, t_cmd *cmd);
 char	*heredoc_temp_file(void);
 int		ft_heredoc(t_info *info, t_token *heredoc, char *f_name);
 
-//execution
+// execution
 int		pipe_wait(int *pid, int pipe_n);
 int		ft_fork(t_info *info, int end[2], int fd_in, t_cmd *cmd);
 int		check_fd_heredoc(t_info *info, int end[2], t_cmd *cmd);
 int		many_cmd_executor(t_info *info);
 t_cmd	*ft_simple_cmdsfirst(t_cmd *cmd);
 
-//buitin/mini_cd
+// buitin/mini_cd
 void	change_pwd(t_info *info);
 int		find_path(t_info *info, char *str);
 void	add_pwd_to_env(t_info *info, char *str);
 
-//buitin/mini_exit
+// buitin/mini_exit
 int		determine_exit_code(char **str, t_info *info);
 int		is_str_digit(char *str);
 
-//buitin/mini_export
+// buitin/mini_export
 int		var_exist(char *var, t_info *info);
 int		env_add(char *var, char ***env);
 void	print_with_q(char *str);
 int		dec_sorted(char **env_arr);
 
-//builtin/builtin_utils
+// builtin/builtin_utils
 int		equal_s(char *str);
 char	*del_quotes(char *str, char c);
 void	path_update(t_info *info);
 int		export_error(char *c);
 int		check_valid_identifier(char c);
 
-//builtin/builtin_utils2
+// builtin/builtin_utils2
 int		check_param(char *str);
 int		env_size(char **env);
 void	sort_env(char **env);
 
-//buitin/mini_unset
+// buitin/mini_unset
 void	check_unset_arg(char *str, t_info *info);
 int		del_var(char **env, char **argv, t_info *info);
 char	*error_unset(t_info *info, t_cmd *simple_cmd);
-
 
 #endif /* MINISHELL_H */
