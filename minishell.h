@@ -115,6 +115,7 @@ void	cmd_clear(t_cmd **cmds);
 int		parse_env(t_info *info);
 char	**split_path_in_env(char **env);
 int		find_pwd(t_info *info);
+char	*env_search(char **env, char *key);
 
 //builtin
 int		mini_echo(t_info *info, t_cmd *simple_cmd);
@@ -130,7 +131,6 @@ int		expander(t_cmd *cmd, t_info *info);
 int		parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
 int		replace_exit_status(char **str, size_t *var_i, int exit_status);
-char	*env_search(char **env, char *key);
 
 //signals
 void	sigint_handler(int sig);

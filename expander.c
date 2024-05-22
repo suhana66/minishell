@@ -123,25 +123,3 @@ int	replace_exit_status(char **str, size_t *var_i, int exit_status)
 	free(exit_str);
 	return (0);
 }
-
-char	*env_search(char **env, char *key)
-{
-	size_t	i;
-	char	*result;
-
-	i = 0;
-	while (env[i])
-	{
-		if (!ft_strncmp(env[i], key, ft_strlen(key)) && \
-		*(env[i] + ft_strlen(key)) == '=')
-		{
-			result = env[i] + ft_strlen(key) + 1;
-			if (!*result)
-				return (NULL);
-			else
-				return (result);
-		}
-		i++;
-	}
-	return (NULL);
-}
