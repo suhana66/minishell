@@ -32,12 +32,13 @@ int	handle_infile(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("minishell: infile: No such file or directory\n");
+		ft_putendl_fd("minishell: infile: No such file or directory", 2);
 		return (1);
 	}
 	if (fd > 0 && dup2(fd, 0) < 0)
 	{
-		printf("minishell: pipe error\n");
+		ft_putendl_fd("minishell: pipe error", 2);
+		close(fd);
 		return (1);
 	}
 	if (fd > 0)
@@ -52,12 +53,13 @@ int	handle_outfile(t_token *redirects)
 	fd = check_append_outfile(redirects);
 	if (fd < 0)
 	{
-		printf("minishell: outfile: Error\n");
+		ft_putendl_fd("minishell: outfile: Error", 2);
 		return (1);
 	}
 	if (fd > 0 && dup2(fd, 1) < 0)
 	{
-		printf("minishell: pipe error\n");
+		ft_putendl_fd("minishell: pipe error", 2);
+		close(fd);
 		return (1);
 	}
 	if (fd > 0)
@@ -93,3 +95,4 @@ int	ck_redirects(t_cmd *cmd)
 	cmd->redirects = start;
 	return (0);
 }
+  
