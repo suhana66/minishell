@@ -1,3 +1,11 @@
 1. Free and type_error (valgrind)
 2. Norminette
 3. Tester
+
+Memory leaks with signals
+Space and tab only
+Norminette
+Enclosers split but need to combine
+
+Export a=255
+Exit $a

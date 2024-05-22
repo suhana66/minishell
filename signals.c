@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:57:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 06:49:33 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:23:55 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,4 @@ void	heredoc_sigint_handler(int sig)
 	rl_redisplay();
 	rl_done = 1;
 }
+				         

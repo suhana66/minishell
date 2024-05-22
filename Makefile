@@ -1,6 +1,6 @@
 NAME := minishell
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Wfatal-errors
+CFLAGS := -Wall -Wextra -Werror
 
 LIBFT_PATH := libft
 LIBFT := $(LIBFT_PATH)/libft.a

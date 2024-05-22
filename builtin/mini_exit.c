@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:34 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 13:45:35 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:57:45 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	is_str_digit(char *str)
 {
 	int	i;
 
-	i = 0;
+	if (str[0] != '+' && str[0] != '-' && !ft_isdigit(str[0]))
+		return (0);
+	i = 1;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -33,7 +35,7 @@ int	determine_exit_code(char **str, t_info *info)
 	if (!str[1])
 		exit_code = 0;
 	else if (is_str_digit(str[1]))
-		exit_code = ft_atoi(str[1]);
+		exit_code = (ft_atoi(str[1]) % 256 + 256) % 256;
 	else
 	{
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
