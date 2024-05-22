@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/22 15:46:17 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:26:45 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**cmd_argv(t_token **token_list)
 	case-sensitive builtin functions:
 		export, unset, exit
 */
-int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
+int	*cmd_builtin(char *argv_0)
 {
 	static void	*builtins[][2] = {
 	{"echo", mini_echo},
@@ -114,51 +114,29 @@ int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
 	{NULL}
 	};
 	int			i;
-	size_t		j;
 
-	if (!argv_0)
-		return (NULL);
 	i = 0;
-	while (builtins[i][0])
+	while (argv_0 && builtins[i][0])
 	{
-		if (builtins[i][1] == mini_echo || builtins[i][1] == mini_cd || \
-		builtins[i][1] == mini_pwd || builtins[i][1] == mini_env)
-		{
-			j = 0;
-			while (argv_0[j] && ((char *)builtins[i][0])[j] && \
-			ft_tolower(argv_0[j]) == ft_tolower(((char *)builtins[i][0])[j]))
-				j++;
-			if (argv_0[j] == 0 && ((char *)builtins[i][0])[j] == 0)
-				return (builtins[i][1]);
-		}
-		else if (ft_strlen(argv_0) == ft_strlen(builtins[i][0]) && \
-		!ft_strncmp(builtins[i][0], argv_0, ft_strlen(argv_0)))
+		if (((builtins[i][1] == mini_echo || builtins[i][1] == mini_cd
+			|| builtins[i][1] == mini_pwd || builtins[i][1] == mini_env)
+			&& !ft_strcasecmp(argv_0, builtins[i][0]))
+			|| (ft_strlen(builtins[i][0]) == ft_strlen(argv_0)
+			&& !ft_strncmp(builtins[i][0], argv_0, ft_strlen(argv_0))))
 			return (builtins[i][1]);
 		i++;
 	}
 	return (NULL);
 }
 
-void	type_error(t_token *token)
+int	ft_strcasecmp(const char *s1, const char *s2)
 {
-	char	*token_name;
+	size_t	i;
 
-	if (!token)
-		token_name = "newline";
-	else if (token->type == GREAT)
-		token_name = ">";
-	else if (token->type == GREATGREAT)
-		token_name = ">>";
-	else if (token->type == LESS)
-		token_name = "<";
-	else if (token->type == LESSLESS)
-		token_name = "<<";
-	else if (token->type == PIPE)
-		token_name = "|";
-	else
-		return ;
-	ft_putstr_fd("minishell: syntax error near unexpected token '",
-		STDERR_FILENO);
-	ft_putstr_fd(token_name, STDERR_FILENO);
-	ft_putendl_fd("'", STDERR_FILENO);
+	i = 0;
+	while (s1[i] && s2[i] && ft_tolower(s1[i]) == ft_tolower(s2[i]))
+		i++;
+	if (s1[i] == 0 && s2[i] == 0)
+		return (0);
+	return (1);
 }

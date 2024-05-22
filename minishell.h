@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/22 17:55:51 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:18:43 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,40 +76,39 @@ void	implement_info(t_info *info);
 void	minishell_loop(t_info *info);
 int		event(void);
 
-// utils2
+// cmd_utils
 void	free_info(t_info *info);
 void	reset_info(t_info *info);
 int		get_exit_status(int cmd_status);
 void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in);
 int		prepare_executor(t_info *info);
 
-// utils
-char	get_encloser(char c, char *encloser);
-void	array_clear(char **array);
-size_t	count_pipes(t_token *token_list);
-size_t	array_len(char **array);
-char	**array_dup(char **array, size_t size);
-
 // lexer
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
 t_type	token_type(char **input);
+char	get_encloser(char c, char *encloser);
+void	type_error(t_token *token);
 
 // token_utils
 t_token	*token_add(t_type type, char *str, t_token **tokens);
 void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
+size_t	count_pipes(t_token *token_list);
 
 // parser
 int		parser(t_token **token_list, t_info *info);
 int		cmd_redirects(t_token **token_list, t_token **result);
 char	**cmd_argv(t_token **token_list);
 int		(*cmd_builtin(char *argv_0))(t_info *, t_cmd *cmd);
-void	type_error(t_token *token);
+int		ft_strcasecmp(const char *s1, const char *s2);
 
-// cmd_utils
+// struct_utils
 t_cmd	*cmd_add(t_cmd **cmds);
 void	cmd_clear(t_cmd **cmds);
+size_t	array_len(char **array);
+char	**array_dup(char **array, size_t size);
+void	array_clear(char **array);
 
 // parse_env
 int		parse_env(t_info *info);
@@ -131,6 +130,7 @@ int		expander(t_cmd *cmd, t_info *info);
 int		parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
 int		replace_exit_status(char **str, size_t *var_i, int exit_status);
+int		replace_str(char **str, size_t *start, size_t len, char *rep_val);
 
 // signals
 void	sigint_handler(int sig);

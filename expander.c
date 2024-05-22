@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:27:08 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 13:16:03 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 21:54:03 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ int	replace_enviornment_variable(char **str, size_t *var_i, char **env)
 {
 	size_t	len;
 	char	*start;
-	char	*temp;
+	char	*key;
 	char	*env_val;
-	size_t	result_size;
 
 	start = *str + *var_i + 1;
 	len = 0;
@@ -80,46 +79,46 @@ int	replace_enviornment_variable(char **str, size_t *var_i, char **env)
 		len++;
 	if (ft_isdigit(start[0]) || len == 0)
 		return ((*var_i)++, 0);
-	temp = ft_substr(start, 0, len);
-	if (!temp)
+	key = ft_substr(start, 0, len);
+	if (!key)
 		return (1);
-	env_val = env_search(env, temp);
+	env_val = env_search(env, key);
 	if (!env_val)
 		env_val = "";
-	free(temp);
-	result_size = *var_i + ft_strlen(env_val) + ft_strlen(start + len) + 1;
-	temp = malloc(sizeof(char) * result_size);
-	if (!temp)
+	free(key);
+	if (replace_str(str, var_i, len + 1, env_val))
 		return (2);
-	ft_strlcpy(temp, *str, *var_i + 1);
-	ft_strlcat(temp, env_val, result_size);
-	ft_strlcat(temp, start + len, result_size);
-	free(*str);
-	*str = temp;
-	*var_i += ft_strlen(env_val);
 	return (0);
 }
 
 int	replace_exit_status(char **str, size_t *var_i, int exit_status)
 {
-	char	*result;
-	size_t	result_size;
 	char	*exit_str;
 
 	exit_str = ft_itoa(exit_status);
 	if (!exit_str)
 		return (1);
-	result_size = *var_i + \
-	ft_strlen(exit_str) + ft_strlen(*str + *var_i + 2) + 1;
-	result = malloc(sizeof(char) * result_size);
-	if (!result)
+	if (replace_str(str, var_i, 2, exit_str))
 		return (free(exit_str), 2);
-	ft_strlcpy(result, *str, *var_i + 1);
-	ft_strlcat(result, exit_str, result_size);
-	ft_strlcat(result, *str + *var_i + 2, result_size);
-	free(*str);
-	*str = result;
-	*var_i += ft_strlen(exit_str);
 	free(exit_str);
 	return (0);
+}
+
+int	replace_str(char **str, size_t *start, size_t len, char *rep_val)
+{
+	size_t	result_size;
+	char	*result;
+
+	result_size = *start + ft_strlen(rep_val)
+		+ ft_strlen(*str + *start + len) + 1;
+	result = malloc(sizeof(char) * result_size);
+	if (!result)
+		return (EXIT_FAILURE);
+	ft_strlcpy(result, *str, *start + 1);
+	ft_strlcat(result, rep_val, result_size);
+	ft_strlcat(result, *str + *start + len, result_size);
+	free(*str);
+	*str = result;
+	*start += ft_strlen(rep_val);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 08:10:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/20 09:32:42 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:23:12 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,18 @@ void	token_clear(t_token **tokens)
 	while (*tokens)
 		token_delone(tokens);
 	*tokens = NULL;
+}
+
+size_t	count_pipes(t_token *token_list)
+{
+	size_t	result;
+
+	result = 0;
+	while (token_list)
+	{
+		if (token_list->type == PIPE)
+			result++;
+		token_list = token_list->next;
+	}
+	return (result);
 }

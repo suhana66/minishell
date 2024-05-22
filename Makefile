@@ -21,9 +21,8 @@ MAIN_SRCS := \
 	redirection.c \
 	signals.c \
 	single_cmd.c \
-	token_utils.c \
-	utils.c \
-	utils2.c
+	struct_utils.c \
+	token_utils.c
 
 BUILTIN_PATH := builtin
 BUILTIN_SRCS := \

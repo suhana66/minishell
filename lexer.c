@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 08:54:20 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/15 10:24:21 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:09:44 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,41 @@ t_type	token_type(char **input)
 			type = LESSLESS;
 	}
 	return (type);
+}
+
+char	get_encloser(char c, char *encloser)
+{
+	if ((c == '\"' || c == '\'') && (!*encloser || *encloser == c))
+	{
+		if (!*encloser)
+			*encloser = c;
+		else
+			*encloser = 0;
+		return (1);
+	}
+	return (0);
+}
+
+void	type_error(t_token *token)
+{
+	char	*token_name;
+
+	if (!token)
+		token_name = "newline";
+	else if (token->type == GREAT)
+		token_name = ">";
+	else if (token->type == GREATGREAT)
+		token_name = ">>";
+	else if (token->type == LESS)
+		token_name = "<";
+	else if (token->type == LESSLESS)
+		token_name = "<<";
+	else if (token->type == PIPE)
+		token_name = "|";
+	else
+		return ;
+	ft_putstr_fd("minishell: syntax error near unexpected token '",
+		STDERR_FILENO);
+	ft_putstr_fd(token_name, STDERR_FILENO);
+	ft_putendl_fd("'", STDERR_FILENO);
 }
