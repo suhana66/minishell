@@ -6,13 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 13:15:45 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:56:33 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern int	g_recv_sig;
 
 char	*join_split_str(char **str, char *new_str)
 {

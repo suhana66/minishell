@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 13:53:10 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:34:40 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	change_pwd(t_info *info)
 int	find_path(t_info *info, char *str)
 {
 	char	*tmp;
-	int		ret;
 	size_t	i;
 
-	ret = -1;
 	tmp = NULL;
 	i = 0;
 	while (info->env[i])
@@ -42,17 +40,16 @@ int	find_path(t_info *info, char *str)
 		}
 		i++;
 	}
-	ret = chdir(tmp);
-	free(tmp);
-	if (ret != 0)
+	if (chdir(tmp))
 	{
 		str = ft_substr(str, 0, ft_strlen(str) - 1);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(str, 2);
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
 		free(str);
-		ft_putendl_fd(" not set", 2);
+		ft_putendl_fd(" not set", STDERR_FILENO);
+		return (free(tmp), -1);
 	}
-	return (ret);
+	return (free(tmp), 0);
 }
 
 void	add_pwd_to_env(t_info *info, char *str)
@@ -88,17 +85,17 @@ int	mini_cd(t_info *info, t_cmd *simple_cmd)
 	val = 0;
 	if (!simple_cmd->argv[1])
 		val = find_path(info, "HOME=");
-	else if (!ft_strncmp(simple_cmd->argv[1], "-", 1) && ft_strlen(simple_cmd->argv[1]) == 1)
+	else if (!ft_strncmp(simple_cmd->argv[1], "-", 1)
+		&& ft_strlen(simple_cmd->argv[1]) == 1)
 		val = find_path(info, "OLDPWD=");
 	else
 	{
 		val = chdir(simple_cmd->argv[1]);
 		if (val != 0)
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(simple_cmd->argv[1], 2);
-			ft_putstr_fd(": No such file or directory ", 2);
-			// perror(" ");
+			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			ft_putstr_fd(simple_cmd->argv[1], STDERR_FILENO);
+			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 		}
 	}
 	if (val != 0)

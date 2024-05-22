@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 17:10:00 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:12:33 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int	mini_export(t_info *info, t_cmd *simple_cmd)
 	i = 1;
 	while (simple_cmd->argv[i])
 	{
-		if (check_param(simple_cmd->argv[i]) == 0 && !var_exist(simple_cmd->argv[i], info))
+		if (check_param(simple_cmd->argv[i]) == 0
+			&& !var_exist(simple_cmd->argv[i], info))
 			env_add(simple_cmd->argv[i], &info->env);
 		if (!ft_strncmp(simple_cmd->argv[i], "PATH=", 5))
 			path_update(info);
