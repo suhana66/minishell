@@ -116,14 +116,3 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 	waitpid(pid, &status, 0);
 	info->exit_status = get_exit_status(status);
 }
-
-int	get_exit_status(int cmd_status)
-{
-	if (WIFEXITED(cmd_status))
-		return (WEXITSTATUS(cmd_status));
-	else if (g_recv_sig == SIGINT)
-		return (g_recv_sig = 0, 130);
-	else if (g_recv_sig == SIGQUIT)
-		return (g_recv_sig = 0, 131);
-	return (0);
-}

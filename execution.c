@@ -27,25 +27,6 @@ int	pipe_wait(int *pid, int pipe_n)
 	return (get_exit_status(status));
 }
 
-void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in)
-{
-	if (cmd->prev && dup2(fd_in, 0) < 0)
-	{
-		ft_putstr_fd("Failed to create pipe\n", 2);
-		reset_info(info);
-	}
-	close(end[0]);
-	if (cmd->next && dup2(end[1], 1) < 0)
-	{
-		ft_putstr_fd("Failed to create pipe\n", 2);
-		reset_info(info);
-	}
-	close(end[1]);
-	if (cmd->prev)
-		close(fd_in);
-	handle_cmd(cmd, info);
-}
-
 int	ft_fork(t_info *info, int end[2], int fd_in, t_cmd *cmd)
 {
 	static int	i = 0;

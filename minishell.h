@@ -27,6 +27,8 @@
 # define USAGE_ERR	"usage: ./minishell"
 # define MEMORY_ERR	"minishell: unable to assign memory"
 
+extern int	g_recv_sig;
+
 typedef struct s_info
 {
 	char			**path;
@@ -68,39 +70,53 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+//main
 int		get_cmd_table(t_info *info);
 void	implement_info(t_info *info);
-void	free_info(t_info *info);
 void	minishell_loop(t_info *info);
-void	reset_info(t_info *info);
+int		event(void);
 
+//utils2
+void	free_info(t_info *info);
+void	reset_info(t_info *info);
+int		get_exit_status(int cmd_status);
+void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in);
+int		prepare_executor(t_info *info);
+
+//utils
 char	get_encloser(char c, char *encloser);
+void	array_clear(char **array);
 size_t	count_pipes(t_token *token_list);
 size_t	array_len(char **array);
 char	**array_dup(char **array, size_t size);
 
+//lexer
 int		lexer(char *input, t_token **token_list);
 int		token_str(char **input, char *delimiters, char **result);
 t_type	token_type(char **input);
 
+//token_utils
 t_token	*token_add(t_type type, char *str, t_token **tokens);
 void	token_delone(t_token **token);
 void	token_clear(t_token **tokens);
 
+//parser
 int		parser(t_token **token_list, t_info *info);
 int		cmd_redirects(t_token **token_list, t_token **result);
 char	**cmd_argv(t_token **token_list);
 int		(*cmd_builtin(char *argv_0))(t_info *, t_cmd *cmd);
 void	type_error(t_token *token);
 
+//cmd_utils
 t_cmd	*cmd_add(t_cmd **cmds);
 void	cmd_clear(t_cmd **cmds);
-void	array_clear(char **array);
 
+//parse_env
 int		parse_env(t_info *info);
 char	**split_path_in_env(char **env);
 int		find_pwd(t_info *info);
 
+//builtin
 int		mini_echo(t_info *info, t_cmd *simple_cmd);
 int		mini_cd(t_info *info, t_cmd *simple_cmd);
 int		mini_pwd(t_info *info, t_cmd *simple_cmd);
@@ -109,31 +125,50 @@ int		mini_unset(t_info *info, t_cmd *simple_cmd);
 int		mini_env(t_info *info, t_cmd *simple_cmd);
 int		mini_exit(t_info *info, t_cmd *simple_cmd);
 
+//expander
 int		expander(t_cmd *cmd, t_info *info);
 int		parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand);
 int		replace_enviornment_variable(char **str, size_t *var_i, char **env);
 int		replace_exit_status(char **str, size_t *var_i, int exit_status);
 char	*env_search(char **env, char *key);
 
+//signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	cmd_sigint_handler(int sig);
 void	heredoc_sigint_handler(int sig);
 
-int		determine_exit_code(char **str, t_info *info);
-int		send_heredoc(t_info *info, t_cmd *cmd);
-int		ck_redirects(t_cmd *cmd);
+//single_cmd
+char	*join_split_str(char **str, char *new_str);
 void	handle_cmd(t_cmd *cmd, t_info *info);
+char	**split_again(char **arr);
+int		find_cmd(t_cmd *cmd, t_info *info);
+void	single_cmd(t_cmd *cmd, t_info *info);
+
+//redirection
+int		check_append_outfile(t_token *redirects);
+int		handle_infile(char *file);
+int		handle_outfile(t_token *redirects);
+int		ck_redirects(t_cmd *cmd);
+
+//heredoc
+int		here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name);
+int		send_heredoc(t_info *info, t_cmd *cmd);
+char	*heredoc_temp_file(void);
+int		ft_heredoc(t_info *info, t_token *heredoc, char *f_name);
+
+//execution
+int		pipe_wait(int *pid, int pipe_n);
+int		ft_fork(t_info *info, int end[2], int fd_in, t_cmd *cmd);
+int		check_fd_heredoc(t_info *info, int end[2], t_cmd *cmd);
+int		many_cmd_executor(t_info *info);
+t_cmd	*ft_simple_cmdsfirst(t_cmd *cmd);
+
+int		determine_exit_code(char **str, t_info *info);
 int		equal_s(char *str);
 int		is_str_digit(char *str);
-
-int		ck_redirects(t_cmd *cmd);
 char	*del_quotes(char *str, char c);
 
-int		prepare_executor(t_info *info);
-int		many_cmd_executor(t_info *info);
-void	single_cmd(t_cmd *cmd, t_info *info);
-int		get_exit_status(int cmd_status);
 void	path_update(t_info *info);
 
 int		export_error(char *c);
