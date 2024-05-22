@@ -12,24 +12,6 @@
 
 #include "minishell.h"
 
-// int	remove_env_var(t_info *info, t_env *to_rem, t_env *p)
-// {
-// 	if (to_rem)
-// 	{
-// 		if (p)
-// 			p->next = to_rem->next;
-// 		else
-// 			info->env = to_rem->next;
-// 		if (info->env && !info->env->key)
-// 			return (1);
-// 		free(to_rem->key);
-// 		free(to_rem->value);
-// 		free(to_rem);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
 void	check_unset_arg(char *str, t_info *info)
 {
 	if (!str)

@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-extern int	g_recv_sig;
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
