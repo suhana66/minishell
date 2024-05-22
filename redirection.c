@@ -95,3 +95,4 @@ int	ck_redirects(t_cmd *cmd)
 	cmd->redirects = start;
 	return (0);
 }
+  
