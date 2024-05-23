@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/22 22:18:43 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 06:41:27 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,10 @@ size_t	count_pipes(t_token *token_list);
 int		parser(t_token **token_list, t_info *info);
 int		cmd_redirects(t_token **token_list, t_token **result);
 char	**cmd_argv(t_token **token_list);
-int		(*cmd_builtin(char *argv_0))(t_info *, t_cmd *cmd);
+int		(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd);
 int		ft_strcasecmp(const char *s1, const char *s2);
 
-// struct_utils
-t_cmd	*cmd_add(t_cmd **cmds);
-void	cmd_clear(t_cmd **cmds);
+// arr_utils
 size_t	array_len(char **array);
 char	**array_dup(char **array, size_t size);
 void	array_clear(char **array);
@@ -139,11 +137,11 @@ void	cmd_sigint_handler(int sig);
 void	heredoc_sigint_handler(int sig);
 
 // single_cmd
-char	*join_split_str(char **str, char *new_str);
-void	handle_cmd(t_cmd *cmd, t_info *info);
-char	**split_again(char **arr);
 int		find_cmd(t_cmd *cmd, t_info *info);
+void	handle_cmd(t_cmd *cmd, t_info *info);
 void	single_cmd(t_cmd *cmd, t_info *info);
+t_cmd	*cmd_add(t_cmd **cmds);
+void	cmd_clear(t_cmd **cmds);
 
 // redirection
 int		check_append_outfile(t_token *redirects);

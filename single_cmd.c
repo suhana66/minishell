@@ -6,43 +6,11 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 18:17:49 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 06:31:16 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*join_split_str(char **str, char *new_str)
-{
-	char	*t;
-	char	*add_space;
-	int		i;
-
-	t = ft_strdup(str[0]);
-	i = 1;
-	while (str[i])
-	{
-		new_str = t;
-		add_space = ft_strjoin(new_str, " ");
-		free(new_str);
-		t = ft_strjoin(add_space, str[i]);
-		free(add_space);
-		i++;
-	}
-	new_str = t;
-	return (new_str);
-}
-
-char	**split_again(char **arr)
-{
-	char	**strs;
-	char	*joined_str;
-
-	joined_str = join_split_str(arr, NULL);
-	strs = ft_split(joined_str, ' ');
-	free(joined_str);
-	return (strs);
-}
 
 int	find_cmd(t_cmd *cmd, t_info *info)
 {
@@ -50,7 +18,6 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 	char	*mycmd;
 
 	i = 0;
-	cmd->argv = split_again(cmd->argv);
 	if (!access(cmd->argv[0], F_OK))
 		execve(cmd->argv[0], cmd->argv, info->env);
 	while (info->path && info->path[i])
@@ -110,4 +77,47 @@ void	single_cmd(t_cmd *cmd, t_info *info)
 		handle_cmd(cmd, info);
 	waitpid(pid, &status, 0);
 	info->exit_status = get_exit_status(status);
+}
+
+t_cmd	*cmd_add(t_cmd **cmds)
+{
+	t_cmd	*node;
+	t_cmd	*temp;
+
+	node = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!node)
+		return (NULL);
+	node->argv = NULL;
+	node->redirects = NULL;
+	node->builtin = NULL;
+	node->hd_f_name = NULL;
+	node->prev = NULL;
+	node->next = NULL;
+	if (!cmds)
+		return (node);
+	if (!*cmds)
+		return (*cmds = node, node);
+	temp = *cmds;
+	while (temp->next)
+		temp = temp->next;
+	node->prev = temp;
+	temp->next = node;
+	return (node);
+}
+
+void	cmd_clear(t_cmd **cmds)
+{
+	t_cmd	*to_delete;
+
+	if (!cmds)
+		return ;
+	while (*cmds)
+	{
+		to_delete = *cmds;
+		*cmds = (*cmds)->next;
+		array_clear(to_delete->argv);
+		token_clear(&to_delete->redirects);
+		free(to_delete);
+	}
+	*cmds = NULL;
 }

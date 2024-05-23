@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:39:23 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/22 22:26:45 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 06:40:57 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**cmd_argv(t_token **token_list)
 	case-sensitive builtin functions:
 		export, unset, exit
 */
-int	*cmd_builtin(char *argv_0)
+int	(*cmd_builtin(char *argv_0))(t_info *info, t_cmd *cmd)
 {
 	static void	*builtins[][2] = {
 	{"echo", mini_echo},
