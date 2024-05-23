@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:23:50 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 18:01:14 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 15:36:57 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 	if (!line || g_recv_sig)
 		return (1);
 	close(fd);
-	(void)quotes;
-	(void)info;
 	return (0);
 }
 
