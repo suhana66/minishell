@@ -6,7 +6,7 @@
 /*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/21 13:17:56 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 07:01:21 by susajid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,14 @@ int	get_cmd_table(t_info *info)
 		g_recv_sig = 0;
 	}
 	if (!input)
-	{
-		free_info(info);
-		ft_putendl_fd("exit", STDOUT_FILENO);
-		exit(EXIT_SUCCESS);
-	}
+		return (free_info(info), ft_putendl_fd("exit", STDOUT_FILENO),
+			exit(EXIT_SUCCESS), 0);
 	if (!*input)
 		return (free(input), 1);
 	add_history(input);
 	err = lexer(input, &token_list);
+	if (!err && !token_list)
+		err = 1;
 	if (!err)
 		err = parser(&token_list, info);
 	free(input);
