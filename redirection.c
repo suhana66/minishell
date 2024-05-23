@@ -88,6 +88,5 @@ int	ck_redirects(t_cmd *cmd)
 	cmd->redirects = start;
 	if (cmd->hd_f_name)
 		unlink(cmd->hd_f_name);
-	free(cmd->hd_f_name);
 	return (err);
 }

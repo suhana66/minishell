@@ -87,7 +87,6 @@ int	send_heredoc(t_info *info, t_cmd *cmd)
 				info->exit_status = 1;
 				g_recv_sig = 0;
 				unlink(cmd->hd_f_name);
-				free(cmd->hd_f_name);
 				return (reset_info(info), 1);
 			}
 		}

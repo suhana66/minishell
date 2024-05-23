@@ -117,6 +117,7 @@ void	cmd_clear(t_cmd **cmds)
 		*cmds = (*cmds)->next;
 		array_clear(to_delete->argv);
 		token_clear(&to_delete->redirects);
+		free(to_delete->hd_f_name);
 		free(to_delete);
 	}
 	*cmds = NULL;
