@@ -6,7 +6,7 @@
 /*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:44:04 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/23 12:14:15 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:48:40 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	find_pwd(&info);
 	implement_info(&info);
 	minishell_loop(&info);
-	free_info(&info);
+	process_exit(&info, 0);
 	return (0);
 }
 
@@ -40,8 +40,7 @@ void	minishell_loop(t_info *info)
 	if (err < 0)
 	{
 		ft_putendl_fd(MEMORY_ERR, STDERR_FILENO);
-		free_info(info);
-		exit(EXIT_FAILURE);
+		process_exit(info, 1);
 	}
 	prepare_executor(info);
 	reset_info(info);
@@ -60,8 +59,7 @@ int	get_cmd_table(t_info *info)
 		g_recv_sig = 0;
 	}
 	if (!input)
-		return (free_info(info), ft_putendl_fd("exit", STDOUT_FILENO),
-			exit(EXIT_SUCCESS), 0);
+		return (ft_putendl_fd("exit", STDOUT_FILENO), process_exit(info, 0), 0);
 	if (!*input)
 		return (free(input), 1);
 	add_history(input);

@@ -6,7 +6,7 @@
 /*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/23 16:32:01 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:53:42 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	return (free_info(info), 127);
+	return (127);
 }
 
 void	handle_cmd(t_cmd *cmd, t_info *info)
@@ -40,17 +40,16 @@ void	handle_cmd(t_cmd *cmd, t_info *info)
 
 	exit_code = 0;
 	if (cmd->redirects)
-		if (ck_redirects(cmd) && (free_info(info), 1))
-			exit(1);
+		if (ck_redirects(cmd))
+			process_exit(info, 1);
 	if (cmd->builtin != NULL)
 	{
 		exit_code = cmd->builtin(info, cmd);
-		free_info(info);
-		exit(exit_code);
+		process_exit(info, exit_code);
 	}
 	else if (cmd->argv[0][0] != '\0')
 		exit_code = find_cmd(cmd, info);
-	exit(exit_code);
+	process_exit(info, exit_code);
 }
 
 void	single_cmd(t_cmd *cmd, t_info *info)

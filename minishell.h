@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:30:11 by susajid           #+#    #+#             */
-/*   Updated: 2024/05/23 06:41:27 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:57:19 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	minishell_loop(t_info *info);
 int		event(void);
 
 // cmd_utils
-void	free_info(t_info *info);
+void	process_exit(t_info *info, int exit_code);
 void	reset_info(t_info *info);
 int		get_exit_status(int cmd_status);
 void	dup_cmd(t_cmd *cmd, t_info *info, int end[2], int fd_in);
@@ -168,7 +168,7 @@ int		find_path(t_info *info, char *str);
 void	add_pwd_to_env(t_info *info, char *str);
 
 // buitin/mini_exit
-int		determine_exit_code(char **str, t_info *info);
+void	determine_exit_code(char **str, t_info *info);
 int		is_str_digit(char *str);
 
 // buitin/mini_export
@@ -179,7 +179,6 @@ int		dec_sorted(char **env_arr);
 
 // builtin/builtin_utils
 int		equal_s(char *str);
-char	*del_quotes(char *str, char c);
 void	path_update(t_info *info);
 int		export_error(char *c);
 int		check_valid_identifier(char c);

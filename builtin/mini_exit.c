@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:34 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 18:57:45 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:56:26 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_str_digit(char *str)
 	return (1);
 }
 
-int	determine_exit_code(char **str, t_info *info)
+void	determine_exit_code(char **str, t_info *info)
 {
 	int	exit_code;
 
@@ -43,8 +43,7 @@ int	determine_exit_code(char **str, t_info *info)
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		exit_code = 255;
 	}
-	free_info(info);
-	exit(exit_code);
+	process_exit(info, exit_code);
 }
 
 int	mini_exit(t_info *info, t_cmd *simple_cmd)

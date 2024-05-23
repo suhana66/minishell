@@ -6,7 +6,7 @@
 /*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:23:50 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/23 16:13:21 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:42:17 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 	while (1)
 	{
 		line = readline(HEREDOC_MSG);
-		if (quotes == false)
+		if (line && quotes == false)
 			parse_arg(&line, info, false, true);
 		if (!line || (ft_strlen(line) == len
 				&& !ft_strncmp(heredoc->str, line, len)) || g_recv_sig)

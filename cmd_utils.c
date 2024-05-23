@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:30:25 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/21 10:51:54 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:56:47 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_info(t_info *info)
+void	process_exit(t_info *info, int exit_code)
 {
 	array_clear(info->path);
 	array_clear(info->env);
@@ -21,6 +21,10 @@ void	free_info(t_info *info)
 	cmd_clear(&info->cmd_table);
 	if (info->pip_n)
 		free(info->pid);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	exit(exit_code);
 }
 
 void	reset_info(t_info *info)
