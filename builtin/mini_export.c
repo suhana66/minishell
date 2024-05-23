@@ -6,7 +6,7 @@
 /*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/23 10:55:02 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/23 11:59:47 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ int	var_exist(char *var, t_info *info)
 	size_t	i;
 	size_t	eq_s;
 
-	if (var[equal_s(var)] == '\"')
-		var = del_quotes(var, '\"');
-	if (var[equal_s(var)] == '\'')
-		var = del_quotes(var, '\'');
 	if (!info->env)
 		return (0);
 	i = 0;
@@ -47,10 +43,6 @@ int	env_add(char *var, char ***env)
 
 	if (!*env)
 		return (0);
-	if (var[equal_s(var)] == '\"')
-		var = del_quotes(var, '\"');
-	if (var[equal_s(var)] == '\'')
-		var = del_quotes(var, '\'');
 	len = array_len(*env);
 	temp = array_dup(*env, len + 2);
 	if (!temp)

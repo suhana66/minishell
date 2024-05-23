@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:07 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 17:20:36 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 11:59:18 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,4 @@ int	check_valid_identifier(char c)
 		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
 		|| c == '~' || c == '=' || c == '-' || c == '?' || c == '&'
 		|| c == '*');
-}
-
-char	*del_quotes(char *str, char c)
-{
-	int		i;
-	int		len;
-	char	*result;
-	int		result_index;
-	int		inside_quote;
-
-	i = 0;
-	len = ft_strlen(str);
-	result = malloc(len + 1);
-	if (!result)
-		return (ft_putendl_fd(MEMORY_ERR, STDERR_FILENO),
-			exit(EXIT_FAILURE), NULL);
-	result_index = 0;
-	inside_quote = 0;
-	while (str[i])
-	{
-		if (str[i] == c && i > 0 && str[i - 1] == '=' && (i++, 1))
-			inside_quote = 1;
-		else if (str[i] == c && inside_quote && (i++, 1))
-			inside_quote = 0;
-		else
-			result[result_index++] = str[i++];
-	}
-	result[result_index] = '\0';
-	return (result);
 }

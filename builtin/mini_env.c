@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:29 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/18 14:47:46 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 11:38:34 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	mini_env(t_info *info, t_cmd *simple_cmd)
 {
 	size_t	i;
 
-	(void)simple_cmd;
+	if (simple_cmd->argv[1])
+		return (ft_putendl_fd("minishell: env: too many arguments",
+				STDERR_FILENO), 1);
 	if (!info->env)
 		return (1);
 	i = 0;
