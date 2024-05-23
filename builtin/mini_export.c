@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:37 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 17:12:33 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 10:55:02 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,14 @@ int	mini_export(t_info *info, t_cmd *simple_cmd)
 			env_add(simple_cmd->argv[i], &info->env);
 		if (!ft_strncmp(simple_cmd->argv[i], "PATH=", 5))
 			path_update(info);
+		free(info->pwd);
+		free(info->old_pwd);
 		info->pwd = env_search(info->env, "PWD");
+		if (info->pwd)
+			info->pwd = ft_strdup(info->pwd);
 		info->old_pwd = env_search(info->env, "OLDPWD");
+		if (info->old_pwd)
+			info->old_pwd = ft_strdup(info->old_pwd);
 		i++;
 	}
 	return (0);
