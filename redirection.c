@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:37:09 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 18:18:47 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 19:35:12 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,24 @@ int	handle_outfile(t_token *redirects)
 int	ck_redirects(t_cmd *cmd)
 {
 	t_token	*start;
+	int		err;
 
 	start = cmd->redirects;
-	while (cmd->redirects)
+	err = 0;
+	while (cmd->redirects && !err)
 	{
-		if (cmd->redirects->type == LESS)
-		{
-			if (handle_infile(cmd->redirects->str))
-				return (1);
-		}
-		else if (cmd->redirects->type == GREAT
-			|| cmd->redirects->type == GREATGREAT)
-		{
-			if (handle_outfile(cmd->redirects))
-				return (1);
-		}
-		else if (cmd->redirects->type == LESSLESS)
-		{
-			if (handle_infile(cmd->hd_f_name))
-				return (1);
-		}
+		if ((cmd->redirects->type == LESS && handle_infile(cmd->redirects->str))
+			|| ((cmd->redirects->type == GREAT
+					|| cmd->redirects->type == GREATGREAT)
+				&& handle_outfile(cmd->redirects))
+			|| (cmd->redirects->type == LESSLESS
+				&& handle_infile(cmd->hd_f_name)))
+			err = 1;
 		cmd->redirects = cmd->redirects->next;
 	}
 	cmd->redirects = start;
-	return (0);
+	if (cmd->hd_f_name)
+		unlink(cmd->hd_f_name);
+	free(cmd->hd_f_name);
+	return (err);
 }

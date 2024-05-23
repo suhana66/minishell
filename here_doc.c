@@ -6,7 +6,7 @@
 /*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:23:50 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/23 17:42:17 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/23 19:37:30 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	close(fd);
 	if (g_recv_sig)
 		return (1);
-	close(fd);
 	return (0);
 }
 
@@ -72,22 +72,22 @@ char	*heredoc_temp_file(void)
 int	send_heredoc(t_info *info, t_cmd *cmd)
 {
 	t_token	*start;
-	int		sl;
 
 	start = cmd->redirects;
-	sl = 0;
 	while (cmd->redirects)
 	{
 		if (cmd->redirects->type == LESSLESS)
 		{
 			if (cmd->hd_f_name)
-				free(cmd->hd_f_name);
+				unlink(cmd->hd_f_name);
+			free(cmd->hd_f_name);
 			cmd->hd_f_name = heredoc_temp_file();
-			sl = ft_heredoc(info, cmd->redirects, cmd->hd_f_name);
-			if (sl)
+			if (ft_heredoc(info, cmd->redirects, cmd->hd_f_name))
 			{
 				info->exit_status = 1;
 				g_recv_sig = 0;
+				unlink(cmd->hd_f_name);
+				free(cmd->hd_f_name);
 				return (reset_info(info), 1);
 			}
 		}
