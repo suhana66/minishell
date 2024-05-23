@@ -51,13 +51,16 @@ int	parse_arg(char **str, t_info *info, bool if_del_quotes, bool if_expand)
 	while ((*str)[i])
 	{
 		if (if_del_quotes && get_encloser((*str)[i], &encloser))
-			ft_strlcpy(*str + i, *str + i + 1, ft_strlen(*str + i + 1) + 1);
+			ft_strlcpy(*str + i, *str + i + 1, ft_strlen(*str + i));
 		else if (if_expand && encloser != '\'' && (*str)[i] == '$')
 		{
-			if ((*str)[i + 1] == '?' && \
-			replace_exit_status(str, &i, info->exit_status))
-				return (2);
-			else if (replace_enviornment_variable(str, &i, info->env))
+			if ((*str)[i + 1] == '?')
+			{
+				if (replace_exit_status(str, &i, info->exit_status))
+					return (2);
+				continue ;
+			}
+			if (replace_enviornment_variable(str, &i, info->env))
 				return (1);
 		}
 		else
@@ -75,7 +78,7 @@ int	replace_enviornment_variable(char **str, size_t *var_i, char **env)
 
 	start = *str + *var_i + 1;
 	len = 0;
-	while (start[len] && (ft_isalnum(start[len]) || start[len] == '_'))
+	while (ft_isalnum(start[len]) || start[len] == '_')
 		len++;
 	if (ft_isdigit(start[0]) || len == 0)
 		return ((*var_i)++, 0);
