@@ -63,16 +63,14 @@ int	del_var(char **env, char **argv, t_info *info)
 
 char	*error_unset(t_info *info, t_cmd *simple_cmd)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
 	(void)info;
 	i = 1;
 	while (simple_cmd->argv[i])
 	{
-		if (equal_s(simple_cmd->argv[i]) != 0)
-			return (simple_cmd->argv[i]);
-		j = 1;
+		j = 0;
 		while (simple_cmd->argv[i][j])
 		{
 			if ((!ft_isalnum(simple_cmd->argv[i][j])

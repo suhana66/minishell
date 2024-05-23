@@ -83,6 +83,8 @@ int	mini_cd(t_info *info, t_cmd *simple_cmd)
 	int	val;
 
 	val = 0;
+	if (simple_cmd->argv[1] && simple_cmd->argv[2])
+		return (ft_putendl_fd("minishell: cd: too many arguments", STDERR_FILENO), 1);
 	if (!simple_cmd->argv[1])
 		val = find_path(info, "HOME=");
 	else if (!ft_strncmp(simple_cmd->argv[1], "-", 1)
