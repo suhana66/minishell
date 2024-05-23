@@ -6,7 +6,7 @@
 /*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:37:38 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/23 12:34:03 by smuneer          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:32:01 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	find_cmd(t_cmd *cmd, t_info *info)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->argv[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	return (127);
+	return (free_info(info), 127);
 }
 
 void	handle_cmd(t_cmd *cmd, t_info *info)

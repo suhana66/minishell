@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:29:19 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/22 17:34:40 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:06:18 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,31 +78,31 @@ void	add_pwd_to_env(t_info *info, char *str)
 		ft_putendl_fd(info->pwd, 1);
 }
 
-int	mini_cd(t_info *info, t_cmd *simple_cmd)
+int	mini_cd(t_info *info, t_cmd *cmd)
 {
 	int	val;
 
 	val = 0;
-	if (simple_cmd->argv[1] && simple_cmd->argv[2])
-		return (ft_putendl_fd("minishell: cd: too many arguments", STDERR_FILENO), 1);
-	if (!simple_cmd->argv[1])
+	if (cmd->argv[1] && cmd->argv[2])
+		return (ft_putendl_fd("minishell: cd: too many arguments",
+				STDERR_FILENO), 1);
+	if (!cmd->argv[1])
 		val = find_path(info, "HOME=");
-	else if (!ft_strncmp(simple_cmd->argv[1], "-", 1)
-		&& ft_strlen(simple_cmd->argv[1]) == 1)
+	else if (!ft_strncmp(cmd->argv[1], "-", 1) && ft_strlen(cmd->argv[1]) == 1)
 		val = find_path(info, "OLDPWD=");
 	else
 	{
-		val = chdir(simple_cmd->argv[1]);
+		val = chdir(cmd->argv[1]);
 		if (val != 0)
 		{
 			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-			ft_putstr_fd(simple_cmd->argv[1], STDERR_FILENO);
+			ft_putstr_fd(cmd->argv[1], STDERR_FILENO);
 			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 		}
 	}
 	if (val != 0)
 		return (1);
 	change_pwd(info);
-	add_pwd_to_env(info, simple_cmd->argv[1]);
+	add_pwd_to_env(info, cmd->argv[1]);
 	return (0);
 }

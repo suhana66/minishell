@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susajid <susajid@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: smuneer <smuneer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:23:50 by smuneer           #+#    #+#             */
-/*   Updated: 2024/05/23 15:36:57 by susajid          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:13:21 by smuneer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	here_doc(t_token *heredoc, bool quotes, t_info *info, char *f_name)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
-	if (!line || g_recv_sig)
+	if (g_recv_sig)
 		return (1);
 	close(fd);
 	return (0);
